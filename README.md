@@ -1,0 +1,1 @@
+# Caja-registradora-1
