@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import style from './ListaArticulos.module.css'
 import Articulo from './Articulo';
+import List from './List';
 import { useDispatch, useSelector } from 'react-redux';
-import { remove_fav } from '../../../../redux/action';
+import { get, remove_fav } from '../../../../redux/action';
+import { useParams } from 'react-router-dom';
 
 export default function ListaArticulos(props) {
-    const productos=useSelector((state)=>state.listProductos);
+
+    const producto=useSelector((state)=>state.producto);
+    const listProductos=useSelector((state)=>state.listProductos);
 
     const dispatch=useDispatch()
+    const {id} = useParams()
+    const [articulo,setArticulo]=useState(producto)
+  
+    useEffect(()=>{
+        setArticulo(producto)
+    },[id,listProductos,producto])
 
    const onClose=(id)=>{
     dispatch(remove_fav(id))
@@ -28,9 +38,7 @@ export default function ListaArticulos(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {productos.map((prod,id) => (
-                        <Articulo key={id} id={id}  productos={prod} onClose={onClose}/>
-                    ))}
+                    <List onClose={onClose} producto={articulo}/>
                 </tbody>
 
             </table>

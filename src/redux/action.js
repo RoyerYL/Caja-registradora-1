@@ -15,6 +15,12 @@ export const remove_fav = (input) => {
     payload:input
   }
 };
+export const get = (input) => {
+  return{
+    type:"get",
+    payload:input
+  }
+};
 
 
 

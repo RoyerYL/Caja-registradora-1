@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import style from './Navbar.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
 
 export default function Navbar() {
-    const [collapse, setCollapse] = useState("collapse")
-    const id=1
+    const [id_, setID] = useState(0)
+    const [button, setButton] = useState([])
     const handleClick = () => {
-        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+        setButton([...button,{id:id_}])
+        setID(id_+1)
+        
     }
 
     return (
@@ -31,14 +34,21 @@ export default function Navbar() {
 
             <nav className="navbar navbar-dark bg-dark">
                 <div className="btn-group" role="group" aria-label="Basic outlined example">
-                    <Link to={`/home/${id}`}>
-                        <button type="button" className="btn btn-outline-primary">Nuevo</button>
-                    </Link>
+                    
+                        <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
+                    
                     <Link to="/provedor">
                         <button type="button" className="btn btn-outline-primary">Comprobantes</button>
                     </Link>
+                    <Link to="/ventana">
+                        <button type="button" className="btn btn-outline-primary">Comprobantes</button>
+                    </Link>
 
-                </div>
+                </div>  
+                {button.map((prod,id) => (
+                        <PageArticulo key={id} id={id}/>
+                    ))}
+
             </nav>
         </div>
     )
