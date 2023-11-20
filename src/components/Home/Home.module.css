@@ -1,0 +1,62 @@
+.Home {
+    background-color: rgb(104, 104, 104);
+    width: 100%;
+    height: 100%;
+}
+
+
+.registrarCompra {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.addArticulo {
+    width: 28%;
+    height: 100%;
+    padding: 15px;
+    border: 1px solid black;
+}
+
+.ListArticulo {
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+}
+
+
+
+.cliente {
+    width: 100%;
+    border: 1px solid black;
+    padding: 15px;
+
+}
+
+.Costo {
+    border: 1px solid black;
+    width: 25%;
+    margin: 5px;
+    padding: 5px;
+}
+.Costo table{
+    margin: 0px;
+}
+
+.condicion {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid black;
+    padding: 3px;
+    margin: 5px;
+}
+.condicion textarea{
+        resize: none;
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+}

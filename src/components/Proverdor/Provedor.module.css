@@ -1,0 +1,24 @@
+.Provedor{
+    background-color: rgb(87, 85, 85);
+    text-align: center;
+}
+.stock{
+    display: flex;
+    gap: 15px;
+}
+.stock div{
+    width: 200px;
+}
+.stock span{
+    width: 95px;
+    font-size: small;
+
+}
+.Provedor span{
+    background-color: grey;
+}
+
+.costo{
+    display: flex;
+    gap: 15px;
+}
