@@ -8,6 +8,9 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_FAV:
+
+      
+
       const p = state.listProductos
       p[payload.page].push(payload)
       return {...state,listProductos:p,producto:p[payload.page]}

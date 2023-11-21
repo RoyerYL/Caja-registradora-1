@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -25,8 +26,19 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-};
+  const dbPath = path.join(app.getPath('userData'), 'tienda.db');
+  const db = new sqlite3.Database(dbPath);
+  // Ejemplo de creación de una tabla
+  db.serialize(() => {
+    db.run('CREATE TABLE IF NOT EXISTS articulos (id INT primary key , nombre TEXT ,precio INT)');
+  });
 
+  // Pasar la instancia de la base de datos al proceso de renderizado (React)
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('db-instance', db);
+  });
+};
+// Configurar la base de datos SQLite
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -37,6 +49,7 @@ app.on('ready', createWindow);
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    db.close();
     app.quit();
   }
 });
