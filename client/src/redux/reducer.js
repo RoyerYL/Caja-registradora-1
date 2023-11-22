@@ -1,4 +1,4 @@
-import { ADD_FAV, FILTER, ORDER, REMOVE_FAV } from "./acionTypes"
+import { ADD_ART, FILTER, GET_ALL, ORDER, REMOVE_FAV } from "./acionTypes"
 
 const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
@@ -7,22 +7,12 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case ADD_FAV:
-
-      
-
+    case ADD_ART:
       const p = state.listProductos
       p[payload.page].push(payload)
       return {...state,listProductos:p,producto:p[payload.page]}
-      
 
-    // case REMOVE_FAV:
-    //   const listProductosAux = state.listProductos.filter((prod) => prod.id !== payload)
-    //   console.log(listProductosAux);
-    //   console.log(state.listProductos);
-    //   return { ...state, listProductos: listProductosAux, };
-
-    case "get":
+    case GET_ALL:
       const prod = state.listProductos[payload] || [];
       return { ...state, producto: prod };
 

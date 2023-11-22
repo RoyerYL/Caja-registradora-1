@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from './Articulo.module.css'
 import { useDispatch } from 'react-redux';
-import { add_fav, get } from '../../../../redux/action';
+import { add_fav, getAll } from '../../../../redux/action';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
@@ -39,7 +39,7 @@ export default function Articulo() {
             codBarras: "",
             cantidad: 1
         })
-        dispatch(get(id))
+        dispatch(getAll(id))
 
     }
 

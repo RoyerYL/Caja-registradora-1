@@ -1,5 +1,5 @@
 const express = require('express');
-// const {router} =require('./routes/index');
+ const {router} =require('./routes/index');
 const server = express();
 
 const morgan = require('morgan');
@@ -21,6 +21,6 @@ server.use((req, res, next) => {
   next();
 });
 
-// server.use("/rickandmorty",router)
+server.use("/tienda",router)
 
 module.exports=server

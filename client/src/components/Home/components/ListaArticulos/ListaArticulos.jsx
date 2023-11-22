@@ -3,7 +3,7 @@ import style from './ListaArticulos.module.css'
 import Articulo from './Articulo';
 import List from './List';
 import { useDispatch, useSelector } from 'react-redux';
-import { get, remove_fav } from '../../../../redux/action';
+import { remove_fav } from '../../../../redux/action';
 import { useParams } from 'react-router-dom';
 
 export default function ListaArticulos(props) {
