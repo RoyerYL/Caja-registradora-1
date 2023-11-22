@@ -2,25 +2,25 @@ import { ADD_ART, FILTER, REMOVE_FAV, ORDER, GET_ALL } from "./acionTypes"
 import axios from "axios";
 
 
-export const add_fav = async (input) => {
+// Importa axios y cualquier otra cosa necesaria
 
-  const { cantidad, codBarras } = input
+export const add_art = (input) => {
+  return async (dispatch) => {
+    try {
+      const { cantidad, codBarras, page } = input;
+      const producto = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`);
+      const data = {
+        cantidad,
+        producto,
+        page
+      };
+      dispatch({ type: 'ADD_ART', payload: data });
+    } catch (error) {
+      console.error('Error al agregar artículo:', error);
+    }
+  };
+};
 
-  const producto = await axios.get(`http://localhost:3001/tienda/${codBarras}`)
-
-  const data = {
-    cantidad,
-    producto
-  }
-
-
-
-  return {
-    type: ADD_ART,
-    payload: data
-  }
-    ;
-}
 
 export const remove_fav = (input) => {
   return {

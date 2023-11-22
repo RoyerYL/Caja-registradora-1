@@ -10,6 +10,7 @@ export default (state = initialState, { type, payload }) => {
     case ADD_ART:
       const p = state.listProductos
       p[payload.page].push(payload)
+      console.log(state.producto);
       return {...state,listProductos:p,producto:p[payload.page]}
 
     case GET_ALL:
