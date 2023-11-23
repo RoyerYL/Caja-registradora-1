@@ -3,4 +3,4 @@ export const REMOVE_FAV="REMOVE_FAV"
 export const FILTER="FILTER"
 export const ORDER="ORDER"
 
-export const GET_ALL="GET_ALL"
+export const GET_ART="GET_ALL"

@@ -16,7 +16,11 @@ export default function ListaArticulos(props) {
     const [articulo,setArticulo]=useState(producto)
   
     useEffect(()=>{
-        setArticulo(producto)
+        console.log(listProductos[id]);
+        if(listProductos[id]){
+            setArticulo(producto)
+        }
+
     },[id,listProductos,producto])
 
    const onClose=(id)=>{

@@ -1,7 +1,27 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import style from './Home.module.css'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 export default function Costo() {
     const [collapse, setCollapse] = useState("collapse")
+    const producto=useSelector((state)=>state.producto)
+
+    const[costo,setCosto]=useState(
+        {
+            subTotal:"0.00",
+        }
+    )
+
+    const{id}=useParams
+    useEffect(()=>{
+        console.log(producto);
+        let total=0
+        producto.map((prod)=>{total+=prod.subTotal;})
+
+        setCosto({
+            subTotal:Number.parseFloat(total).toFixed(2)
+        })
+    },[id,producto])
 
     const handleClick = () => {
         collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
@@ -14,8 +34,8 @@ export default function Costo() {
                 <tbody>
                     <tr>
                         <th scope="row">Subtotal:</th>
-                        <td>Mark</td>
-                        <td>0.00</td>
+                        <td></td>
+                        <td>{costo.subTotal}</td>
                     </tr>
                     <tr>
                         <th scope="row">Descuento:</th>
@@ -24,11 +44,12 @@ export default function Costo() {
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </select></td>
-                        <td>0.00</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
-                        <td colSpan="2">0.00</td>
+                        <td></td>
+                        <td colSpan="2">{costo.subTotal}</td>
                     </tr>
                 </tbody>
             </table>

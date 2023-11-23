@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import style from './Provedor.module.css'
-function Provedor() {
-    
-   
+function AltaArticulo() {
+    const [articulo,setArticulo]=useState({
+
+        id:"",
+        name:"",
+        stock:0,
+        costoPeso:"0.00",
+        costoDolar:"0.00",
+        iva:"",
+        ganancia:"",
+        precioVenta:""
+    })
 
 
     return (
@@ -104,4 +113,4 @@ function Provedor() {
 
 }
 
-export default Provedor;
+export default AltaArticulo;

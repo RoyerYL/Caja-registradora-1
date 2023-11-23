@@ -38,14 +38,17 @@ export default function Articulo() {
             codBarras,
             page
         }))
+
         setId(id_ + 1)
+
         setArticulo({
             id: id_,
             page: id,
             codBarras: "",
             cantidad: 1
         })
-        dispatch(getAll(id))
+
+
 
     }
 
@@ -84,9 +87,7 @@ export default function Articulo() {
                     </select>
                 </div>
                 <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.cantidad} />
-                <Link to={`/home/${id}`}>
                 <button type="button" className="btn btn-success" onClick={addHandler}>➕ Cantidad</button>
-                </Link>
             </div>
         </div>
 

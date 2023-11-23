@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/Navbar/Navbar';
-import Provedor from './components/Proverdor/Provedor';
+import AltaArticulo from './components/AltaArticulo/AltaArticulo';
 import Home from './components/Home/Home';
 import Ventana from './components/Window/Ventana';
 
@@ -18,7 +18,7 @@ function App() {
                <Home />
             } />
             <Route path='/provedor' element={
-               <Provedor />
+               <AltaArticulo />
             } />
             <Route path='/ventana' element={
                <Ventana />

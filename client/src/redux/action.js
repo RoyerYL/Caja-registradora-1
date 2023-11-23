@@ -1,4 +1,4 @@
-import { ADD_ART, FILTER, REMOVE_FAV, ORDER, GET_ALL } from "./acionTypes"
+import { ADD_ART, FILTER, REMOVE_FAV, ORDER, GET_ART } from "./acionTypes"
 import axios from "axios";
 
 
@@ -30,7 +30,7 @@ export const remove_fav = (input) => {
 };
 export const getAll = (input) => {
   return {
-    type: GET_ALL,
+    type: GET_ART,
     payload: input
   }
 };
