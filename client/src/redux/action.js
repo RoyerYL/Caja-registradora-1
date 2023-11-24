@@ -21,6 +21,18 @@ export const add_art = (input) => {
   };
 };
 
+export const add_artLike=async()=>{
+  try {
+
+    const productosLike = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`);
+
+    dispatch({ type: ADD_ARTlike, payload: productosLike });
+      
+  } catch (error) {
+    console.error('Error al agregar artículo:', error);
+  }
+}
+
 
 export const remove_fav = (input) => {
   return {
