@@ -9,7 +9,7 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_ART:
       const {page,cantidad,producto}=payload
-      const subTotal=Number(cantidad) * Number(producto.data.costoPeso)
+      const subTotal=Number(cantidad) * Number(producto.data.precioVenta)
       const newProductos = [...state.listProductos];
       newProductos[page] = [...newProductos[page], {page,cantidad,producto,subTotal}]
       return { ...state, listProductos: newProductos, producto: newProductos[page] }

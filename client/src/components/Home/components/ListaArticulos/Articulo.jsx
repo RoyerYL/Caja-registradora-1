@@ -11,7 +11,7 @@ export default function Articulo(props) {
             <td>{data.id}</td>
             <td>{data.name}</td>
             <td>{cantidad}</td>
-            <td>$ {data.costoPeso}</td>
+            <td>$ {data.precioVenta}</td>
             <td>$ {subTotal}</td>
             <td >
                 <button type="button" className="btn btn-success" onClick={() => {console.log(data); }}>➕ Cantidad</button>
