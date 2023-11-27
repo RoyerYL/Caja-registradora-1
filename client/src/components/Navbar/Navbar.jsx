@@ -12,43 +12,51 @@ export default function Navbar() {
         setID(id_+1)
         
     }
-
+    const onClose=(idFilter)=>{
+        console.log(idFilter);
+        console.log(button);
+        const newButtons=button.filter((b)=>b.id!==idFilter)
+        setButton(newButtons)
+    }
     return (
         <div className={style.Navbar}>
 
 
-            <nav className="navbar navbar-dark bg-dark">
+            <nav className="navbar ">
                 <div className="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" className="btn btn-outline-primary">Ventas</button>
-                    <button type="button" className="btn btn-outline-primary">Caja</button>
-                    <button type="button" className="btn btn-outline-primary">Clientes</button>
-                    <button type="button" className="btn btn-outline-primary">Provedores</button>
-                    <button type="button" className="btn btn-outline-primary">Estadisticas</button>
-                    <button type="button" className="btn btn-outline-primary">Reportes</button>
-                    <button type="button" className="btn btn-outline-primary">Articulos</button>
-                    <button type="button" className="btn btn-outline-primary">Operaciones</button>
-                    <button type="button" className="btn btn-outline-primary">Administracón</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Ventas</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Caja</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Clientes</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Provedores</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Estadisticas</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Reportes</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Articulos</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Operaciones</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary">Administracón</button>
                 </div>
             </nav>
 
 
-            <nav className="navbar navbar-dark bg-dark">
+            <nav className="navbar">
                 <div className="btn-group" role="group" aria-label="Basic outlined example">
                     
                         <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
                     
-                    <Link to="/provedor">
-                        <button type="button" className="btn btn-outline-primary">Comprobantes</button>
+                    <Link to="/altaArticulo">
+                        <button type="button" className="btn btn-outline-primary">Alta de articulo</button>
                     </Link>
                     <Link to="/ventana">
                         <button type="button" className="btn btn-outline-primary">Comprobantes</button>
                     </Link>
 
                 </div>  
-                {button.map((prod,id) => (
-                        <PageArticulo key={id} id={id}/>
-                    ))}
 
+            </nav>
+            <nav className={style.pageArticulo}>
+
+                {button.map((prod,id) => (
+                        <PageArticulo key={id} id={prod.id} onClose={onClose}/>
+                    ))}
             </nav>
         </div>
     )
