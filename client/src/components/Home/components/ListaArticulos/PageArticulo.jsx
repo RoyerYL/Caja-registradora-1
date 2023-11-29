@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getAll } from '../../../../redux/action';
+import { getAll, get_list } from '../../../../redux/action';
 import style from "./PageArticulo.module.css"
 export default function PageArticulo(props) {
     const { id, onClose } = props
     const producto = useSelector((state) => state.producto);
     const dispatch = useDispatch()
     const handleClick = () => {
-        dispatch(getAll(id))
+        dispatch(get_list(id))
     }
 
     return (

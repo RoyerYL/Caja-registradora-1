@@ -1,0 +1,9 @@
+.cantidad{
+    display: flex;
+    justify-content: space-around;
+}
+.containerProducto{
+}
+.containerProducto :hover{
+    background-color: rgb(191, 191, 191);
+}

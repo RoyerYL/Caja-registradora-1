@@ -21,3 +21,15 @@
     display: flex;
     gap: 15px;
 }
+.nombre{
+    width: 35%;
+}
+.containerNombreStock{
+    display: flex;
+    gap: 15px;
+}
+.botones{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}

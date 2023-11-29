@@ -6,10 +6,39 @@ import Cliente from './components/Cliente/Cliente';
 import Costo from './Costo';
 import Condicion from './Condicion';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulosEncontrados';
+
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
-    const productos = useSelector((state) => { state.listProductos })
-    
+
+
+    const productos = useSelector((state) => state.producto)
+    const listProductos = useSelector((state) => state.listProductos)
+    const productoLike = useSelector((state) => state.productoLike)
+
+    const [productoProp, setProductoProp] = useState([])
+    const [productoLikeProp, setproductoLikeProp] = useState([])
+
+    const { id } = useParams()
+
+    useEffect(() => {
+        if (listProductos[id]) {
+            setProductoProp(productos)
+
+        }
+
+        if (productoLike.data) {
+
+
+            setproductoLikeProp(productoLike.data)
+        }
+    }, [id, productos, listProductos, productoLike])
+
+
+
+
     const handleClick = () => {
         collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
     }
@@ -26,10 +55,13 @@ export default function Navbar() {
                         <Cliente />
                     </div>
 
+                    <ListaArticulosEncontrados productos={productoLikeProp} />
                 </div>
                 <div className={style.ListArticulo}>
+                <div>
 
-                    <ListaArticulos articulos={productos}/>
+
+                    <ListaArticulos productos={productoProp} />
                     <div className={style.info}>
                         <Condicion />
                         <Costo />
@@ -37,12 +69,14 @@ export default function Navbar() {
                     </div>
 
 
+
+                </div>
+                    <button type="button" className="btn btn-success" onClick={() => { console.log("nuevo"); }}>Generar recibo</button>
                 </div>
             </div>
             <div >
 
             </div>
-
         </div>
     )
 }

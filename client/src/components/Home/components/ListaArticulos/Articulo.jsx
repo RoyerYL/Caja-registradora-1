@@ -1,20 +1,44 @@
 import React, { useState } from 'react';
-
+import { Link, useLocation } from 'react-router-dom';
+import style from "./Articulo.module.css"
 export default function Articulo(props) {
-    const { productos, onClose,id } = props
-    const {cantidad,producto,subTotal}=productos
-    const {data}=producto
-    // const subtotal=cantidad*Number(data.costoPeso)
+    const { productos, id } = props
+    const { cantidad, producto } = productos
+    const { data } = producto
     return (
-        <tr>
+        <tr >
             <th scope="row">{id}</th>
-            <td>{data.id}</td>
-            <td>{data.name}</td>
-            <td>{cantidad}</td>
+            <td className={style.containerProducto}>
+                <Link to={`/detail/${data.id}`}>
+                    {data.id}
+                </Link>
+            </td>
+            <td className={style.containerProducto}>
+                <Link to={`/detail/${data.id}`}>
+                    {data.name}
+                </Link>
+            </td>
+
+            <td className={style.cantidad}>
+                <div>
+                    {cantidad}
+
+                </div>
+                <div>
+
+                    <button type="button" className="btn btn-success" onClick={() => { console.log(); }}>+</button>
+                    <button type="button" className="btn btn-danger" onClick={() => { console.log(); }}>-</button>
+                </div>
+
+            </td>
             <td>$ {data.precioVenta}</td>
-            <td>$ {subTotal}</td>
+            <td>$ {data.precioVenta * cantidad}</td>
             <td >
-                <button type="button" className="btn btn-danger" onClick={() => {console.log(data); }}>🗑</button>
+                <Link to={`/detail/${data.id}`}>
+
+                    <button type="button" className="btn btn-danger" onClick={() => { console.log(); }}>🗑</button>
+
+                </Link>
             </td>
         </tr>
     )

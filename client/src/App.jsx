@@ -6,6 +6,7 @@ import Ventana from './components/Window/Ventana';
 
 import './index.css';
 import { Route, Routes } from 'react-router-dom';
+import Detail from './components/Home/components/Detail/detail';
 
 function App() {
    return (
@@ -21,6 +22,9 @@ function App() {
             } />
             <Route path='/ventana' element={
                <Ventana />
+            } />
+            <Route path='/detail/:id' element={
+               <Detail />
             } />
 
          </Routes>

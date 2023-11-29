@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import style from './Articulo.module.css'
 import { useDispatch } from 'react-redux';
-import { add_art,  getAll } from '../../../../redux/action';
+import { add_art, getAll, get_artLike } from '../../../../redux/action';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
-export default function Articulo() {
-
+export default function Articulo(props) {
+    const { listaAdd } = props
 
     const producto = useSelector((state) => state.producto);
 
@@ -31,8 +31,9 @@ export default function Articulo() {
     }, [id])
 
     const addHandler = () => {
-        const {cantidad,codBarras,page}=Articulo
-        
+        const { cantidad, codBarras, page } = Articulo
+
+
         dispatch(add_art({
             cantidad,
             codBarras,
@@ -48,7 +49,7 @@ export default function Articulo() {
             cantidad: 1
         })
 
-
+        
 
     }
 
@@ -78,7 +79,7 @@ export default function Articulo() {
                         <option value="1">Nombre</option>
                     </select>
                 </div>
-                <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='codBarras' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.codBarras} />
+                <input type="text" className=" form-control" aria-label="Dollar amount (with dot and two decimal places)" name='codBarras' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.codBarras} />
             </div>
             <div className={`${"input-group mb-3"} `}>
                 <div>
