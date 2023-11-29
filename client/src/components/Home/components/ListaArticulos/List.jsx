@@ -11,7 +11,7 @@ export default function ListaArticulos(props) {
         <>
             {producto.map((prod, id) => {
                 return (
-                    <Articulo key={id} id={id} productos={prod} onClose={props.onClose} />
+                    <Articulo key={id} id={id} productos={prod} />
                 )
             }
             )}

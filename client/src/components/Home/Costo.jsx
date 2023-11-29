@@ -16,10 +16,10 @@ export default function Costo() {
     useEffect(()=>{
         let total=0
         producto.map((prod)=>{
-            console.log(prod);
-            console.log(prod.cantidad);
-            total+=(prod.cantidad*prod.producto.data.precioVenta);})
-        console.log(total);
+            // console.log(prod.producto.data.precioVenta);
+            total+=(prod.cantidad*prod.producto.data.precioVenta)
+            
+            ;})
 
         setCosto({
             subTotal:Number.parseFloat(total).toFixed(2)

@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import style from "./Articulo.module.css"
+import { useDispatch } from 'react-redux';
+import { remove_art } from '../../../../redux/action';
 export default function Articulo(props) {
+    const page=useParams()
     const { productos, id } = props
     const { cantidad, producto } = productos
     const { data } = producto
+    const dispatch =useDispatch()
+
+    const onClose=()=>{
+        dispatch(remove_art({
+            id:props.id,
+            page:page.id}))
+    }
+
     return (
         <tr >
             <th scope="row">{id}</th>
@@ -19,14 +30,14 @@ export default function Articulo(props) {
                 </Link>
             </td>
 
-            <td className={style.cantidad}>
+            <td id='cantidadArticulo' className={style.cantidad}>
                 <div>
                     {cantidad}
 
                 </div>
                 <div>
 
-                    <button type="button" className="btn btn-success" onClick={() => { console.log(); }}>+</button>
+                    <button type="button" className="btn btn-success" onClick={() => { console.log(document.getElementById('cantidadArticulo')); }}>+</button>
                     <button type="button" className="btn btn-danger" onClick={() => { console.log(); }}>-</button>
                 </div>
 
@@ -34,11 +45,9 @@ export default function Articulo(props) {
             <td>$ {data.precioVenta}</td>
             <td>$ {data.precioVenta * cantidad}</td>
             <td >
-                <Link to={`/detail/${data.id}`}>
 
-                    <button type="button" className="btn btn-danger" onClick={() => { console.log(); }}>🗑</button>
+                    <button type="button" className="btn btn-danger" onClick={onClose}>🗑</button>
 
-                </Link>
             </td>
         </tr>
     )

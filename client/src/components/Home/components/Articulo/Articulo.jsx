@@ -23,7 +23,6 @@ export default function Articulo(props) {
     })
     useEffect(() => {
         setArticulo({
-            id: id_,
             page: id,
             codBarras: "",
             cantidad: 1
@@ -46,7 +45,7 @@ export default function Articulo(props) {
             id: id_,
             page: id,
             codBarras: "",
-            cantidad: 1
+            cantidad:1
         })
 
         
@@ -68,6 +67,7 @@ export default function Articulo(props) {
             addHandler();
         }
     };
+ 
 
     return (
 
@@ -87,7 +87,7 @@ export default function Articulo(props) {
                         <option value="default">Unidades</option>
                     </select>
                 </div>
-                <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.cantidad} />
+                <input onClick={(event)=>{event.target.value=""}}  id='cantidad' type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.cantidad} />
                 <button type="button" className="btn btn-success" onClick={addHandler}>➕ Cantidad</button>
             </div>
         </div>

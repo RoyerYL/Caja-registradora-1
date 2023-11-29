@@ -3,23 +3,12 @@ import style from './ListaArticulos.module.css'
 import Articulo from './Articulo';
 import List from './List';
 import { useDispatch, useSelector } from 'react-redux';
-import { remove_fav } from '../../../../redux/action';
 import { useParams } from 'react-router-dom';
 
 export default function ListaArticulos(props) {
 
     const{productos}=props
     
-    // const producto=useSelector((state)=>state.producto);
-    const listProductos=useSelector((state)=>state.listProductos);
-    const {id} = useParams()
-    const dispatch=useDispatch()
-
-  
-
-   const onClose=(id)=>{
-    dispatch(remove_fav(id))
-   }
 
     return (
         <div className={style.listArticulo}>
@@ -36,7 +25,7 @@ export default function ListaArticulos(props) {
                     </tr>
                 </thead>
                 <tbody>
-                     <List onClose={onClose} producto={productos}/>
+                     <List  producto={productos}/>
                 </tbody>
 
             </table>
