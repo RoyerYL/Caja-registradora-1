@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import style from './Venta.module.css'
+import { useSelector } from 'react-redux';
 export default function Condicion() {
     const [collapse, setCollapse] = useState("collapse")
-
+    const vendedor = useSelector((state)=>state.Vendedor)
+    
     const handleClick = () => {
         collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
     }
@@ -15,7 +17,7 @@ export default function Condicion() {
             </div>
             <div>
 
-            <select className="form-select form-select-sm" aria-label="Small select example" defaultValue="A">
+            <select className="form-select form-select-sm" aria-label="Small select example" defaultValue={vendedor}>
                 <option value="A">Administrador</option>
                 <option value="1">Vendedor 1</option>
                 <option value="2">Vendedor 2</option>

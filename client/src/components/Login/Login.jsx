@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import style from "./Login.module.css"
 
 import { useDispatch, useSelector } from 'react-redux';
-import { add_cotizacion, add_vendedor } from '../../../../redux/action';
+import { add_cotizacion, add_vendedor } from '../../redux/action';
 export default function Login(props) {
 
     const Vendedor = useSelector((state) => state.Vendedor)
@@ -21,7 +21,6 @@ export default function Login(props) {
         dispatch(add_cotizacion(Cotizacion))
 
         event.preventDefault()//evitamos que submit recargue la pagina
-        props.login({ access: true })
         setValidado(false)
     }
 
@@ -30,12 +29,12 @@ export default function Login(props) {
 
 
         const value = event.target.value;
-        if (typeof value===Number) {
+        const property = event.target.name;
+        if (property==="vendedor") {
             
             dispatch(add_vendedor(value))
         return ""
         }
-        const property = event.target.name;
     
         setCotizacion({...Cotizacion,[property]:value})
 
@@ -46,7 +45,7 @@ export default function Login(props) {
             <div>
 
 
-                <select className="form-select form-select-sm" aria-label="Small select example" defaultValue={Vendedor} onChange={handleChange}>
+                <select id='vendedor' className="form-select form-select-sm" aria-label="Small select example" defaultValue={Vendedor} name='vendedor' onChange={handleChange}>
                     <option value="A">Administrador</option>
                     <option value="1">Vendedor 1</option>
                     <option value="2">Vendedor 2</option>

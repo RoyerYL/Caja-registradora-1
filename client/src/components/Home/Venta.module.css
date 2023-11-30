@@ -45,8 +45,7 @@
 }
 
 .condicion {
-    width: 30%;
-    display: flex;
+        display: flex;
     align-items: center;
     justify-content: space-around;
     border: 1px solid black;

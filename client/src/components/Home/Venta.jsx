@@ -12,7 +12,7 @@ import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulo
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
-
+    const fecha= new Date().toString()
 
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
@@ -32,11 +32,17 @@ export default function Navbar() {
         if (productoLike.data) {
 
 
-            setproductoLikeProp(productoLike.data)
-        }
+            return setproductoLikeProp(productoLike.data)
+        }setproductoLikeProp(productoLike)
     }, [id, productos, listProductos, productoLike])
 
-
+    const generarRecibo=()=>{
+        console.log({
+            productos,
+            fecha,
+            costoTotal:document.getElementById('costoTotal').textContent
+        });
+    }
 
 
     const handleClick = () => {
@@ -45,7 +51,7 @@ export default function Navbar() {
 
     return (
         <div className={style.Home}>
-
+             <span className="input-group-text">{fecha}</span>
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
                     <h2>Ingrese un articulo</h2>
@@ -71,7 +77,7 @@ export default function Navbar() {
 
 
                 </div>
-                    <button type="button" className="btn btn-success" onClick={() => { console.log("nuevo"); }}>Generar recibo</button>
+                    <button type="button" className="btn btn-success" onClick={generarRecibo}>Generar recibo</button>
                 </div>
             </div>
             <div >

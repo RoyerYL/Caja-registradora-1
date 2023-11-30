@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { remove_art } from '../../../../redux/action';
 export default function Articulo(props) {
     const page=useParams()
-    const { productos, id } = props
-    const { cantidad, producto } = productos
-    const { data } = producto
+    const { data, id } = props
+    const { cantidad, producto } = data
+    
     const dispatch =useDispatch()
 
     const onClose=()=>{
@@ -20,13 +20,13 @@ export default function Articulo(props) {
         <tr >
             <th scope="row">{id}</th>
             <td className={style.containerProducto}>
-                <Link to={`/detail/${data.id}`}>
-                    {data.id}
+                <Link to={`/detail/${producto.id}`}>
+                    {producto.id}
                 </Link>
             </td>
             <td className={style.containerProducto}>
-                <Link to={`/detail/${data.id}`}>
-                    {data.name}
+                <Link to={`/detail/${producto.id}`}>
+                    {producto.name}
                 </Link>
             </td>
 
@@ -42,8 +42,8 @@ export default function Articulo(props) {
                 </div>
 
             </td>
-            <td>$ {data.precioVenta}</td>
-            <td>$ {data.precioVenta * cantidad}</td>
+            <td>$ {producto.precioVenta}</td>
+            <td>$ {producto.precioVenta * cantidad}</td>
             <td >
 
                     <button type="button" className="btn btn-danger" onClick={onClose}>🗑</button>

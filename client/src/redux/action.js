@@ -1,42 +1,42 @@
-import { ADD_ART, ADD_ARTLike, REMOVE_ART} from "./acionTypes"
+import { ADD_ART, ADD_ARTLike, REMOVE_ART } from "./acionTypes"
 import axios from 'axios'
 
 
 export const add_art = (input) => {
   return async (dispatch) => {
-    const {cantidad, codBarras, page } = input
+    const { cantidad, codBarras, page } = input
     if (codBarras.trim().length === 0) {
-      const newProducto = await axios.get(`http://localhost:3001/tienda/articulo`)
+      const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
       return dispatch({
         type: 'GET_ALL',
-        payload: newProducto
+        payload: data
       })
     }
     try {
 
-      const producto = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
-      const data = {
-        cantidad,
-        producto,
-        page
-      }
+      const { data } = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
+
       dispatch({
         type: ADD_ART,
-        payload: data
+        payload: {
+          cantidad,
+          producto:data,
+          page
+        }
       })
     } catch (error) {
       try {
-        const newProducto = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
+        const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
         dispatch({
           type: ADD_ARTLike,
-          payload: newProducto
+          payload: {data}
         })
 
       } catch (error) {
-        const newProducto = await axios.get(`http://localhost:3001/tienda/articulo`)
-       return dispatch({
+        const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
+        return dispatch({
           type: ADD_ARTLike,
-          payload: newProducto
+          payload: data
         })
       }
     }
@@ -47,12 +47,12 @@ export const add_art = (input) => {
 export const get_artLike = (input) => {
   return async (dispatch) => {
     try {
-      const { cantidad, codBarras, page } = input
+      const {  codBarras } = input
 
-      const newProducto = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
+      const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
       dispatch({
         type: ADD_ARTLike,
-        payload: newProducto
+        payload: data
       })
     } catch (error) {
       console.error("Error al agregar el articulo ", error);
@@ -64,10 +64,10 @@ export const get_artLike = (input) => {
 
 export const getAll = async () => {
   return async (dispatch) => {
-    const newProducto = await axios.get(`http://localhost:3001/tienda/articulo`)
+    const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
     dispatch({
       type: 'GET_ALL',
-      payload: newProducto
+      payload: data
     })
 
   }

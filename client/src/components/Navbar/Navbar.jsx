@@ -39,7 +39,7 @@ export default function Navbar() {
 
             <nav className="navbar">
                 <div className="btn-group" role="group" aria-label="Basic outlined example">
-                    <Link to="/login">
+                    <Link to="/">
                         <button type="button" className="btn btn-outline-primary">Caja</button>
                     </Link>
                     

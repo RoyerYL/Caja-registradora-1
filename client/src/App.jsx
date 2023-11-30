@@ -8,7 +8,7 @@ import './index.css';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Detail from './components/Home/components/Detail/detail';
 import ListaArticulos from './components/ListaDeArticulos/ListaArticulos';
-import Login from './components/Home/components/Login/Login';
+import Login from './components/Login/Login';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
  
 
    useEffect(() => {
-         !access && navigate("/login");
+         !access && navigate("/");
       }, [access]);
 
 
@@ -30,7 +30,7 @@ function App() {
          <Navbar />
 
          <Routes>
-            <Route path='/login' element={
+            <Route path='/' element={
                <Login />
             } />
             <Route path='/ventana/:id' element={

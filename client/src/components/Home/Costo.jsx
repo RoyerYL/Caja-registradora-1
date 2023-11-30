@@ -16,9 +16,7 @@ export default function Costo() {
     useEffect(()=>{
         let total=0
         producto.map((prod)=>{
-            // console.log(prod.producto.data.precioVenta);
-            total+=(prod.cantidad*prod.producto.data.precioVenta)
-            
+             total+=(prod.cantidad*prod.producto.precioVenta)
             ;})
 
         setCosto({
@@ -52,7 +50,7 @@ export default function Costo() {
                     <tr>
                         <th scope="row">Total</th>
                         <td></td>
-                        <td colSpan="2">{costo.subTotal}</td>
+                        <td id='costoTotal' colSpan="2">{costo.subTotal}</td>
                     </tr>
                 </tbody>
             </table>

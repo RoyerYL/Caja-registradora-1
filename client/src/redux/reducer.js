@@ -1,5 +1,4 @@
 import { ADD_ART, ADD_ARTLike, GET_ART, REMOVE_ART } from "./acionTypes"
-import { Vendedor } from "../util.json"
 
 const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
@@ -24,10 +23,12 @@ export default (state = initialState, { type, payload }) => {
 
 
     case ADD_ARTLike:
-      // console.log(state.productoLike);
+      console.log(payload);
       return { ...state, productoLike: payload };
 
     case 'GET_ALL':
+      console.log(payload);
+  
       return { ...state, productoLike: payload };
       
     case 'GET_LIST':
