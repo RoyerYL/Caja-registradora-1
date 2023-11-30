@@ -1,9 +1,15 @@
 import { ADD_ART, ADD_ARTLike, GET_ART, REMOVE_ART } from "./acionTypes"
+import { Vendedor } from "../util.json"
 
 const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
   producto: [],
-  productoLike: []
+  productoLike: [],
+  Vendedor: "A",
+  cotizacionDolar: {
+    mep: 0.00,
+    blue: 0.00
+  }
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -23,6 +29,7 @@ export default (state = initialState, { type, payload }) => {
 
     case 'GET_ALL':
       return { ...state, productoLike: payload };
+      
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
@@ -39,17 +46,20 @@ export default (state = initialState, { type, payload }) => {
 
       const newProductos3 = [...state.listProductos]
       newProductos3[payload.page] = [...newLista1]
-      console.log(newLista);
       return { ...state, listProductos: newProductos3, producto: newLista1 };
     case REMOVE_ART:
 
-      console.log(state.producto);
       const newLista = state.producto.filter((prod, index) => index !== payload.id)
 
       const newProductos2 = [...state.listProductos]
       newProductos2[payload.page] = [...newLista]
-      console.log(newLista);
       return { ...state, listProductos: newProductos2, producto: newLista };
+
+    case "ADD_VENDEDOR":
+      return { ...state, Vendedor: payload }
+
+    case "ADD_COTIZACION":
+      return { ...state, cotizacionDolar: payload }
 
     default:
       return {

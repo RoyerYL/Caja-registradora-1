@@ -14,7 +14,7 @@ export default function PageArticulo(props) {
     return (
         <>
             <div className={style.container}>
-                <Link to={`/home/${id}`}>
+                <Link to={`/ventana/${id}`}>
                     <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo {id}</button>
                 </Link>
                 <button type="button" className={`${"btn-close "}${style.close}`} onClick={()=>{onClose(id)}} aria-label="Close"></button>

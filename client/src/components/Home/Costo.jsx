@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import style from './Home.module.css'
+import style from './Venta.module.css'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 export default function Costo() {

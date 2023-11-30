@@ -15,7 +15,8 @@ function AltaArticulo(props) {
         costoPeso: 0,
         costoDolar: 0,
         precioVenta: 0,
-        descripcion: ""
+        descripcion: "",
+        iva:0
 
     })
 
@@ -25,34 +26,39 @@ function AltaArticulo(props) {
         axios(`http://localhost:3001/tienda/articulo/${id}`)
             .then(({ data }) => {
                 if (data.name) {
-                    console.log(data);
                     setForm(data)
                 }
-            }).catch((err) => { console.error(err); })
+            }).catch((err) => {
 
-        return setForm({
-            name: "",
-            id: "",
-            stock: 0,
-            stockMin: 0,
-            costoPeso: 0,
-            costoDolar: 0,
-            precioVenta: 0,
-            descripcion: ""
+                return setForm({
+                    name: "",
+                    id: "",
+                    stock: 0,
+                    stockMin: 0,
+                    costoPeso: 0,
+                    costoDolar: 0,
+                    precioVenta: 0,
+                    descripcion: "",
+                    iva:0
 
-        })
+                })
+            })
+
     }, [id]);
 
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
         setForm({ ...form, [property]: value });//cambio Form..
-
-
-
     }
+
+    const handleClick = () => {
+        console.log(form);
+    }
+
+
     return (
-        <div className={style.Provedor}>
+        <div className={style.AltaArticulo}>
             <h2>Alta Articulos</h2>
             <div>
                 <div className={style.containerNombreStock}>
@@ -87,6 +93,38 @@ function AltaArticulo(props) {
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
+                        </div>
+                        <div className={style.costo}>
+                            <div>
+
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Costo Peso: AR$</span>
+                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='costoPeso' value={form.costoPeso} onChange={handleChange} />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Costo Dolar: US$</span>
+                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='costoDolar' value={form.costoDolar} onChange={handleChange} />
+                                </div>
+                            </div>
+                            <div>
+
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">Iva %:</span>
+                                <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='iva' value={form.iva} onChange={handleChange} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">Ganancias %:</span>
+                                <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)"  />
+                            </div>
+                            </div>
+
+                            <div className="input-group mb-3">
+                                <span className="input-group-text">precio Venta :$</span>
+                                <input className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='precioVenta' value={form.precioVenta} onChange={handleChange} />
+                            </div>
+
+
+
                         </div>
                     </div>
                     <div>
@@ -124,23 +162,16 @@ function AltaArticulo(props) {
                 </div>
 
 
+                <div>
 
-                <div className="input-group mb-3">
-                    <span className="input-group-text">precio Venta :$</span>
-                    <input type="number" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='precioVenta' value={form.precioVenta} onChange={handleChange} />
-                </div>
-
+                    <div>
+                        
 
 
-                <div className={style.costo}>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text">Costo Peso:</span>
-                        <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='costoPeso' value={form.costoPeso} onChange={handleChange} />
+
                     </div>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text">Costo Dolar:</span>
-                        <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='costoDolar' value={form.costoDolar} onChange={handleChange} />
-                    </div>
+
+
                 </div>
 
 
@@ -152,8 +183,8 @@ function AltaArticulo(props) {
             </div>
             <div className={style.botones}>
 
-                <button type="button" className="btn btn-danger" onClick={() => { console.log("actualizar"); }}>Actualizar</button>
-                <button type="button" className="btn btn-danger" onClick={() => { console.log("nuevo"); }}>Nuevo</button>
+                <button type="button" className="btn btn-danger" onClick={handleClick}>Actualizar</button>
+                <button type="button" className="btn btn-danger" onClick={handleClick}>Nuevo</button>
             </div>
 
         </div>

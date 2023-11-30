@@ -39,6 +39,9 @@ export default function Navbar() {
 
             <nav className="navbar">
                 <div className="btn-group" role="group" aria-label="Basic outlined example">
+                    <Link to="/login">
+                        <button type="button" className="btn btn-outline-primary">Caja</button>
+                    </Link>
                     
                         <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
                     
@@ -47,6 +50,9 @@ export default function Navbar() {
                     </Link>
                     <Link to="/ventana">
                         <button type="button" className="btn btn-outline-primary">Comprobantes</button>
+                    </Link>
+                    <Link to="/listaArticulos">
+                        <button type="button" className="btn btn-outline-primary">Lista de articulos</button>
                     </Link>
 
                 </div>  

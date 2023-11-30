@@ -93,6 +93,18 @@ export const modificar_cant = (input) => {
     payload: input
   }
 };
+export const add_vendedor = (input) => {
+  return {
+    type: "ADD_VENDEDOR",
+    payload: input
+  }
+};
+export const add_cotizacion = (input) => {
+  return {
+    type: "ADD_COTIZACION",
+    payload: input
+  }
+};
 
 
 

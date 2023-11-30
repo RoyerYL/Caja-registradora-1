@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import style from './Home.module.css'
+import style from './Venta.module.css'
 import Articulo from './components/Articulo/Articulo';
 import ListaArticulos from './components/ListaArticulos/ListaArticulos';
 import Cliente from './components/Cliente/Cliente';
@@ -17,6 +17,7 @@ export default function Navbar() {
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
+ 
 
     const [productoProp, setProductoProp] = useState([])
     const [productoLikeProp, setproductoLikeProp] = useState([])
@@ -26,7 +27,6 @@ export default function Navbar() {
     useEffect(() => {
         if (listProductos[id]) {
             setProductoProp(productos)
-
         }
 
         if (productoLike.data) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import style from './Home.module.css'
+import style from './Venta.module.css'
 export default function Condicion() {
     const [collapse, setCollapse] = useState("collapse")
 

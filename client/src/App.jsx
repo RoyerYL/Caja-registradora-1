@@ -1,21 +1,43 @@
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import Navbar from './components/Navbar/Navbar';
 import AltaArticulo from './components/AltaArticulo/AltaArticulo';
-import Home from './components/Home/Home';
+import Venta from './components/Home/Venta';
 import Ventana from './components/Window/Ventana';
 
 import './index.css';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Detail from './components/Home/components/Detail/detail';
+import ListaArticulos from './components/ListaDeArticulos/ListaArticulos';
+import Login from './components/Home/components/Login/Login';
+
 
 function App() {
+   const navigate = useNavigate();
+   /************ SEGURIDAD ************/
+
+   const [access,setAccess] = useState(false)
+
+ 
+
+   useEffect(() => {
+         !access && navigate("/login");
+      }, [access]);
+
+
+
    return (
       <div className="App">
          <Navbar />
 
          <Routes>
-            <Route path='/home/:id' element={
-               <Home />
+            <Route path='/login' element={
+               <Login />
+            } />
+            <Route path='/ventana/:id' element={
+               <Venta />
+            } />
+            <Route path='/listaArticulos' element={
+               <ListaArticulos />
             } />
             <Route path='/altaArticulo' element={
                <AltaArticulo />
