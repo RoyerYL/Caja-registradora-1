@@ -3,23 +3,26 @@ import style from './ListaArticulos.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ArticuloEncontrados from './ArticuloEncontrados';
+import { order_articulos } from '../../../../redux/action';
 
 export default function ListaArticulosEncontrados(props) {
 
     const { productos } = props
+    const dispatch =useDispatch()
 
-
-
+    const handleSort=(input)=>{
+        dispatch(order_articulos(input))
+    }
  
 
     return (
         <div className={style.listArticulo}>
             <table className="table">
                 <thead>
-                    <tr>
-                        <th scope="col">Código de barras</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Precio</th>
+                    <tr className={style.nomFilas}>
+                        <th scope="col">Código de barras  <button type="button" onClick={()=>{handleSort("A")}} >🔀</button> </th>
+                        <th scope="col">Nombre <button type="button"  onClick={()=>{handleSort("B")}}>🔀</button></th>
+                        <th scope="col">Precio </th>
                     </tr>
                 </thead>
                 <tbody>

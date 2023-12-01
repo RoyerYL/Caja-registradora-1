@@ -1,6 +1,6 @@
 const { Articulo } = require("../DB_connection")
 
-const postArticulo = async (req, res) => {
+const updateArticulo = async (req, res) => {
     const {
         id,
         name,
@@ -20,9 +20,8 @@ const postArticulo = async (req, res) => {
 
     try {
 
-        const [newUser,created] = await Articulo.findOrCreate({
-            where:{
-                id,
+        const response=await Articulo.update(
+            {
                 name,
                 stock,
                 costoPeso,
@@ -32,17 +31,19 @@ const postArticulo = async (req, res) => {
                 precioVenta,
                 descripcion,
                 stockMin
+            },{
+                where:{
+                    id,
+                }
             }
-        })
-        if(!created){return res.status(409).json({error:"El email ya está registrado "})}
+        )
 
-        const allArticulos=await Articulo.findAll()
 
-        return res.status(201).json(allArticulos);
+        return res.status(201).json(response);
 
     } catch (error) {
         return res.status(500).json({ error: error.message })
 
     }
 }
-module.exports = {postArticulo};
+module.exports = {updateArticulo};

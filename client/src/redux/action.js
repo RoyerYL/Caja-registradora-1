@@ -106,5 +106,11 @@ export const add_cotizacion = (input) => {
   }
 };
 
+export const order_articulos = (order) => {
+  return{
+    type:"ORDER",
+    payload:order,
 
+  }
+}
 

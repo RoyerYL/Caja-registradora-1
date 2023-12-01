@@ -12,11 +12,11 @@ function AltaArticulo(props) {
         id: "",
         stock: 0,
         stockMin: 0,
-        costoPeso: 0,
-        costoDolar: 0,
-        precioVenta: 0,
+        costoPeso: Number.parseFloat(0).toFixed(2),
+        costoDolar: Number.parseFloat(0).toFixed(2),
+        precioVenta: Number.parseFloat(0).toFixed(2),
         descripcion: "",
-        iva:0
+        iva: 0
 
     })
 
@@ -26,6 +26,23 @@ function AltaArticulo(props) {
         axios(`http://localhost:3001/tienda/articulo/${id}`)
             .then(({ data }) => {
                 if (data.name) {
+                    const {
+                        activo,
+                        costoDolar,
+                        costoPeso,
+                        descripcion,
+                        ganancia,
+                        ganancia_2,
+                        id,
+                        img,
+                        iva,
+                        name,
+                        precioVenta,
+                        precioVenta_2,
+                        stock,
+                        stockMin, } = data
+
+                    console.log(data);
                     setForm(data)
                 }
             }).catch((err) => {
@@ -35,11 +52,12 @@ function AltaArticulo(props) {
                     id: "",
                     stock: 0,
                     stockMin: 0,
-                    costoPeso: 0,
-                    costoDolar: 0,
-                    precioVenta: 0,
+                    costoPeso: Number.parseFloat(0).toFixed(2),
+                    costoDolar: Number.parseFloat(0).toFixed(2),
+                    precioVenta: Number.parseFloat(0).toFixed(2),
                     descripcion: "",
-                    iva:0
+                    iva: 0,
+                    ganancia: 0
 
                 })
             })
@@ -55,6 +73,44 @@ function AltaArticulo(props) {
     const handleClick = () => {
         console.log(form);
     }
+
+    const [loading, setLoading] = useState(false);
+
+    const actualizarDato = () => {
+        console.log("=====");
+        console.log(form.ganancia);
+        console.log("=====");
+        setLoading(true);
+        const body={
+            "activo": "0",
+            "costoDolar":Number.parseFloat(form.costoDolar).toFixed(2),
+            "costoPeso":  Number.parseFloat(form.costoPeso).toFixed(2),
+            "descripcion":form.descripcion,
+            "ganancia":form.ganancia,
+            "id": form.id,
+            "img": "",
+            "iva": 21,
+            "name": form.name,
+            "stock": form.stock,
+            "stockMin": form.stockMin,
+            "precioVenta": form.precioVenta
+        }
+
+        axios.post("http://localhost:3001/tienda/actualizararticulo", body)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((error) => {
+                console.error('Error al actualizar el artículo:', error);
+                // Aquí puedes agregar lógica para mostrar un mensaje de error al usuario
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    // Luego puedes utilizar el estado `loading` para mostrar un indicador de carga en tu interfaz de usuario
+
 
 
     return (
@@ -108,14 +164,14 @@ function AltaArticulo(props) {
                             </div>
                             <div>
 
-                            <div className="input-group mb-3">
-                                <span className="input-group-text">Iva %:</span>
-                                <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='iva' value={form.iva} onChange={handleChange} />
-                            </div>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text">Ganancias %:</span>
-                                <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)"  />
-                            </div>
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Iva %:</span>
+                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='iva' value={form.iva} onChange={handleChange} />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text">Ganancias %:</span>
+                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='ganancia' value={form.ganancia} onChange={handleChange}/>
+                                </div>
                             </div>
 
                             <div className="input-group mb-3">
@@ -165,7 +221,7 @@ function AltaArticulo(props) {
                 <div>
 
                     <div>
-                        
+
 
 
 
@@ -183,7 +239,7 @@ function AltaArticulo(props) {
             </div>
             <div className={style.botones}>
 
-                <button type="button" className="btn btn-danger" onClick={handleClick}>Actualizar</button>
+                <button type="button" className="btn btn-danger" onClick={actualizarDato}>Actualizar</button>
                 <button type="button" className="btn btn-danger" onClick={handleClick}>Nuevo</button>
             </div>
 

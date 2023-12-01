@@ -23,24 +23,26 @@ export default (state = initialState, { type, payload }) => {
 
 
     case ADD_ARTLike:
-      console.log(payload);
       return { ...state, productoLike: payload };
 
     case 'GET_ALL':
-      console.log(payload);
-  
+
       return { ...state, productoLike: payload };
-      
+
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
 
     case "MODIFICAR_CANT":
-
-      console.log(state.producto);
       const newLista1 = state.producto.map((prod, index) => {
-        if (index !== payload.id) {
-          return "hola XD"
+
+        if (index === payload.id) {
+          const { page, producto, cantidad } = prod
+          return {
+            page,
+            producto,
+            cantidad: Number(cantidad) + payload.cant
+          }
         }
         return prod
       })
@@ -61,12 +63,26 @@ export default (state = initialState, { type, payload }) => {
 
     case "ADD_COTIZACION":
       return { ...state, cotizacionDolar: payload }
+    case "ORDER":
+      let orderedCharacters;
 
-    default:
+      if (payload === "A") {
+        orderedCharacters = [...state.productoLike].sort((a, b) => a.id.toString().localeCompare(b.id.toString()));
+      } else {
+        orderedCharacters = [...state.productoLike].sort((a, b) => b.id.toString().localeCompare(a.id.toString()));
+      }
+
       return {
         ...state,
+        productoLike: orderedCharacters,
       };
 
-  }
+
+    default:
+  return {
+    ...state,
+  };
+
+}
 
 }

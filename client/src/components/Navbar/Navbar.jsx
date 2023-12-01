@@ -8,14 +8,12 @@ export default function Navbar() {
     const [id_, setID] = useState(0)
     const [button, setButton] = useState([])
     const handleClick = () => {
-        setButton([...button,{id:id_}])
-        setID(id_+1)
-        
+        setButton([...button, { id: id_ }])
+        setID(id_ + 1)
+
     }
-    const onClose=(idFilter)=>{
-        console.log(idFilter);
-        console.log(button);
-        const newButtons=button.filter((b)=>b.id!==idFilter)
+    const onClose = (idFilter) => {
+        const newButtons = button.filter((b) => b.id !== idFilter)
         setButton(newButtons)
     }
     return (
@@ -30,7 +28,9 @@ export default function Navbar() {
                     <button type="button" className="btn btn-sm btn-outline-secondary">Provedores</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Estadisticas</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Reportes</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Articulos</button>
+                    <Link to="/provedor">
+                        <button type="button" className="btn btn-sm btn-outline-secondary">Articulos</button>
+                    </Link>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Operaciones</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Administracón</button>
                 </div>
@@ -42,9 +42,9 @@ export default function Navbar() {
                     <Link to="/">
                         <button type="button" className="btn btn-outline-primary">Caja</button>
                     </Link>
-                    
-                        <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
-                    
+
+                    <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
+
                     <Link to="/altaArticulo">
                         <button type="button" className="btn btn-outline-primary">Alta de articulo</button>
                     </Link>
@@ -55,14 +55,14 @@ export default function Navbar() {
                         <button type="button" className="btn btn-outline-primary">Lista de articulos</button>
                     </Link>
 
-                </div>  
+                </div>
 
             </nav>
             <nav className={style.pageArticulo}>
 
-                {button.map((prod,id) => (
-                        <PageArticulo key={id} id={prod.id} onClose={onClose}/>
-                    ))}
+                {button.map((prod, id) => (
+                    <PageArticulo key={id} id={prod.id} onClose={onClose} />
+                ))}
             </nav>
         </div>
     )

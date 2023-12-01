@@ -45,6 +45,15 @@ function App() {
             <Route path='/ventana' element={
                <Ventana />
             } />
+            <Route path='/provedor' element={
+               <Ventana />
+            } />
+            <Route path='/categoria' element={
+               <Ventana />
+            } />
+            <Route path='/fabricante' element={
+               <Ventana />
+            } />
             <Route path='/detail/:id' element={
                <Detail />
             } />

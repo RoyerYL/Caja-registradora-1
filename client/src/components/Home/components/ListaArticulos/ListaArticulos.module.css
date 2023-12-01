@@ -3,3 +3,10 @@
     background-color: white;
     overflow: overlay;
 }
+.nomFilas button{
+    font-size: 1em;
+    border: none;
+    padding: 0px;
+}
+.nomFilas button:hover{
+transform: scale(1.2);}

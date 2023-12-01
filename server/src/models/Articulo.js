@@ -20,11 +20,11 @@ module.exports = (sequelize) => {
          defaultValue:0,
       },
       costoPeso:{
-         type:DataTypes.DOUBLE,
+         type: DataTypes.DECIMAL(10, 2),
          allowNull:false,
       },
       costoDolar:{
-         type:DataTypes.DOUBLE,
+         type: DataTypes.DECIMAL(10, 2),
          allowNull:false,
       },
       
@@ -37,26 +37,28 @@ module.exports = (sequelize) => {
          allowNull:false,
       },
       precioVenta:{
-         type:DataTypes.DOUBLE,
+         type: DataTypes.DECIMAL(10, 2),
          allowNull:false,
       },
       ganancia_2:{
-         type:DataTypes.DOUBLE,
+         type: DataTypes.DECIMAL(10, 2),
          defaultValue:0.00,
       },
       precioVenta_2:{
-         type:DataTypes.DOUBLE,
+         type: DataTypes.DECIMAL(10, 2),
          defaultValue:0.00,
       },
       descripcion:{
          type:DataTypes.TEXT,
+         defaultValue:"",
       },
       img:{
          type:DataTypes.STRING,
+         defaultValue:"",
       },
       activo:{
          type:DataTypes.BOOLEAN,
-         defaultValue:"true",
+         defaultValue:true,
       },
    }, { timestamps: false });
 };

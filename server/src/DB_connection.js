@@ -2,6 +2,9 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST ,DB_PORT,DB_BDD } = process.env;
 const ArticuloFunction=require('./models/Articulo')
+const CategoriaFunction=require('./models/Categoria')
+const FabricanteFunction=require('./models/Fabricante')
+const ProvedorFunction=require('./models/Provedor')
 
 
 /**
@@ -16,11 +19,25 @@ const dataBase = new Sequelize(
  * Creacion de tablas
  */
 ArticuloFunction(dataBase)
+CategoriaFunction(dataBase)
+FabricanteFunction(dataBase)
+ProvedorFunction(dataBase)
 
 /**
  * Tablas
  */
-const {Articulo} =dataBase.models
+const {Articulo,Provedor,Categoria,Fabricante} =dataBase.models
+
+
+Categoria.hasMany(Articulo);
+Articulo.belongsTo(Categoria);
+
+Fabricante.hasMany(Articulo);
+Articulo.belongsTo(Fabricante);
+
+Provedor.hasMany(Articulo);
+Articulo.belongsTo(Provedor);
+
 
 
 module.exports = {
