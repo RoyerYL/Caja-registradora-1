@@ -1,0 +1,9 @@
+.container{
+    position: relative;
+}
+.close{
+    position: absolute;
+    top: 3px;
+    right: -3px;
+    height: 2px;
+}
