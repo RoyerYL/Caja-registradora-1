@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import style from "./Provedor.module.css"
-export default function Provedor() {
+import style from "./Cliente.module.css"
+export default function Cliente() {
     const [collapse, setCollapse] = useState("collapse")
     const [form, setForm] = useState({
         name: "",
@@ -35,11 +35,11 @@ export default function Provedor() {
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Nombre comercial</label>
+                            <label htmlFor="floatingInput" name='name' >Nombre</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >CUIT</label>
+                            <label htmlFor="floatingInput" name='name' >CUIT/DNI</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
@@ -47,30 +47,28 @@ export default function Provedor() {
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Provincia ---!</label>
+                            <label htmlFor="floatingInput" name='name' >Zona</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Telefono 1</label>
+                            <label htmlFor="floatingInput" name='name' >Localidad</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Telefono 2</label>
+                            <label htmlFor="floatingInput" name='name' >Telefono 1 / celular 1</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Telefono 3</label>
+                            <label htmlFor="floatingInput" name='name' >Telefono 2 / celular 2</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
+                            <label htmlFor="floatingInput" name='name' >Telefono 3 / celular 3</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
                             <label htmlFor="floatingInput" name='name' >Email</label>
                         </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Persona de contacto</label>
-                        </div>
-
-
 
 
                     </div>

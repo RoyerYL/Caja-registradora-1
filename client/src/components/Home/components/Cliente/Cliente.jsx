@@ -19,8 +19,8 @@ export default function Navbar() {
             <div className="input-group mb-3">
                 <span className="input-group-text">Nombre</span>
                 <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" />
-                <button type="button" className="btn btn-info">Info</button>
             </div>
+                <button type="button" className="btn btn-info">Info</button>
 
 
         </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import style from './Navbar.module.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
 
@@ -24,8 +23,12 @@ export default function Navbar() {
                 <div className="btn-group" role="group" aria-label="Basic outlined example">
                     <button type="button" className="btn btn-sm btn-outline-secondary">Ventas</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Caja</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Clientes</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Provedores</button>
+                    <Link to="/cliente">
+                        <button type="button" className="btn btn-sm btn-outline-secondary">Clientes</button>
+                    </Link>
+                    <Link to="/provedor">
+                        <button type="button" className="btn btn-sm btn-outline-secondary">Provedores</button>
+                    </Link>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Estadisticas</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Reportes</button>
                     <Link to="/provedor">

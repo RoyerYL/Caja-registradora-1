@@ -25,13 +25,14 @@
     
 }
 .costo div{
-    width: 200px;
+    width: 125px;
 }
 .costo span{
-    font-size: 12px;
 }
 .nombre{
-    width: 35%;
+    width: 50%;
+}.nombre input{
+    margin-right: 5px;
 }
 .containerNombreStock{
     display: flex;

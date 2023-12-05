@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 
 if (require('electron-squirrel-startup')) {
@@ -24,9 +24,30 @@ const createWindow = () => {
 
   }
 
-  mainWindow.webContents.openDevTools();
-
-
+  // mainWindow.webContents.openDevTools();
+  const template = [
+    {
+      label: "Mequitex",
+      submenu: [
+        { role: "toggleDevTools" },
+        {
+          label:"ligth",
+          click:()=>{
+            
+            mainWindow.webContents.send('theme',"ligth")
+          }
+        },
+        {
+          label:"dark",
+          click:()=>{
+            mainWindow.webContents.send('theme',"dark")
+          }
+        }
+      ]
+    },
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
 };
 app.on('ready', createWindow);
 

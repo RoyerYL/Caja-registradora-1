@@ -81,12 +81,12 @@ function AltaArticulo(props) {
         console.log(form.ganancia);
         console.log("=====");
         setLoading(true);
-        const body={
+        const body = {
             "activo": "0",
-            "costoDolar":Number.parseFloat(form.costoDolar).toFixed(2),
-            "costoPeso":  Number.parseFloat(form.costoPeso).toFixed(2),
-            "descripcion":form.descripcion,
-            "ganancia":form.ganancia,
+            "costoDolar": Number.parseFloat(form.costoDolar).toFixed(2),
+            "costoPeso": Number.parseFloat(form.costoPeso).toFixed(2),
+            "descripcion": form.descripcion,
+            "ganancia": form.ganancia,
             "id": form.id,
             "img": "",
             "iva": 21,
@@ -120,17 +120,16 @@ function AltaArticulo(props) {
                 <div className={style.containerNombreStock}>
 
                     <div className={style.nombre}>
-                        <div className="input-group mb-3">
-                            <span className="input-group-text">Nombre :</span>
-                            <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='name' value={form.name} onChange={handleChange} />
+                        <div className="form-floating mb-3">
+                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
+                            <label htmlFor="floatingInput" name='name' >Nombre articulo</label>
                         </div>
 
-                        <div className="input-group mb-3">
-                            <span className="input-group-text">Codigo de barras (o codigo de articulo):</span>
-                            <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='id' value={form.id} onChange={handleChange} />
+                        <div className="form-floating mb-3">
+                            <input type="email" className="form-control" id="floatingInput" name='id' value={form.id} onChange={handleChange} />
+                            <label htmlFor="floatingInput">Codigo de barras (o codigo de articulo)</label>
                         </div>
-
-
+                        {/* ****** */}
                         <div className="input-group mb-3">
                             <span className="input-group-text">Categoria</span>
                             <select className="form-select" aria-label="Default select example" defaultValue="default">
@@ -150,52 +149,47 @@ function AltaArticulo(props) {
                                 <option value="3">Three</option>
                             </select>
                         </div>
+                        {/* ****** */}
                         <div className={style.costo}>
                             <div>
-
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text">Costo Peso: AR$</span>
-                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='costoPeso' value={form.costoPeso} onChange={handleChange} />
+                                <div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput" name='costoPeso' value={`${form.costoPeso}`} onChange={handleChange} />
+                                    <label htmlFor="floatingInput" >Costo Peso: AR$</label>
                                 </div>
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text">Costo Dolar: US$</span>
-                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='costoDolar' value={form.costoDolar} onChange={handleChange} />
+                                <div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput" name='costoDolar' value={`${form.costoDolar}`} onChange={handleChange} />
+                                    <label htmlFor="floatingInput" >Costo Dolar: US$</label>
                                 </div>
                             </div>
                             <div>
-
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text">Iva %:</span>
-                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='iva' value={form.iva} onChange={handleChange} />
+                                <div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput" name='iva' value={` ${form.iva}`} onChange={handleChange} />
+                                    <label htmlFor="floatingInput" >Iva %</label>
                                 </div>
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text">Ganancias %:</span>
-                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='ganancia' value={form.ganancia} onChange={handleChange}/>
+                                <div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput" name='ganancia' value={` ${form.ganancia}`} onChange={handleChange} />
+                                    <label htmlFor="floatingInput" >Ganancias %</label>
                                 </div>
                             </div>
-
-                            <div className="input-group mb-3">
-                                <span className="input-group-text">precio Venta :$</span>
-                                <input className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='precioVenta' value={form.precioVenta} onChange={handleChange} />
+                            <div className="form-floating mb-3">
+                                <input type="email" className="form-control" id="floatingInput" name='precioVenta' value={`${form.precioVenta}`} onChange={handleChange} />
+                                <label htmlFor="floatingInput" >Precio Venta $</label>
                             </div>
-
-
-
                         </div>
                     </div>
+
                     <div>
                         <div className={style.stock}>
                             <div>
 
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text">Stock:</span>
-                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='stock' value={form.stock} onChange={handleChange} />
+                                <div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput" name='stock' value={`${form.stock}`} onChange={handleChange} />
+                                    <label htmlFor="floatingInput" >Stock</label>
+                                </div><div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput" name='stockMin' value={`${form.stockMin}`} onChange={handleChange} />
+                                    <label htmlFor="floatingInput" >Stock mínimo</label>
                                 </div>
 
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text">Stock minimo:</span>
-                                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='stockMin' value={form.stockMin} onChange={handleChange} />
-                                </div>
                             </div>
 
                             <div className="form-check">
@@ -210,39 +204,21 @@ function AltaArticulo(props) {
                                     por peso
                                 </label>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
 
-
-                <div>
-
-                    <div>
-
-
-
-
-                    </div>
-
-
+                <div className="form-floating">
+                    <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name='descripcion' value={form.descripcion} onChange={handleChange}></textarea>
+                    <label htmlFor="floatingTextarea2">Comments</label>
                 </div>
-
-
-                <div className="mb-3">
-                    <label htmlFor="exampleFormControlTextarea1" className="form-label" >Descripción:</label>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" resize="false" rows="3" name='descripcion' value={form.descripcion} onChange={handleChange}></textarea>
-                </div>
-
             </div>
+
             <div className={style.botones}>
 
                 <button type="button" className="btn btn-danger" onClick={actualizarDato}>Actualizar</button>
                 <button type="button" className="btn btn-danger" onClick={handleClick}>Nuevo</button>
             </div>
-
         </div>
     );
 
