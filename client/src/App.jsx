@@ -11,6 +11,7 @@ import Detail from './components/Home/components/Detail/detail';
 import ListaArticulos from './components/ListaDeArticulos/ListaArticulos';
 import Login from './components/Login/Login';
 import Cliente from './components/Window/Cliente/Cliente';
+import Categoria from './components/Window/Categoria/Categoria';
 
 
 function App() {
@@ -49,9 +50,9 @@ function App() {
             <Route path='/provedor' element={
                <Provedor />
             } />
-            {/* <Route path='/categoria' element={
-               // <Ventana />
-            } /> */}
+            <Route path='/categoria' element={
+               <Categoria />
+            } />
             <Route path='/cliente' element={
                <Cliente />
             } />

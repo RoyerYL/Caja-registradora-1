@@ -44,7 +44,7 @@ export default function Form(props) {
             throw new Error("faltan datos")
         }
         axios.post("http://localhost:3001/tienda/provedor",body).then((res)=>{
-            window.location.reload()
+            console.log("Creado correctamente");
         })
     }
     return (

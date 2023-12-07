@@ -81,7 +81,73 @@ const Articulo = sequelize.define('Articulo', {
       },
   }, { timestamps: false });
 
-
+   const Categoria=sequelize.define('Categoria', {
+      id:{
+         type:DataTypes.INTEGER,
+         primaryKey:true,
+         autoIncrement: true
+      },
+      nameCategoria:{
+         type:DataTypes.STRING,
+         allowNull:false,
+      }
+      
+   }, { timestamps: false });
+   const Provedor=sequelize.define('Provedor', {
+      id:{
+         type:DataTypes.INTEGER,
+         primaryKey:true,
+         autoIncrement: true
+      },
+      razonSocial:{
+         type:DataTypes.INTEGER,
+         allowNull:false,
+      },
+      cuit:{
+         type:DataTypes.INTEGER,
+         defaultValue:0
+      },
+      nombreComercial:{
+         type:DataTypes.STRING,
+         allowNull:false,
+      },
+      direccion:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      provincia:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      telefono1:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      telefono2:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      telefono3:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      email:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      personContacto:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      comentarios:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      
+   }, { timestamps: false });
+   
+   let categoria = null
+   let provedor = null
 // Cargar datos desde el archivo Excel
 const cargarDatosDesdeExcel = async (rutaExcel) => {
     try {
@@ -93,6 +159,39 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
         // Itera sobre las filas y agrega registros a la base de datos
         for (const row of data.slice(1)) {
             console.log(row);
+
+        
+            try {
+                
+                    const [newCategoria, created] = await Categoria.findOrCreate({
+                        where: {
+                            id: 0,
+                            nameCategoria: "No tiene categoria",
+                        },
+                    })
+                    
+                    categoria = newCategoria
+                
+            } catch (error) {
+        
+                console.log("error de categoria");
+            }
+        
+            try {
+               
+        
+                    const [newProvedor, created] = await Provedor.findOrCreate({
+                        where: {
+                            // id: provedorId,
+                            razonSocial: "No tiene provedor",
+                            nombreComercial: "No tiene provedor",
+                        },
+                    })
+                    provedor = newProvedor
+                
+            } catch (error) {
+                console.log("error de provedor");
+            }
               await Articulo.create({
                 name: row[1], // Ajusta según las columnas de tu archivo Excel
                 id: row[0], // Ajusta según las columnas de tu archivo Excel
@@ -102,8 +201,8 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
                 iva: row[5], // Ajusta según las columnas de tu archivo Excel
                 ganancia: row[6], // Ajusta según las columnas de tu archivo Excel
                 precioVenta: row[7], // Ajusta según las columnas de tu archivo Excel
-                CategoriaId:row[8],
-                ProvedorId:row[9]
+                CategoriaId: categoria.getDataValue('id'), // Corrige aquí
+                ProvedorId: provedor.getDataValue('id')
               });
         }
 
@@ -117,6 +216,6 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
 const rutaExcel = path.join(__dirname, 'Articulos20231122_0932.csv');
 
 // Sincroniza la base de datos y carga los datos desde el Excel
-sequelize.sync({ alter: true }).then(async () => {
+sequelize.sync({ alter: false }).then(async () => {
     await cargarDatosDesdeExcel(rutaExcel);
 });

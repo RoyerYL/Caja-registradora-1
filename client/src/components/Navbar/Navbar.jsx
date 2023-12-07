@@ -29,6 +29,9 @@ export default function Navbar() {
                     <Link to="/provedor">
                         <button type="button" className="btn btn-sm btn-outline-secondary">Provedores</button>
                     </Link>
+                    <Link to="/categoria">
+                        <button type="button" className="btn btn-sm btn-outline-secondary">Categoria</button>
+                    </Link>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Estadisticas</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Reportes</button>
                     <Link to="/provedor">

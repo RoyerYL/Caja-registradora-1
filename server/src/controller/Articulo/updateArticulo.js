@@ -15,15 +15,54 @@ const updateArticulo = async (req, res) => {
         precioVenta_2,
         descripcion,
         img,
-        CategoriaId,
-        ProvedorId
+        categoriaId,
+        provedorId
 
     } = req.body;
 
 
 
     try {
-
+        let categoria = null
+        let provedor = null
+    
+        try {
+            const find = await Categoria.findByPk(categoriaId)
+            if (!find){
+    
+                const [newCategoria, created] = await Categoria.findOrCreate({
+                    where: {
+                        // id: categoriaId,
+                        nameCategoria: "No tiene categoria",
+                    },
+                })
+                
+                categoria = newCategoria
+            }
+            categoria=find
+        } catch (error) {
+    
+            console.log("error de categoria");
+        }
+    
+        try {
+            const find = await Provedor.findByPk(provedorId)
+            if (!find) {
+    
+                const [newProvedor, created] = await Provedor.findOrCreate({
+                    where: {
+                        // id: provedorId,
+                        razonSocial: "No tiene provedor",
+                        nombreComercial: "No tiene provedor",
+                    },
+                })
+                provedor = newProvedor
+            } else {
+                provedor = find
+            }
+        } catch (error) {
+            console.log("error de provedor");
+        }
         const updateObject = {
             id,
             name,
@@ -38,25 +77,16 @@ const updateArticulo = async (req, res) => {
             precioVenta_2,
             descripcion,
             img,
-            CategoriaId,
-            ProvedorId
+            CategoriaId:categoria.id,
+            ProvedorId:provedor.id
         };
-        console.log(req.body);
-        console.log("---------");
-        console.log(updateObject);
         if (!stockMin) {
             updateObject.stockMin = 0.00;
         }
         if (!ganancia_2) {
             updateObject.ganancia_2 = "";
         }
-        if (!ProvedorId) {
-            console.log("hola mundo");
-            updateObject.ProvedorId = 0;
-        }
-        if (!CategoriaId) {
-            updateObject.CategoriumId = 0;
-        }
+      
         if (!descripcion) {
             updateObject.descripcion = "";
         }

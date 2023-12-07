@@ -1,6 +1,12 @@
-const { Articulo,Categoria,Provedor } = require("../../DB_connection")
+const { Articulo, Categoria, Provedor } = require("../../DB_connection")
 
 const postArticulo = async (req, res) => {
+
+ 
+
+
+
+
     const {
         id,
         name,
@@ -17,50 +23,69 @@ const postArticulo = async (req, res) => {
         img,
         categoriaId,
         provedorId
-        
+
     } = req.body;
 
     // if (!id || !name || !stock || !costoPeso || !costoDolar || !iva || !ganancia || !precioVenta) {
     //     return res.status(400).json({ error: "Faltan datos" })
-    // }else{console.log("todo en orden");}
-    if (!id) {
-        return res.status(400).json({ error: "Falta el ID" });
+    // } else { console.log("todo en orden"); }
+    if (id === null) console.log("falta id");
+    if (name === null) console.log("falta name");
+    if (stock === null) console.log("falta stock");
+    if (costoPeso === null) console.log("falta costoPeso");
+    if (costoDolar === null) console.log("falta costoDolar");
+    if (iva === null) console.log("falta iva");
+    if (ganancia == null) console.log("falta ganancia");
+    if (precioVenta === null) console.log("falta precioVenta");
+
+
+    let categoria = null
+    let provedor = null
+
+    try {
+        const find = await Categoria.findByPk(categoriaId)
+        if (!find){
+
+            const [newCategoria, created] = await Categoria.findOrCreate({
+                where: {
+                    // id: categoriaId,
+                    nameCategoria: "No tiene categoria",
+                },
+            })
+            
+            categoria = newCategoria
+        }
+        categoria=find
+    } catch (error) {
+
+        console.log("error de categoria");
     }
-    
-    if (!name) {
-        return res.status(400).json({ error: "Falta el nombre" });
+
+    try {
+        const find = await Provedor.findByPk(provedorId)
+        if (!find) {
+
+            const [newProvedor, created] = await Provedor.findOrCreate({
+                where: {
+                    // id: provedorId,
+                    razonSocial: "No tiene provedor",
+                    nombreComercial: "No tiene provedor",
+                },
+            })
+            provedor = newProvedor
+        } else {
+            provedor = find
+        }
+    } catch (error) {
+        console.log("error de provedor");
     }
-    
-    if (!stock) {
-        return res.status(400).json({ error: "Falta el stock" });
-    }
-    
-    if (!costoPeso) {
-        return res.status(400).json({ error: "Falta el costo en pesos" });
-    }
-    
-    if (!costoDolar) {
-        return res.status(400).json({ error: "Falta el costo en dólares" });
-    }
-    
-    if (!iva) {
-        return res.status(400).json({ error: "Falta el IVA" });
-    }
-    
-    if (!ganancia) {
-        return res.status(400).json({ error: "Falta la ganancia" });
-    }
-    
-    if (!precioVenta) {
-        return res.status(400).json({ error: "Falta el precio de venta" });
-    }
-    
+
     console.log("Todos los datos están presentes");
-    
+
     try {
 
-        const [newUser,created] = await Articulo.findOrCreate({
-            where:{
+        const [newUser, created] = await Articulo.findOrCreate({
+            where: {
                 id,
                 name,
                 stock,
@@ -69,20 +94,20 @@ const postArticulo = async (req, res) => {
                 iva,
                 ganancia,
                 precioVenta,
+                ProvedorId: provedor.id,
+                CategoriaId: categoria.id
             },
-            defaults:{
-                stockMin:stockMin || 0.00,
-                descripcion:descripcion || "",
-                ganancia_2:ganancia_2 || 0,
-                precioVenta_2:precioVenta_2 || 0.00,
-                img:img || "",
-                CategoriaId:categoriaId || 0,
-                ProvedorId:provedorId || 0,
+            defaults: {
+                stockMin: stockMin || 0.00,
+                descripcion: descripcion || "",
+                ganancia_2: ganancia_2 || 0,
+                precioVenta_2: precioVenta_2 || 0.00,
+                img: img || "",
             }
         })
-        if(!created){return res.status(409).json({error:"El email ya está registrado "})}
+        if (!created) { return res.status(409).json({ error: "El email ya está registrado " }) }
 
-        const allArticulos=await Articulo.findAll()
+        const allArticulos = await Articulo.findAll()
 
         return res.status(201).json(allArticulos);
 
@@ -91,4 +116,4 @@ const postArticulo = async (req, res) => {
 
     }
 }
-module.exports = {postArticulo};
+module.exports = { postArticulo };

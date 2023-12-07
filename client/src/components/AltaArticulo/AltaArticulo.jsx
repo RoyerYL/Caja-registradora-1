@@ -155,22 +155,20 @@ function AltaArticulo(props) {
                         {/* ****** */}
                         <div className="input-group mb-3">
                             <span className="input-group-text">Categoria</span>
-                            {/* <select className="form-select" aria-label="Default select example" value={form.CategoriaId} name='categoriaId' onChange={handleChange}>
-                                <option value={0}>sin categoria</option>
+                            <select className="form-select" aria-label="Default select example" value={form.CategoriaId || 1} name='categoriaId' onChange={handleChange}>
                                 {
-                                    categoria.map((prov)=>{
-                                        return(<>
-                                        <option value={0}></option>
-                                        </>)
+                                    categoria.map((cate)=>{
+                                        return(
+                                        <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
+                                        )
                                     })
                                 }
-                            </select> */}
+                            </select>
                         </div>
 
                         <div className="input-group mb-3">
                             <span className="input-group-text">Fabricante</span>
-                            <select className="form-select" aria-label="Default select example" value={form.ProvedorId || 0} name='ProvedorId' onChange={handleChange}>
-                                <option value={0}>sin fabricante</option>
+                            <select className="form-select" aria-label="Default select example" value={form.ProvedorId || 1} name='ProvedorId' onChange={handleChange}>
                                 {
                                     provedor.map((prov)=>{
                                         return(
