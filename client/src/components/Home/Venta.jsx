@@ -12,12 +12,12 @@ import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulo
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
-    const fecha= new Date().toString()
+    const fecha = new Date().toString()
 
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
- 
+
 
     const [productoProp, setProductoProp] = useState([])
     const [productoLikeProp, setproductoLikeProp] = useState([])
@@ -33,14 +33,14 @@ export default function Navbar() {
 
 
             return setproductoLikeProp(productoLike.data)
-        }setproductoLikeProp(productoLike)
+        } setproductoLikeProp(productoLike)
     }, [id, productos, listProductos, productoLike])
 
-    const generarRecibo=()=>{
+    const generarRecibo = () => {
         console.log({
             productos,
             fecha,
-            costoTotal:document.getElementById('costoTotal').textContent
+            costoTotal: document.getElementById('costoTotal').textContent
         });
     }
 
@@ -51,7 +51,7 @@ export default function Navbar() {
 
     return (
         <div className={style.Home}>
-             <span className="input-group-text">{fecha}</span>
+            <span className="input-group-text">{fecha}</span>
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
                     <h2>Ingrese un articulo</h2>
@@ -64,19 +64,19 @@ export default function Navbar() {
                     <ListaArticulosEncontrados productos={productoLikeProp} />
                 </div>
                 <div className={style.ListArticulo}>
-                <div>
+                    <div>
 
 
-                    <ListaArticulos productos={productoProp} />
-                    <div className={style.info}>
-                        <Condicion />
-                        <Costo />
+                        <ListaArticulos productos={productoProp} />
+                        <div className={style.info}>
+                            <Condicion />
+                            <Costo />
+
+                        </div>
+
+
 
                     </div>
-
-
-
-                </div>
                     <button type="button" className="btn btn-success" onClick={generarRecibo}>Generar recibo</button>
                 </div>
             </div>

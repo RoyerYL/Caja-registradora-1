@@ -3,45 +3,89 @@ const { Sequelize } = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST ,DB_PORT,DB_BDD } = process.env;
 const ArticuloFunction=require('./models/Articulo')
 const CategoriaFunction=require('./models/Categoria')
-const FabricanteFunction=require('./models/Fabricante')
 const ProvedorFunction=require('./models/Provedor')
+const ClienteFunction = require('./models/Cliente');
+const TicketFunction=require('./models/Ticket');
+const CompraFunction=require('./models/Compra');
+
+// /**
+//  * Conexion con la base de datos
+//  */
+// const dataBase = new Sequelize(
+//    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_BDD}`,
+//    { logging: false, native: false }
+// );
+
+// /***
+//  * Creacion de tablas
+//  */
+// ArticuloFunction(dataBase)
+// CategoriaFunction(dataBase)
+// FabricanteFunction(dataBase)
+// ProvedorFunction(dataBase)
+
+// /**
+//  * Tablas
+//  */
+// const {Articulo,Provedor,Categoria,Fabricante} =dataBase.models
 
 
-/**
- * Conexion con la base de datos
- */
-const dataBase = new Sequelize(
-   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_BDD}`,
-   { logging: false, native: false }
-);
+// Categoria.hasMany(Articulo);
+// Articulo.belongsTo(Categoria);
 
-/***
- * Creacion de tablas
- */
+// Fabricante.hasMany(Articulo);
+// Articulo.belongsTo(Fabricante);
+
+// Provedor.hasMany(Articulo);
+// Articulo.belongsTo(Provedor);
+
+
+
+// module.exports = {
+//    Articulo,
+//    // Favorite,
+//    dataBase,
+// };
+
+const dataBase=new Sequelize({
+   dialect:'sqlite',
+   storage:'./tienda.sqlite',
+   database:"tienda"
+})
+
 ArticuloFunction(dataBase)
 CategoriaFunction(dataBase)
-FabricanteFunction(dataBase)
 ProvedorFunction(dataBase)
 
-/**
- * Tablas
- */
-const {Articulo,Provedor,Categoria,Fabricante} =dataBase.models
+ClienteFunction(dataBase)
+TicketFunction(dataBase)
+CompraFunction(dataBase)
+// Creación de tablas
+const { Articulo, Provedor, Categoria,Cliente,Ticket,Compra } = dataBase.models;
 
+Categoria.hasMany(Articulo, { foreignKey: 'CategoriaId' });
+Articulo.belongsTo(Categoria, { foreignKey: 'CategoriaId' });
 
-Categoria.hasMany(Articulo);
-Articulo.belongsTo(Categoria);
+Provedor.hasMany(Articulo, { foreignKey: 'ProvedorId' });
+Articulo.belongsTo(Provedor, { foreignKey: 'ProvedorId' });
 
-Fabricante.hasMany(Articulo);
-Articulo.belongsTo(Fabricante);
+Cliente.hasMany(Ticket)
+Ticket.belongsTo(Cliente)
 
-Provedor.hasMany(Articulo);
-Articulo.belongsTo(Provedor);
+Ticket.hasMany(Compra)
+Compra.belongsTo(Ticket)
+
+Articulo.hasMany(Compra)
+Compra.belongsTo(Articulo)
 
 
 
 module.exports = {
-   Articulo,
-   // Favorite,
-   dataBase,
+  dataBase,
+  Articulo,
+  Provedor,
+  Categoria,
+  Compra,
+  Ticket,
+  Cliente
 };

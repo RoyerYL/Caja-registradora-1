@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Articulo } = require("../DB_connection")
+const { Articulo } = require("../../DB_connection")
 
 
 const getArticuloLike = async (req, res) => {

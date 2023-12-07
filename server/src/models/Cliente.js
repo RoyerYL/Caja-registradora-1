@@ -1,29 +1,33 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-   sequelize.define('Provedor', {
+   sequelize.define('Cliente', {
       id:{
          type:DataTypes.INTEGER,
          primaryKey:true,
          autoIncrement: true
       },
       razonSocial:{
-         type:DataTypes.INTEGER,
-         allowNull:false,
-      },
-      cuit:{
-         type:DataTypes.INTEGER,
-         defaultValue:0
-      },
-      nombreComercial:{
          type:DataTypes.STRING,
          allowNull:false,
+      },
+      nombre:{
+         type:DataTypes.STRING,
+         allowNull:false,
+      },
+      dni:{
+         type:DataTypes.INTEGER,
+         defaultValue:0
       },
       direccion:{
          type:DataTypes.STRING,
          defaultValue:""
       },
-      provincia:{
+      zona:{
+         type:DataTypes.STRING,
+         defaultValue:""
+      },
+      localidad:{
          type:DataTypes.STRING,
          defaultValue:""
       },
@@ -40,10 +44,6 @@ module.exports = (sequelize) => {
          defaultValue:""
       },
       email:{
-         type:DataTypes.STRING,
-         defaultValue:""
-      },
-      personContacto:{
          type:DataTypes.STRING,
          defaultValue:""
       },

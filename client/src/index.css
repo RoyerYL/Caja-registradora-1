@@ -4,7 +4,6 @@ body {
 
     width: 100%;
     height: 100%;
-    background-color: #6c757d !important;
 }
 html{
   width: 100%;
@@ -20,4 +19,12 @@ html{
   width: 100%;
   height: 100%;
 
+}
+
+:root{
+  --scheme:dark;
+
+}
+body{
+  color-scheme: var(--scheme) !important;
 }

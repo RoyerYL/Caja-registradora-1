@@ -1,4 +1,4 @@
-const { Articulo } = require("../DB_connection")
+const { Articulo } = require("../../DB_connection")
 
 const getAllArticulos = async (req, res) => {
 

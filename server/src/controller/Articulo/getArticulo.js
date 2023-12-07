@@ -1,5 +1,5 @@
 const { Op, Sequelize, where, fn, col } = require("sequelize")
-const { Articulo } = require("../DB_connection")
+const { Articulo } = require("../../DB_connection")
 
 const getArticulo = async (req, res) => {
     const {id} = req.params
