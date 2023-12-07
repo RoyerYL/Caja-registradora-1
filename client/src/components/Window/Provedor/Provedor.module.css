@@ -1,0 +1,22 @@
+.Provedor{
+display: flex;
+align-items: center;
+flex-direction: column;
+}
+.container{
+    display: flex;
+    justify-content: space-evenly;
+}
+.containerNombreStock{
+    display: flex;
+    gap: 15px;
+    margin: 15px;
+    padding: 5px;
+    border: 1px solid black;
+}
+.ListProvedores{
+    margin: 15px;
+    width: 600px;
+    padding: 3px;
+    border: 1px solid black;
+}

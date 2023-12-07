@@ -12,12 +12,12 @@ module.exports = (sequelize) => {
          allowNull:false,
       },
       stock:{
-         type:DataTypes.INTEGER,
+         type:DataTypes.DECIMAL(10, 2),
          allowNull:false
       },
       stockMin:{
-         type:DataTypes.INTEGER,
-         defaultValue:0,
+         type:DataTypes.DECIMAL(10, 2),
+         defaultValue:0.00,
       },
       costoPeso:{
          type: DataTypes.DECIMAL(10, 2),
@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
       },
       precioVenta:{
          type: DataTypes.DECIMAL(10, 2),
-         allowNull:false,
+         defaultValue:0.00
       },
       ganancia_2:{
          type: DataTypes.DECIMAL(10, 2),
@@ -60,5 +60,13 @@ module.exports = (sequelize) => {
          type:DataTypes.BOOLEAN,
          defaultValue:true,
       },
+      CategoriaId: {
+         type: DataTypes.INTEGER,
+         allowNull: true, // Permite que la clave foránea sea nula
+       },
+      ProvedorId: {
+         type: DataTypes.INTEGER,
+         allowNull: true, // Permite que la clave foránea sea nula
+       },
    }, { timestamps: false });
 };

@@ -26,17 +26,17 @@ async function main() {
     // console.log(data);
   // Insertar datos en la base de datos
   const query = 'INSERT INTO "Sprites"(id,sprite,spriteshiny) VALUES($1, $2,$3)';
-  const URL="https://pokeapi.co/api/v2/pokemon/"
-   for (let i = 1; i < 152; i++) {
-    try {
-      const {data} = await axios(`https://pokeapi.co/api/v2/pokemon/${i}`)
-      const {name,sprites}=data
-      console.log(sprites.front_default);
-      // await client.query(query,name,sprites.front_default,sprites.front_shiny)
-    } catch (error) {
+  // const URL="https://pokeapi.co/api/v2/pokemon/"
+  //  for (let i = 1; i < 152; i++) {
+  //   try {
+  //     const {data} = await axios(`https://pokeapi.co/api/v2/pokemon/${i}`)
+  //     const {name,sprites}=data
+  //     console.log(sprites.front_default);
+  //     // await client.query(query,name,sprites.front_default,sprites.front_shiny)
+  //   } catch (error) {
       
-    }
-   }
+  //   }
+  //  }
 
 
   // for (const row of data) {

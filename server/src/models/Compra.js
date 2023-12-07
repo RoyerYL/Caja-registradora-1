@@ -1,16 +1,19 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-   sequelize.define('Categoria', {
+   sequelize.define('Compra', {
       id:{
          type:DataTypes.INTEGER,
          primaryKey:true,
          autoIncrement: true
       },
-      nameCategoria:{
-         type:DataTypes.STRING,
+      cantidad:{
+         type:DataTypes.DECIMAL(10, 2),
          allowNull:false,
-      }
-      
+      },
+      fecha:{
+         type:DataTypes.DATE,
+         allowNull:false
+      },
    }, { timestamps: false });
 };
