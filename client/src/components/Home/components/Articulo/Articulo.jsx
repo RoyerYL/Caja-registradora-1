@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 export default function Articulo(props) {
-    const { listaAdd } = props
+    const { addHandler, collapseClick } = props
 
     const producto = useSelector((state) => state.producto);
 
@@ -21,6 +21,8 @@ export default function Articulo(props) {
         cantidad: 1,
         page: 0
     })
+
+    //reinicia la entrada de datos
     useEffect(() => {
         setArticulo({
             page: id,
@@ -29,15 +31,30 @@ export default function Articulo(props) {
         })
     }, [id])
 
-    const addHandler = () => {
-        const { cantidad, codBarras, page } = Articulo
+    // const addHandler = () => {
+    //     const { cantidad, codBarras, page } = Articulo
 
 
-        dispatch(add_art({
-            cantidad,
-            codBarras,
-            page
-        }))
+    //     dispatch(add_art({
+    //         cantidad,
+    //         codBarras,
+    //         page
+    //     }))
+
+    //     setId(id_ + 1)
+
+    //     setArticulo({
+    //         id: id_,
+    //         page: id,
+    //         codBarras: "",
+    //         cantidad:1
+    //     })
+
+    // }
+
+
+    const addFunction = () => {
+        props.addHandler(Articulo)
 
         setId(id_ + 1)
 
@@ -45,11 +62,8 @@ export default function Articulo(props) {
             id: id_,
             page: id,
             codBarras: "",
-            cantidad:1
+            cantidad: 1
         })
-
-        
-
     }
 
     const handleChangue = (event) => {
@@ -67,11 +81,11 @@ export default function Articulo(props) {
             addHandler();
         }
     };
- 
+
 
     return (
 
-        <div>
+        <>
             <div className={`${"input-group mb-3"} `}>
                 <div>
                     <select className={`${"form-select"} ${style.busqueda}`} aria-label="Default select example" defaultValue="default">
@@ -87,10 +101,12 @@ export default function Articulo(props) {
                         <option value="default">Unidades</option>
                     </select>
                 </div>
-                <input onClick={(event)=>{event.target.value=""}}  id='cantidad' type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.cantidad} />
+                <input onClick={(event) => { event.target.value = "" }} id='cantidad' type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} value={Articulo.cantidad} />
             </div>
-                <button type="button" className="btn btn-success btn-sm" onClick={addHandler}>➕ Cantidad</button>
-        </div>
+            <button type="button" className="btn btn-success btn-sm" onClick={addFunction}>➕ Agregar</button>
+            <button type="button" className="btn btn-success btn-sm" onClick={collapseClick}>V</button>
+            
+        </>
 
 
 

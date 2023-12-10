@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
 import style from "./Cliente.module.css"
+import axios from 'axios';
 export default function Form() {
     const [collapse, setCollapse] = useState("collapse")
     const [form, setForm] = useState({
         razonSocial: "",
-        nombre:"",
+        nombre: "",
         dni: 0,
         direccion: "",
-        zona:"",
+        zona: "",
         localidad: "",
         telefono1: "",
         telefono2: "",
         telefono3: "",
         email: "",
-        comentarios:""
+        comentarios: ""
 
     })
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
         setForm({ ...form, [property]: value });//cambio Form..
+    }
+    const crearCliente=()=>{
+        const body = {
+            "razonSocial":form.razonSocial,
+            "nombre":form.nombre,
+            "dni":form.dni,
+            "direccion":form.direccion,
+            "zona":form.zona,
+            "localidad":form.localidad,
+            "telefono1":form.telefono1,
+            "telefono2":form.telefono2,
+            "telefono3":form.telefono3,
+            "email":form.email, 
+            "comentarios":form.comentarios
+        }
+        axios.post("http://localhost:3001/tienda/cliente",body).then((res)=>{
+            console.log("Creado correctamente");
+        })
     }
     const handleClick = () => {
         collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
@@ -31,7 +50,7 @@ export default function Form() {
 
                     <div className={style.nombre}>
                         <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" name="razonSocial"  value={form.razonSocial} onChange={handleChange} />
+                            <input type="email" className="form-control" id="floatingInput" name="razonSocial" value={form.razonSocial} onChange={handleChange} />
                             <label htmlFor="floatingInput" >Razon social</label>
                         </div>
                         <div className="form-floating mb-3">
@@ -84,8 +103,8 @@ export default function Form() {
 
                     <div className={style.botones}>
 
-                        {/* <button type="button" className="btn btn-danger" onClick={actualizarDato}>Actualizar</button>
-            <button type="button" className="btn btn-danger" onClick={handleClick}>Nuevo</button> */}
+                        <button type="button" className="btn btn-danger" onClick={()=>{console.log(console.log("form"))}}>Actualizar</button>
+                        <button type="button" className="btn btn-danger" onClick={crearCliente}>Nuevo</button>
                     </div>
                 </div>
             </div>

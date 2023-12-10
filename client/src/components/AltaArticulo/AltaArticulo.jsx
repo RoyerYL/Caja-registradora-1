@@ -6,8 +6,8 @@ function AltaArticulo(props) {
     const { infoArticulo } = props
 
     const { id } = useParams()
-    const [categoria,setCategoria]=useState([])
-    const [provedor,setProvedor]=useState([])
+    const [categoria, setCategoria] = useState([])
+    const [provedor, setProvedor] = useState([])
     const [form, setForm] = useState({
         name: "",
         id: "",
@@ -16,26 +16,26 @@ function AltaArticulo(props) {
         costoPeso: Number.parseFloat(0).toFixed(2),
         costoDolar: Number.parseFloat(0).toFixed(2),
         precioVenta: Number.parseFloat(0).toFixed(2),
-        ganancia:0,
+        ganancia: 0,
         precioVenta_2: Number.parseFloat(0).toFixed(2),
-        ganancia_2:0,
+        ganancia_2: 0,
         descripcion: "",
         iva: 21,
-        img:"",
-        activo:true,
-        CategoriaId:0,
-        ProvedorId:0
+        img: "",
+        activo: true,
+        CategoriaId: 0,
+        ProvedorId: 1
 
     })
 
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/provedor").then(({data})=>{
+        axios("http://localhost:3001/tienda/provedor").then(({ data }) => {
 
             setProvedor(data)
         }
         )
-        axios("http://localhost:3001/tienda/categoria").then(({data})=>{
+        axios("http://localhost:3001/tienda/categoria").then(({ data }) => {
 
             setCategoria(data)
         }
@@ -45,7 +45,7 @@ function AltaArticulo(props) {
                 if (data.name) {
                     const {
                         activo,
-                        costoDolar,
+                        costoDolar ,
                         costoPeso,
                         descripcion,
                         ganancia,
@@ -60,26 +60,25 @@ function AltaArticulo(props) {
                         stockMin,
                     } = data
 
-                    console.log(data);
-                    setForm(data)
+                    // console.log(data);
+                    setForm({
+                        activo,
+                        costoDolar:Number.parseFloat(costoDolar).toFixed(2) ,
+                        costoPeso:Number.parseFloat(costoPeso).toFixed(2),
+                        descripcion: descripcion || "",
+                        ganancia,
+                        ganancia_2 : ganancia_2 || 0,
+                        id,
+                        img,
+                        iva,
+                        name,
+                        precioVenta:Number.parseFloat(precioVenta).toFixed(2),
+                        precioVenta_2:Number.parseFloat(precioVenta_2).toFixed(2),
+                        stock,
+                        stockMin,
+                    })
                 }
-            }).catch((err) => {
-
-                // return setForm({
-                //     name: "",
-                //     id: "",
-                //     stock: 0,
-                //     stockMin: 0,
-                //     costoPeso: Number.parseFloat(0).toFixed(2),
-                //     costoDolar: Number.parseFloat(0).toFixed(2),
-                //     precioVenta: Number.parseFloat(0).toFixed(2),
-                //     descripcion: "",
-                //     iva: 0,
-                //     ganancia: 0
-
-                // })
             })
-
     }, [id]);
 
     const handleChange = (event) => {
@@ -95,7 +94,6 @@ function AltaArticulo(props) {
     const [loading, setLoading] = useState(false);
 
     const actualizarDato = () => {
-        console.log(form);
         setLoading(true);
         const body = {
             "activo": form.activo,
@@ -115,10 +113,9 @@ function AltaArticulo(props) {
             "precioVenta": form.precioVenta,
             "precioVenta_2": form.precioVenta_2,
 
-             "categoriaId":0,
-            "ProvedorId":Number(form.ProvedorId)
+            "CategoriaId": form.CategoriaId || 0,
+            "ProvedorId": Number(form.ProvedorId) || 1
         }
-        console.log(body);
         axios.post("http://localhost:3001/tienda/actualizararticulo", body)
             .then((res) => {
                 console.log(res);
@@ -144,7 +141,7 @@ function AltaArticulo(props) {
 
                     <div className={style.nombre}>
                         <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name}  name='name' onChange={handleChange} />
+                            <input type="email" className="form-control" id="floatingInput" value={form.name} name='name' onChange={handleChange} />
                             <label htmlFor="floatingInput" >Nombre articulo</label>
                         </div>
 
@@ -155,11 +152,11 @@ function AltaArticulo(props) {
                         {/* ****** */}
                         <div className="input-group mb-3">
                             <span className="input-group-text">Categoria</span>
-                            <select className="form-select" aria-label="Default select example" value={form.CategoriaId || 1} name='categoriaId' onChange={handleChange}>
+                            <select className="form-select" aria-label="Default select example" value={form.CategoriaId} name='CategoriaId' onChange={handleChange}>
                                 {
-                                    categoria.map((cate)=>{
-                                        return(
-                                        <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
+                                    categoria.map((cate) => {
+                                        return (
+                                            <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
                                         )
                                     })
                                 }
@@ -168,11 +165,12 @@ function AltaArticulo(props) {
 
                         <div className="input-group mb-3">
                             <span className="input-group-text">Fabricante</span>
-                            <select className="form-select" aria-label="Default select example" value={form.ProvedorId || 1} name='ProvedorId' onChange={handleChange}>
+                            <select className="form-select" aria-label="Default select example" value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
                                 {
-                                    provedor.map((prov)=>{
-                                        return(
-                                        <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
+                                    provedor.map((prov) => {
+                                        console.log(form.ProvedorId);
+                                        return (
+                                            <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
                                         )
                                     })
                                 }
@@ -224,12 +222,12 @@ function AltaArticulo(props) {
                                     <label htmlFor="floatingInput" >Iva %</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input type="email" className="form-control" id="floatingInput" name='ganancia' value={` ${form.ganancia}`} onChange={handleChange} />
+                                    <input type="email" className="form-control" id="floatingInput" name='ganancia_2' value={` ${form.ganancia_2}`} onChange={handleChange} />
                                     <label htmlFor="floatingInput" >Ganancias %</label>
                                 </div>
                             </div>
                             <div className="form-floating mb-3">
-                                <input type="email" className="form-control" id="floatingInput" name='precioVenta' value={`${form.precioVenta}`} onChange={handleChange} />
+                                <input type="email" className="form-control" id="floatingInput" name='precioVenta_2' value={`${form.precioVenta_2}`} onChange={handleChange} />
                                 <label htmlFor="floatingInput" >Precio Venta $</label>
                             </div>
                         </div>

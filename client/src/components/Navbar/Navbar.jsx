@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import style from './Navbar.module.css'
 import { Link } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
+import { useDispatch } from 'react-redux';
+import { get_list } from '../../redux/action';
 
 export default function Navbar() {
     const [id_, setID] = useState(0)
+    const dispatch = useDispatch()
     const [button, setButton] = useState([])
     const handleClick = () => {
         setButton([...button, { id: id_ }])
         setID(id_ + 1)
+        dispatch(get_list(id_))
 
     }
     const onClose = (idFilter) => {
@@ -48,8 +52,11 @@ export default function Navbar() {
                     <Link to="./">
                         <button type="button" className="btn btn-outline-primary">Caja</button>
                     </Link>
-
+                    <Link to={`/ventana/${id_}`}>
                     <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
+                    </Link>
+
+
 
                     <Link to="/altaArticulo">
                         <button type="button" className="btn btn-outline-primary">Alta de articulo</button>

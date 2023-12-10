@@ -2,11 +2,23 @@
     height: 450px;
     background-color: white;
     overflow: overlay;
+    border: 3px solid black;
+    /* box-shadow: 10 10 10 10 black; */
 }
-.nomFilas button{
+
+.nomFilas button {
     font-size: 1em;
     border: none;
     padding: 0px;
 }
-.nomFilas button:hover{
-transform: scale(1.2);}
+
+.nomFilas button:hover {
+    transform: scale(1.2);
+}
+.listArticuloEncontrados{
+    width: 350px;
+    height: 450px;
+    overflow: overlay;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}

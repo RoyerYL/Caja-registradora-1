@@ -16,7 +16,7 @@ export default function ListaArticulosEncontrados(props) {
  
 
     return (
-        <div className={style.listArticulo}>
+        <div className={style.listArticuloEncontrados}>
             <table className="table">
                 <thead>
                     <tr className={style.nomFilas}>

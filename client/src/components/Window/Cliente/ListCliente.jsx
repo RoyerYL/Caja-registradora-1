@@ -24,13 +24,14 @@ export default function ListClientes() {
                 <tbody>
 
                     {provedores.map((prov) => {
+                        console.log(provedores);
                         return (
                                 <tr key={prov.id}>
                                     <td>{prov.id}</td>
 
                                     <td>
                                         {/* <Link to={`/detail/${productos.id}`}> */}
-                                            {prov.nombre}
+                                            {prov.razonSocial}
                                         {/* </Link> */}
                                     </td>
                                    

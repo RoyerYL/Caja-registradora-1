@@ -7,7 +7,7 @@ export default function Categoria() {
 
     return (
         <div className={style.Provedor}>
-            <h2>Alta Provedor</h2>
+            <h2>Alta Categoria</h2>
             <div className={style.container}>
                 <div className={style.ListProvedores}>
 

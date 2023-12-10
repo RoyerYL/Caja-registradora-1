@@ -15,8 +15,8 @@ const updateArticulo = async (req, res) => {
         precioVenta_2,
         descripcion,
         img,
-        categoriaId,
-        provedorId
+        CategoriaId,
+        ProvedorId
 
     } = req.body;
 
@@ -27,7 +27,7 @@ const updateArticulo = async (req, res) => {
         let provedor = null
     
         try {
-            const find = await Categoria.findByPk(categoriaId)
+            const find = await Categoria.findByPk(CategoriaId)
             if (!find){
     
                 const [newCategoria, created] = await Categoria.findOrCreate({
@@ -46,7 +46,7 @@ const updateArticulo = async (req, res) => {
         }
     
         try {
-            const find = await Provedor.findByPk(provedorId)
+            const find = await Provedor.findByPk(ProvedorId)
             if (!find) {
     
                 const [newProvedor, created] = await Provedor.findOrCreate({

@@ -5,19 +5,28 @@ import ListaArticulos from './components/ListaArticulos/ListaArticulos';
 import Cliente from './components/Cliente/Cliente';
 import Costo from './Costo';
 import Condicion from './Condicion';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulosEncontrados';
+import { add_art } from '../../redux/action';
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
     const fecha = new Date().toString()
-
+    const dispatch = useDispatch()
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
 
+    const collapseClick = () => {
+        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+    }
+
+    const [clienteForm, setClienteForm] = useState({
+        nombre: "ejemplo",
+        dni: "000000"
+    })
 
     const [productoProp, setProductoProp] = useState([])
     const [productoLikeProp, setproductoLikeProp] = useState([])
@@ -36,17 +45,31 @@ export default function Navbar() {
         } setproductoLikeProp(productoLike)
     }, [id, productos, listProductos, productoLike])
 
+    const addHandler = (Articulo) => {
+        const { cantidad, codBarras, page } = Articulo
+
+        dispatch(add_art({
+            cantidad,
+            codBarras,
+            page
+        }))
+
+
+    }
     const generarRecibo = () => {
         console.log({
+            cliente:clienteForm.nombre,
             productos,
             fecha,
             costoTotal: document.getElementById('costoTotal').textContent
         });
     }
 
+    const handleChange = (event) => {
+        const value = event.target.value
+        const name = event.target.name
 
-    const handleClick = () => {
-        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+        setClienteForm({ ...clienteForm, [name]: value })
     }
 
     return (
@@ -54,27 +77,29 @@ export default function Navbar() {
             <span className="input-group-text">{fecha}</span>
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
-                    <h2>Ingrese un articulo</h2>
-                    <Articulo />
+                    <div className={style.Articulo}>
+                        <h5>Ingrese un articulo</h5>
+                        <Articulo addHandler={addHandler} collapseClick={collapseClick} />
+
+                    </div>
+                    <div className={collapse}>
+
+                        <ListaArticulosEncontrados productos={productoLikeProp} />
+                    </div>
                     <div className={style.cliente}>
-                        <h2>Cliente</h2>
-                        <Cliente />
+                        <h5>Cliente</h5>
+                        <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
                     </div>
 
-                    <ListaArticulosEncontrados productos={productoLikeProp} />
                 </div>
                 <div className={style.ListArticulo}>
                     <div>
-
-
                         <ListaArticulos productos={productoProp} />
                         <div className={style.info}>
                             <Condicion />
                             <Costo />
 
                         </div>
-
-
 
                     </div>
                     <button type="button" className="btn btn-success" onClick={generarRecibo}>Generar recibo</button>

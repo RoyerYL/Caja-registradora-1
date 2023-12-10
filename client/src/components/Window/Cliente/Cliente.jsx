@@ -27,14 +27,14 @@ export default function Cliente() {
     return (
 
         <div className={style.AltaArticulo}>
-            <h2>Alta Articulos</h2>
-            <div>
+            <h2>Alta Clientes</h2>
+            <div className={style.container}>
 
-                <div>
+                <div className={style.List}>
 
                     <ListClientes />
                 </div>
-                <div>
+                <div className={style.form}>
 
                     <Form />
                 </div>

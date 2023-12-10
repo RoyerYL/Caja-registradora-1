@@ -25,16 +25,16 @@ export default function ListProvedores() {
 
                     {provedores.map((prov) => {
                         return (
-                                <tr key={prov.id}>
-                                    <td>{prov.id}</td>
+                            <tr key={prov.id}>
+                                <td>{prov.id}</td>
 
-                                    <td>
-                                        {/* <Link to={`/detail/${productos.id}`}> */}
-                                            {prov.nameCategoria}
-                                        {/* </Link> */}
-                                    </td>
-                                   
-                                </tr>
+                                <td>
+                                    {/* <Link to={`/detail/${productos.id}`}> */}
+                                    {prov.nameCategoria}
+                                    {/* </Link> */}
+                                </td>
+
+                            </tr>
 
                         )
                     }

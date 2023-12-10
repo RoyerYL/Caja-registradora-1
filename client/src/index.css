@@ -28,3 +28,6 @@ html{
 body{
   color-scheme: var(--scheme) !important;
 }
+button{
+  padding: 3px !important;
+}
