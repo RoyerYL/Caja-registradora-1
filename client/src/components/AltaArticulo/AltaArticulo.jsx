@@ -58,6 +58,8 @@ function AltaArticulo(props) {
                         precioVenta_2,
                         stock,
                         stockMin,
+                        CategoriaId,
+                        ProvedorId
                     } = data
 
                     // console.log(data);
@@ -76,6 +78,8 @@ function AltaArticulo(props) {
                         precioVenta_2:Number.parseFloat(precioVenta_2).toFixed(2),
                         stock,
                         stockMin,
+                        CategoriaId,
+                        ProvedorId
                     })
                 }
             })
