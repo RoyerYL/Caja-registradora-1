@@ -7,13 +7,13 @@ const postTicket = async (req, res) => {
         clienteId
     } = req.body;
 
-    if (valorTotal,fecha,clienteId) {
-        return res.status(400).json({ error: "Faltan datos" })
-    }else{console.log("todo en orden");}
+    // if (valorTotal,fecha,clienteId) {
+    //     return res.status(400).json({ error: "Faltan datos" })
+    // }else{console.log("todo en orden");}
 
     try {
 
-        const newUser = await Ticket.Create({
+        const newUser = await Ticket.create({
                 valorTotal,
                 fecha,
                 ClienteId:clienteId

@@ -2,15 +2,12 @@ import React, {useEffect, useState } from 'react';
 import style from './Venta.module.css'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-export default function Costo() {
+export default function Costo(props) {
     const [collapse, setCollapse] = useState("collapse")
     const producto=useSelector((state)=>state.producto)
 
-    const[costo,setCosto]=useState(
-        {
-            subTotal:"0.00",
-        }
-    )
+    const{costo,setCosto}=props
+    
 
     const{id}=useParams
     useEffect(()=>{

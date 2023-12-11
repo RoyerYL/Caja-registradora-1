@@ -5,18 +5,11 @@ import axios from 'axios'
 export const add_art = (input) => {
   return async (dispatch) => {
     const { cantidad, codBarras, page } = input
-    if (codBarras.trim().length === 0) {
-      const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
-      return dispatch({
-        type: 'GET_ALL',
-        payload: data
-      })
-    }
-    try {
 
+    try {
       const { data } = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
 
-      dispatch({
+      return dispatch({
         type: ADD_ART,
         payload: {
           cantidad,
@@ -25,20 +18,20 @@ export const add_art = (input) => {
         }
       })
     } catch (error) {
-      try {
-        const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
-        dispatch({
-          type: ADD_ARTLike,
-          payload: {data}
-        })
+      // try {
+      //   const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
+      // return  dispatch({
+      //     type: ADD_ARTLike,
+      //     payload: data
+      //   })
 
-      } catch (error) {
-        const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
-        return dispatch({
-          type: ADD_ARTLike,
-          payload: data
-        })
-      }
+      // } catch (error) {
+      //   // const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
+      //   // return dispatch({
+      //   //   type: ADD_ARTLike,
+      //   //   payload: data
+      //   // })
+      // }
     }
 
   }
@@ -61,14 +54,23 @@ export const get_artLike = (input) => {
   }
 
 };
-
-export const getAll = async () => {
+export const resetArtLike=()=>{
+  return{
+    type:"RESET_ARTLIKE"
+  }
+}
+export const getAll = () => {
   return async (dispatch) => {
-    const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
-    dispatch({
-      type: 'GET_ALL',
-      payload: data
-    })
+    try {
+      const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
+      dispatch({
+        type: 'GET_ALL',
+        payload: data
+      })
+      
+    } catch (error) {
+      
+    }
 
   }
 };
@@ -109,8 +111,7 @@ export const add_cotizacion = (input) => {
 export const order_articulos = (order) => {
   return{
     type:"ORDER",
-    payload:order,
-
+    payload:order
   }
 }
 

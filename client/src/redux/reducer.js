@@ -23,16 +23,18 @@ export default (state = initialState, { type, payload }) => {
 
 
     case ADD_ARTLike:
+      console.log(payload);
       return { ...state, productoLike: payload };
 
     case 'GET_ALL':
-
+      console.log(payload);
       return { ...state, productoLike: payload };
 
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
-
+    case "RESET_ARTLIKE":
+      return {...state , productoLike:[]}
     case "MODIFICAR_CANT":
       const newLista1 = state.producto.map((prod, index) => {
 

@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulosEncontrados';
-import { add_art } from '../../redux/action';
+import { add_art, getAll } from '../../redux/action';
+import axios from 'axios';
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
@@ -18,21 +19,25 @@ export default function Navbar() {
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
-    useEffect(()=>{
-        const cerrar=()=>{
+    
+    const [costo,setCosto]=useState({
+        subTotal:0.00
+    })
+    useEffect(() => {
+        const cerrar = () => {
             setCollapse("collapse")
         }
 
-        document.addEventListener('click',cerrar)
-        return()=>{
-            document.removeEventListener('click',cerrar)
+        document.addEventListener('click', cerrar)
+        return () => {
+            document.removeEventListener('click', cerrar)
 
         }
-    },[])
+    }, [])
 
     const collapseClick = (e) => {
         e.stopPropagation()
-        collapse==="collapse"?setCollapse("collapse.show"):setCollapse("collapse")
+        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
         // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
     }
 
@@ -60,23 +65,78 @@ export default function Navbar() {
 
     const addHandler = (Articulo) => {
         const { cantidad, codBarras, page } = Articulo
-
-        dispatch(add_art({
+        console.log(codBarras);
+        if (!codBarras) {
+            dispatch(getAll())   
+            return         
+        }
+         dispatch(add_art({
             cantidad,
             codBarras,
+
             page
         }))
 
 
     }
-    const generarRecibo = () => {
-        console.log({
-            cliente:clienteForm.nombre,
-            productos,
-            fecha,
-            costoTotal: document.getElementById('costoTotal').textContent
-        });
-    }
+    const generarRecibo = async () => {
+        try {
+            // Buscar el cliente por nombre
+            const responseCliente = await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`);
+            const cliente = responseCliente.data[0];
+    
+            // Crear un nuevo ticket
+            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", {
+                clienteId: cliente.id,
+                valorTotal: costo.subTotal,
+                fecha: fecha,
+            });
+    
+            const ticketId = responseTicket.data.id;
+    
+            // Crear compras para cada producto en la lista
+            for (const prod of productos) {
+                await axios.post("http://localhost:3001/tienda/compra", {
+                    ticketId: ticketId,
+                    fecha: fecha,
+                    cantidad: prod.cantidad,
+                    articuloId: prod.id,
+                });
+            }
+    
+            console.log("Recibo generado correctamente");
+        } catch (error) {
+            console.error("Error al generar el recibo:", error.message);
+        }
+    };
+    
+    // const generarRecibo =async () => {
+    //     console.log("generar Recibo");
+    //     const cliente = await (await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`))
+    //     console.log(cliente);
+    //     const body={
+    //         clienteId:cliente.data[0].id,
+    //         valorTotal:costo.subTotal,
+    //         fecha
+    //     }
+    //     let id
+    //     await axios.post("http://localhost:3001/tienda/ticket",body).then(({data})=>{
+    //         id=data.id
+
+    //         productos.forEach(async(prod)=>{
+
+    //             await axios.post("http://localhost:3001/tienda/compra",{
+    //                 ticketId:id,
+    //                 fecha,
+    //                 cantidad:prod.cantidad,
+    //                 articuloId:prod.id
+
+    //             }).then(()=>{console.log("Compra generada correctamente");})
+    //         })
+    //         console.log("Creado correctamente");
+    //     })
+
+    // }
 
     const handleChange = (event) => {
         const value = event.target.value
@@ -95,7 +155,7 @@ export default function Navbar() {
                         <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
                     </div>
-                    <div className={collapse}>
+                    <div>
 
                         <ListaArticulosEncontrados productos={productoLikeProp} />
                     </div>
@@ -110,7 +170,7 @@ export default function Navbar() {
                         <ListaArticulos productos={productoProp} />
                         <div className={style.info}>
                             <Condicion />
-                            <Costo />
+                            <Costo costo={costo} setCosto={setCosto}/>
 
                         </div>
 

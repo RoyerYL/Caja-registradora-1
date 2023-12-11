@@ -8,3 +8,7 @@
     --bs-table-bg: #bbb;
     cursor: default;
 }
+.tablaCliente{
+    border: 1px solid black;
+    transition: all .5s !important;
+}

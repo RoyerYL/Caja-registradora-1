@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ListCliente from './ListCliente';
+import style from './Cliente.module.css'
 export default function Navbar(props) {
 
     const [collapse, setCollapse] = useState("collapse")
@@ -50,7 +51,7 @@ export default function Navbar(props) {
 
 
             </div>
-            <div className={`${collapse}`}>
+            <div className={`${collapse} ${style.tablaCliente}`}>
                 <ListCliente cliente={cliente} setClienteForm={setClienteForm} clienteForm={clienteForm}/>
             </div>
         </>
