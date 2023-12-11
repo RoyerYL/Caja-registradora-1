@@ -3,21 +3,36 @@ import React, { useState, useEffect } from 'react';
 import ListCliente from './ListCliente';
 export default function Navbar(props) {
 
-    const {setClienteForm,ClienteForm} = props
     const [collapse, setCollapse] = useState("collapse")
-    const handleClick = () => {
-        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
-    }
+
+    const {setClienteForm,clienteForm} = props
+    const {  handleChange } = props
+
     const [cliente, setCliente] = useState([])
+
+    const handleClick = (e) => {
+        e.stopPropagation()
+        collapse==="collapse"?setCollapse("collapse.show"):setCollapse("collapse")
+        // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+    }
 
     useEffect(() => {
         axios("http://localhost:3001/tienda/cliente").then(({ data }) => {
             console.log(data);
             setCliente(data)
         })
+
+        const cerrar=()=>{
+            setCollapse("collapse")
+        }
+
+        document.addEventListener('click',cerrar)
+        return()=>{
+            document.removeEventListener('click',cerrar)
+
+        }
     }, [])
 
-    const { clienteForm, handleChange } = props
     return (
         <>
             <div >
@@ -36,7 +51,7 @@ export default function Navbar(props) {
 
             </div>
             <div className={`${collapse}`}>
-                <ListCliente cliente={cliente} setClienteForm={setClienteForm} clienteForm={ClienteForm}/>
+                <ListCliente cliente={cliente} setClienteForm={setClienteForm} clienteForm={clienteForm}/>
             </div>
         </>
 

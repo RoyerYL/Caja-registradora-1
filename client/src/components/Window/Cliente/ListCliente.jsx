@@ -14,7 +14,7 @@ export default function ListClientes() {
     return (
         <>
 
-            <table className="table">
+            <table className={`table  ${style.tabla}`}>
                 <thead>
                     <tr >
                         <th scope="col">#</th>
@@ -29,7 +29,7 @@ export default function ListClientes() {
                                 <tr key={prov.id}>
                                     <td>{prov.id}</td>
 
-                                    <td>
+                                    <td className={style.selectClient}>
                                         {/* <Link to={`/detail/${productos.id}`}> */}
                                             {prov.razonSocial}
                                         {/* </Link> */}

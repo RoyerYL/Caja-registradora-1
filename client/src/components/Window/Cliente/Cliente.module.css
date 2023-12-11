@@ -16,3 +16,12 @@
     width: 350px;
     padding: 15px;
 }
+.selectClient{
+    background-color: black;
+}
+.selectClient :hover{
+    background-color: antiquewhite;
+}
+.tabla{
+    background-color: black;
+}

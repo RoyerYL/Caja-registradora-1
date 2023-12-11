@@ -1,26 +1,29 @@
 const { Op } = require("sequelize");
-const { Articulo } = require("../../DB_connection")
+const { Cliente } = require("../../DB_connection")
 
 
-const getArticuloLike = async (req, res) => {
+const getClienteLike = async (req, res) => {
   const { id } = req.params
   try {
-    let resultados = await Articulo.findAll({
+    let resultados = await Cliente.findAll({
       where: {
-        id: {
+        nombre: {
           [Op.like]: `%${id}%`,
         },
       },
     });
+
+    // Si no hay resultados, consulta por otro parámetro 
     if (resultados.length === 0) {
-      resultados = await Articulo.findAll({
+      resultados = await Cliente.findAll({
         where: {
-          name: {
+          razonSocial: {
             [Op.like]: `%${id}%`,
           },
         },
       });
     }
+
     return res.status(201).json(resultados);
 
   } catch (error) {
@@ -28,4 +31,4 @@ const getArticuloLike = async (req, res) => {
 
   }
 }
-module.exports = { getArticuloLike };
+module.exports = { getClienteLike };

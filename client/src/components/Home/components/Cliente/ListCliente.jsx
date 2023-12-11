@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import style from './Cliente.module.css'
 export default function ListCliente(props) {
     const { cliente,setClienteForm,clienteForm } = props
     const handleClick=()=>{
-        axios("")
+        // axios("")
+        console.log("hola Cliente");
     }
     return (
         <>
@@ -22,7 +24,7 @@ export default function ListCliente(props) {
                                     <tr key={c.id}>
                                         <td>{c.id}</td>
 
-                                        <td onClick={handleClick}>
+                                        <td className={style.selectClient} onClick={handleClick}>
                                             {/* <Link to={`/detail/${productos.id}`}> */}
                                                 {c.razonSocial}
                                             {/* </Link> */}
