@@ -18,13 +18,26 @@ export default function Navbar() {
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
+    useEffect(()=>{
+        const cerrar=()=>{
+            setCollapse("collapse")
+        }
 
-    const collapseClick = () => {
-        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+        document.addEventListener('click',cerrar)
+        return()=>{
+            document.removeEventListener('click',cerrar)
+
+        }
+    },[])
+
+    const collapseClick = (e) => {
+        e.stopPropagation()
+        collapse==="collapse"?setCollapse("collapse.show"):setCollapse("collapse")
+        // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
     }
 
     const [clienteForm, setClienteForm] = useState({
-        nombre: "ejemplo",
+        nombre: "Default",
         dni: "000000"
     })
 

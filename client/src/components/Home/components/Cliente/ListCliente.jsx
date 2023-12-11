@@ -3,9 +3,24 @@ import React, { useState, useEffect } from 'react';
 import style from './Cliente.module.css'
 export default function ListCliente(props) {
     const { cliente,setClienteForm,clienteForm } = props
-    const handleClick=()=>{
-        // axios("")
-        console.log("hola Cliente");
+    const [selectClient,setSelectClient]=useState("")
+    useEffect(()=>{
+        if(selectClient!==""){
+
+            axios(`http://localhost:3001/tienda/clienteLike/${selectClient}`).then(({ data }) => {
+                console.log(data);
+
+                setClienteForm({
+                    ...clienteForm,
+                    nombre:data[0].nombre
+                })
+            })
+        }
+
+    },[selectClient])
+    const handleClick=(e)=>{
+        const value=e.target.innerHTML
+        setSelectClient(value)
     }
     return (
         <>

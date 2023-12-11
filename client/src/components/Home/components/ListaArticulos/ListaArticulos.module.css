@@ -16,9 +16,9 @@
     transform: scale(1.2);
 }
 .listArticuloEncontrados{
-    width: 350px;
+    z-index: 999;
+    position: absolute;
     height: 450px;
     overflow: overlay;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+    border: 1px solid black;
 }
