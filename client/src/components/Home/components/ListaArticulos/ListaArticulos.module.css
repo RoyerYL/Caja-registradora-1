@@ -21,3 +21,9 @@
     overflow: overlay;
     border: 1px solid black;
 }
+articulosEncontradosC{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: black;
+}

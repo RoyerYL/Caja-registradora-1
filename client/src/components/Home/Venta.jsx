@@ -100,43 +100,15 @@ export default function Navbar() {
                     ticketId: ticketId,
                     fecha: fecha,
                     cantidad: prod.cantidad,
-                    articuloId: prod.id,
+                    articuloId: prod.producto.id,
                 });
             }
     
-            console.log("Recibo generado correctamente");
+            alert("Compra realizada")
         } catch (error) {
             console.error("Error al generar el recibo:", error.message);
         }
     };
-    
-    // const generarRecibo =async () => {
-    //     console.log("generar Recibo");
-    //     const cliente = await (await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`))
-    //     console.log(cliente);
-    //     const body={
-    //         clienteId:cliente.data[0].id,
-    //         valorTotal:costo.subTotal,
-    //         fecha
-    //     }
-    //     let id
-    //     await axios.post("http://localhost:3001/tienda/ticket",body).then(({data})=>{
-    //         id=data.id
-
-    //         productos.forEach(async(prod)=>{
-
-    //             await axios.post("http://localhost:3001/tienda/compra",{
-    //                 ticketId:id,
-    //                 fecha,
-    //                 cantidad:prod.cantidad,
-    //                 articuloId:prod.id
-
-    //             }).then(()=>{console.log("Compra generada correctamente");})
-    //         })
-    //         console.log("Creado correctamente");
-    //     })
-
-    // }
 
     const handleChange = (event) => {
         const value = event.target.value

@@ -18,9 +18,9 @@ export default function ListaArticulosEncontrados(props) {
     const Row = ({ index, style }) => {
         const prod = productos[index];
         return (
-            <>
+            <div style={style.articulosEncontradosC}>
                 <ArticuloEncontrados key={index} productos={prod} onClose={props.onClose} />
-            </>
+            </div>
         );
     };
 
@@ -38,7 +38,7 @@ export default function ListaArticulosEncontrados(props) {
                     <AutoSizer>
                         {({ height, width }) => (
                             <FixedSizeList
-                                height={250} // Adjust height as needed
+                                height={550} // Adjust height as needed
                                 itemCount={productos.length}
                                 itemSize={50} // Adjust itemSize as needed
                                 width={width}
