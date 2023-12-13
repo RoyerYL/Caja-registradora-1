@@ -14,6 +14,7 @@ import Cliente from './components/Window/Cliente/Cliente';
 import Categoria from './components/Window/Categoria/Categoria';
 
 
+
 function App() {
    const navigate = useNavigate();
    /************ SEGURIDAD ************/

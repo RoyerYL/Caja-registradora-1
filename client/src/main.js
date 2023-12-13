@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
+const { spawn } = require('child_process');
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -21,7 +22,7 @@ const createWindow = () => {
     const filePath = path.join(__dirname, '../renderer', MAIN_WINDOW_VITE_NAME, 'index.html');
     console.log('Cargando desde archivo:', filePath);
     mainWindow.loadFile(filePath);
-
+    mainWindow.loadURL('http://localhost:3001');
   }
 
   // mainWindow.webContents.openDevTools();
@@ -31,16 +32,16 @@ const createWindow = () => {
       submenu: [
         { role: "toggleDevTools" },
         {
-          label:"ligth",
-          click:()=>{
-            
-            mainWindow.webContents.send('theme',"ligth")
+          label: "ligth",
+          click: () => {
+
+            mainWindow.webContents.send('theme', "ligth")
           }
         },
         {
-          label:"dark",
-          click:()=>{
-            mainWindow.webContents.send('theme',"dark")
+          label: "dark",
+          click: () => {
+            mainWindow.webContents.send('theme', "dark")
           }
         }
       ]
@@ -49,7 +50,34 @@ const createWindow = () => {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 };
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+  createWindow();
+
+  app.on('activate', function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+
+  // Inicia tu servidor Express
+  const serverProcess = spawn('node', ['./src/index.js']);
+  console.log("iniciando server");
+  console.log("***********************");
+  serverProcess.stdout.on('data', (data) => {
+    console.log(`Server output: ${data}`);
+  });
+
+  serverProcess.stderr.on('data', (data) => {
+    console.error(`Server error: ${data}`);
+  });
+
+  serverProcess.on('close', (code) => {
+    console.log(`Server process exited with code ${code}`);
+  });
+});
+
+// app.on('window-all-closed', function () {
+//   if (process.platform !== 'darwin') app.quit();
+// });
+// // app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -57,9 +85,9 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+// app.on('activate', () => {
+//   if (BrowserWindow.getAllWindows().length === 0) {
+//     createWindow();
+//   }
+// });
 
