@@ -3,7 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 import AltaArticulo from './components/AltaArticulo/AltaArticulo';
 import Venta from './components/Home/Venta';
 import Provedor from './components/Window/Provedor/Provedor';
-import Ventana from './components/Window/Ventana';
+import Comprobante from './components/Window/Comprobante';
 
 import './index.css';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
@@ -46,7 +46,7 @@ function App() {
                <AltaArticulo />
             } />
             <Route path='/ventana' element={
-               <Ventana />
+               <Comprobante />
             } />
             <Route path='/provedor' element={
                <Provedor />

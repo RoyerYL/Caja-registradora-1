@@ -22,7 +22,6 @@ const createWindow = () => {
     const filePath = path.join(__dirname, '../renderer', MAIN_WINDOW_VITE_NAME, 'index.html');
     console.log('Cargando desde archivo:', filePath);
     mainWindow.loadFile(filePath);
-    mainWindow.loadURL('http://localhost:3001');
   }
 
   // mainWindow.webContents.openDevTools();
@@ -58,9 +57,11 @@ app.whenReady().then(() => {
   });
 
   // Inicia tu servidor Express
-  const serverProcess = spawn('node', ['./src/index.js']);
+  const serverProcess = spawn('node', [path.join(app.getAppPath(),'src', 'index.js')]);
   console.log("iniciando server");
-  console.log("***********************");
+  console.log("********** *************");
+  console.log("__dirname *************");
+  console.log(app.getAppPath());
   serverProcess.stdout.on('data', (data) => {
     console.log(`Server output: ${data}`);
   });

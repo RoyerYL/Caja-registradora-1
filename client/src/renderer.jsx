@@ -16,7 +16,6 @@ window.electronAPI.onUpdateTheme((event,theme)=>{
   console.log(root);
   root.style.setProperty("--scheme",theme)
 })
-
 rootElement.render(
   <Provider store={store}>
     <BrowserRouter>
