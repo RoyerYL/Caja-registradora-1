@@ -8,7 +8,8 @@ const initialState = {
   cotizacionDolar: {
     mep: 0.00,
     blue: 0.00
-  }
+  },
+  articulosActualizar:[]
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -78,7 +79,8 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         productoLike: orderedCharacters,
       };
-
+      case "ART_ACTUALIZAR":
+        return {...state,articulosActualizar:[...payload]}
 
     default:
   return {

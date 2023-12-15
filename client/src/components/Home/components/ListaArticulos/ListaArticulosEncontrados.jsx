@@ -8,7 +8,7 @@ import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 export default function ListaArticulosEncontrados(props) {
 
-    const { productos } = props
+    const { productos,onClose } = props
     const dispatch = useDispatch()
 
     const handleSort = (input) => {
@@ -19,7 +19,7 @@ export default function ListaArticulosEncontrados(props) {
         const prod = productos[index];
         return (
             <div style={style.articulosEncontradosC}>
-                <ArticuloEncontrados key={index} productos={prod} onClose={props.onClose} />
+                <ArticuloEncontrados key={index} productos={prod} onClose={onClose} />
             </div>
         );
     };

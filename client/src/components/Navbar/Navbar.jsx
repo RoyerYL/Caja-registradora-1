@@ -67,6 +67,9 @@ export default function Navbar() {
                     <Link to="/listaArticulos">
                         <button type="button" className="btn btn-outline-primary">Lista de articulos</button>
                     </Link>
+                    <Link to="/actualizarArticulo">
+                        <button type="button" className="btn btn-outline-primary">Acrualizar datos</button>
+                    </Link>
 
                 </div>
 

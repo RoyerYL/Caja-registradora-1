@@ -115,3 +115,9 @@ export const order_articulos = (order) => {
   }
 }
 
+export const articuloActualizar=(data)=>{
+  return{
+    type:"ART_ACTUALIZAR",
+    payload:data
+  }
+}

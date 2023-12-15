@@ -11,6 +11,9 @@ module.exports = (sequelize) => {
          type:DataTypes.DECIMAL(10, 2),
          allowNull:false,
       },
+      subTotal:{
+         type:DataTypes.DECIMAL(10, 2)
+      },
       fecha:{
          type:DataTypes.DATE,
          allowNull:false

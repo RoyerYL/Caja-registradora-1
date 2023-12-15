@@ -12,6 +12,7 @@ import ListaArticulos from './components/ListaDeArticulos/ListaArticulos';
 import Login from './components/Login/Login';
 import Cliente from './components/Window/Cliente/Cliente';
 import Categoria from './components/Window/Categoria/Categoria';
+import ActualizarDatos from './components/ActualizarDatos/ActualizarDatos';
 
 
 
@@ -59,6 +60,9 @@ function App() {
             } />
             <Route path='/detail/:id' element={
                <Detail />
+            } />
+            <Route path='/actualizarArticulo' element={
+               <ActualizarDatos />
             } />
 
          </Routes>

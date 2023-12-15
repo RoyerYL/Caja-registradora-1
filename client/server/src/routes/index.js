@@ -22,6 +22,9 @@ const { getCategoria } = require('../controller/Categoria/getCategoria');
 const { getClienteLike } = require('../controller/Cliente/getClienteLike');
 const { getTicket } = require('../controller/Ticket/getTicket');
 const { getCompras } = require('../controller/Compra/getCompras');
+const { actualizarPrecioPorcentaje } = require('../controller/Articulo/acutalizarPreciosPorcentaje');
+const {  actualizarPrecios } = require('../controller/Articulo/acutalizarPrecios');
+const { actualizarPrecio } = require('../controller/Articulo/acutalizarPrecio');
 
 
 
@@ -30,6 +33,10 @@ router.get('/articulo/:id',getArticulo)
 router.get('/articuloLike/:id',getArticuloLike)
 router.post('/articulo',postArticulo)
 router.post('/actualizararticulo',updateArticulo)
+router.post('/actualizpreciosporcentaje',actualizarPrecioPorcentaje)
+router.post('/actualizprecios',actualizarPrecios)
+router.post('/actualizprecio',actualizarPrecio)
+
 
 
 router.get('/categoria',getAllCategoria)
