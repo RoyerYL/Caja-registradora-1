@@ -1,13 +1,14 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const ticketCreate = require(path.join(app.getAppPath() ,"src", "Utils","ticketGenerator",'index.js'));
 
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
-
+let mainWindow
 const createWindow = () => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1500,
     height: 1600,
     webPreferences: {
@@ -49,6 +50,17 @@ const createWindow = () => {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 };
+
+ipcMain.on("executeTicketCreate", (event,id) => {
+  console.log("hola app");
+    // Ejecutar la función ticketCreate
+     ticketCreate(id);
+
+    // Enviar el resultado de vuelta al proceso de renderizado
+    event.reply('ticketCreateResult', 'Ticket creado con éxito');
+  
+});
+
 app.whenReady().then(() => {
   createWindow();
 
@@ -58,10 +70,6 @@ app.whenReady().then(() => {
 
   // Inicia tu servidor Express
   const serverProcess = spawn('node', [path.join(app.getAppPath(),'src', 'index.js')]);
-  console.log("iniciando server");
-  console.log("********** *************");
-  console.log("__dirname *************");
-  console.log(app.getAppPath());
   serverProcess.stdout.on('data', (data) => {
     console.log(`Server output: ${data}`);
   });
@@ -75,20 +83,11 @@ app.whenReady().then(() => {
   });
 });
 
-// app.on('window-all-closed', function () {
-//   if (process.platform !== 'darwin') app.quit();
-// });
-// // app.on('ready', createWindow);
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-
-// app.on('activate', () => {
-//   if (BrowserWindow.getAllWindows().length === 0) {
-//     createWindow();
-//   }
-// });
 

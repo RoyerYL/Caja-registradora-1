@@ -5,7 +5,8 @@ const postCompra = async (req, res) => {
         cantidad,
         fecha,
         ticketId,
-        articuloId
+        articuloId,
+        subTotal
     } = req.body;
 
     // if (!cantida || !fecha || !ticketId || !articuloId) {
@@ -13,13 +14,10 @@ const postCompra = async (req, res) => {
     // }
 
     try {
-        console.log("----------------");
-        console.log(req.body.articuloId);
-        console.log(req.body);
-        console.log("----------------");
         const newCompra = await Compra.create({
                 cantidad,
                 fecha,
+                subTotal,
                 TicketId:ticketId,
                 ArticuloId:articuloId
             

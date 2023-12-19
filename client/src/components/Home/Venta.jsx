@@ -11,14 +11,19 @@ import { useParams } from 'react-router-dom';
 import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulosEncontrados';
 import { add_art, getAll } from '../../redux/action';
 import axios from 'axios';
+import createExcelFile from '../../Utils/excelGenerator/index.mjs';
+import getFecha from '../../Utils/getFecha/getFecha';
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
-    const fecha = new Date().toString()
+    
+    const fecha =getFecha( new Date())
     const dispatch = useDispatch()
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
+    const vendedor = useSelector((state) => state.vendedor)
+    const[ticket,setTicket]=useState()
     
     const [costo,setCosto]=useState({
         subTotal:0.00
@@ -42,8 +47,7 @@ export default function Navbar() {
     }
 
     const [clienteForm, setClienteForm] = useState({
-        nombre: "Default",
-        dni: "000000"
+        nombre: "default",
     })
 
     const [productoProp, setProductoProp] = useState([])
@@ -65,7 +69,6 @@ export default function Navbar() {
 
     const addHandler = (Articulo) => {
         const { cantidad, codBarras, page } = Articulo
-        console.log(codBarras);
         if (!codBarras) {
             dispatch(getAll())   
             return         
@@ -73,13 +76,12 @@ export default function Navbar() {
          dispatch(add_art({
             cantidad,
             codBarras,
-
             page
         }))
 
 
     }
-    const generarRecibo = async () => {
+    const generarRecibo =  async() => {
         try {
             // Buscar el cliente por nombre
             const responseCliente = await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`);
@@ -89,11 +91,13 @@ export default function Navbar() {
             const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", {
                 clienteId: cliente.id,
                 valorTotal: costo.subTotal,
-                fecha: fecha,
+                fecha: new Date(),
+                vendedorId:vendedor,
+                cajaId:1
             });
     
             const ticketId = responseTicket.data.id;
-    
+            setTicket(ticketId)
             // Crear compras para cada producto en la lista
             for (const prod of productos) {
                 await axios.post("http://localhost:3001/tienda/compra", {
@@ -101,6 +105,7 @@ export default function Navbar() {
                     fecha: fecha,
                     cantidad: prod.cantidad,
                     articuloId: prod.producto.id,
+                    subTotal: prod.producto.precioVenta*prod.cantidad,
                 });
             }
     
@@ -109,6 +114,11 @@ export default function Navbar() {
             console.error("Error al generar el recibo:", error.message);
         }
     };
+
+    const imprimirRecibo=()=>{
+     window.electronAPI.executeTicketCreate(ticket)
+
+    }
 
     const handleChange = (event) => {
         const value = event.target.value
@@ -119,11 +129,11 @@ export default function Navbar() {
 
     return (
         <div className={style.Home}>
-            <span className="input-group-text">{fecha}</span>
+            <span>{fecha}</span>
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
                     <div className={style.Articulo}>
-                        <h5>Ingrese un articulo</h5>
+                        
                         <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
                     </div>
@@ -147,7 +157,8 @@ export default function Navbar() {
                         </div>
 
                     </div>
-                    <button type="button" className="btn btn-success" onClick={generarRecibo}>Generar recibo</button>
+                    <button  onClick={generarRecibo}>Generar recibo</button>
+                    <button  onClick={imprimirRecibo}>Imprimir recibo</button>
                 </div>
             </div>
             <div >

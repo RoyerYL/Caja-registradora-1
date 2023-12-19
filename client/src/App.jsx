@@ -5,7 +5,7 @@ import Venta from './components/Home/Venta';
 import Provedor from './components/Window/Provedor/Provedor';
 import Comprobante from './components/Window/Comprobante';
 
-import './index.css';
+
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Detail from './components/Home/components/Detail/detail';
 import ListaArticulos from './components/ListaDeArticulos/ListaArticulos';

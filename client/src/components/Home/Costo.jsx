@@ -28,16 +28,16 @@ export default function Costo(props) {
     return (
         <div className={style.Costo}>
 
-            <table className="table table-success table-striped">
+            <table >
                 <tbody>
                     <tr>
-                        <th scope="row">Subtotal:</th>
+                        <th >Subtotal:</th>
                         <td></td>
                         <td>{costo.subTotal}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Descuento:</th>
-                        <td><select className="form-select form-select-sm" aria-label="Small select example" defaultValue="1">
+                        <th >Descuento:</th>
+                        <td><select defaultValue="1">
                             <option value="1">Sin descuento</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
@@ -45,7 +45,7 @@ export default function Costo(props) {
                         <td></td>
                     </tr>
                     <tr>
-                        <th scope="row">Total</th>
+                        <th >Total</th>
                         <td></td>
                         <td id='costoTotal' colSpan="2">{costo.subTotal}</td>
                     </tr>

@@ -25,17 +25,47 @@ const { getCompras } = require('../controller/Compra/getCompras');
 const { actualizarPrecioPorcentaje } = require('../controller/Articulo/acutalizarPreciosPorcentaje');
 const {  actualizarPrecios } = require('../controller/Articulo/acutalizarPrecios');
 const { actualizarPrecio } = require('../controller/Articulo/acutalizarPrecio');
+const { getVendedor } = require('../controller/Vendedor/getVendedor');
+const { postVendedor } = require('../controller/Vendedor/postVendedor');
+const { getCaja } = require('../controller/Caja/getCaja');
+const { postCaja } = require('../controller/Caja/postCaja');
+const { cerrarCaja } = require('../controller/Caja/cerrarCaja');
+const { getAllVendedors } = require('../controller/Vendedor/getAllTickets');
+const { actualizarCategoria } = require('../controller/Articulo/acutalizarCategoria');
+const { actualizarProvedor } = require('../controller/Articulo/acutalizarProvedor');
+const { actualizarCostoDolar } = require('../controller/Articulo/acutalizarCostoDolar');
+const { actualizarCostoPeso } = require('../controller/Articulo/acutalizarCostoPeso');
+const { actualizarGanancia } = require('../controller/Articulo/acutalizarGanancia');
+const { actualizarIva } = require('../controller/Articulo/acutalizarIva');
+const { actualizarStock } = require('../controller/Articulo/acutalizarStock');
+const { actualizarStockMin } = require('../controller/Articulo/acutalizarStockMin');
+const { actualizarActivo } = require('../controller/Articulo/acutalizarActivo');
+const { getAllCaja } = require('../controller/Caja/getAllCaja');
 
 
 
 router.get('/articulo',getAllArticulos)
 router.get('/articulo/:id',getArticulo)
 router.get('/articuloLike/:id',getArticuloLike)
+
 router.post('/articulo',postArticulo)
+//Actualizar todo
 router.post('/actualizararticulo',updateArticulo)
-router.post('/actualizpreciosporcentaje',actualizarPrecioPorcentaje)
+
+router.post('/actualizarpreciosporcentajexcategoria',actualizarPrecioPorcentaje)
 router.post('/actualizprecios',actualizarPrecios)
+//ACTUALIZAR DATOS UNICOS
 router.post('/actualizprecio',actualizarPrecio)
+router.post('/actualizarCategoria',actualizarCategoria)
+router.post('/actualizarProvedor',actualizarProvedor)
+router.post('/actualizarCostoDolar',actualizarCostoDolar)
+router.post('/actualizarCostoPeso',actualizarCostoPeso)
+router.post('/actualizarGanancia',actualizarGanancia)
+router.post('/actualizarIva',actualizarIva)
+router.post('/actualizarStock',actualizarStock)
+router.post('/actualizarStockMin',actualizarStockMin)
+router.post('/actualizarActivo',actualizarActivo)
+
 
 
 
@@ -60,6 +90,14 @@ router.get('/cliente/:id',getCliente)
 router.get('/clienteLike/:id',getClienteLike)
 router.post('/cliente',postCliente)
 
+router.get('/caja',getAllCaja)
+router.get('/caja/:id',getCaja)
+router.post('/caja',postCaja)
+router.post('/cerrarCaja',cerrarCaja)
+
+router.get('/vendedor/:id',getVendedor)
+router.get('/vendedor',getAllVendedors)
+router.post('/vendedor',postVendedor)
 
 
 

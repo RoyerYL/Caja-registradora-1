@@ -21,38 +21,38 @@ export default function ArticuloEncontrados(props) {
     }
 
     return (
-        // <tr>
-        //     <td>{productos.id}</td>
+        <tr>
+            <td>{productos.id}</td>
 
-        //     <td>
-        //         <Link to={`/detail/${productos.id}`}>
-        //             {productos.name}
-        //         </Link>
-        //     </td>
-        //     <td>${productos.precioVenta}
-        //         {
-        //             pathname !== '/listaArticulos' &&
-        //             <button type="button" className="btn btn-success" onClick={handleClick}>Agregar</button>
-        //         }
-        //     </td>
-
-        // </tr>
-        <>
-            <span>{productos.id}</span>
-
-            <span>
+            <td>
                 <Link to={`/detail/${productos.id}`}>
                     {productos.name}
                 </Link>
-            </span>
-            <span>${productos.precioVenta}
+            </td>
+            <td>${productos.precioVenta}
                 {
                     pathname !== '/listaArticulos' &&
                     <button type="button" className="btn btn-success" onClick={handleClick}>Agregar</button>
                 }
-            </span>
+            </td>
 
-        </>
+        </tr>
+        // <>
+        //     <span>{productos.id}</span>
+
+        //     <span>
+        //         <Link to={`/detail/${productos.id}`}>
+        //             {productos.name}
+        //         </Link>
+        //     </span>
+        //     <span>${productos.precioVenta}
+        //         {
+        //             pathname !== '/listaArticulos' &&
+        //             <button type="button" className="btn btn-success" onClick={handleClick}>Agregar</button>
+        //         }
+        //     </span>
+
+        // </>
     )
 
 }

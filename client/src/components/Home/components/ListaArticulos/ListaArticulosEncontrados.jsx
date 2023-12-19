@@ -1,60 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import style from './ListaArticulos.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import ArticuloEncontrados from './ArticuloEncontrados';
-import { order_articulos } from '../../../../redux/action';
+import { add_art, order_articulos, resetArtLike } from '../../../../redux/action';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 export default function ListaArticulosEncontrados(props) {
 
-    const { productos,onClose } = props
+    const { productos, onClose } = props
     const dispatch = useDispatch()
-
+    const { pathname } = useLocation();
+    const { id } = useParams()
     const handleSort = (input) => {
         dispatch(order_articulos(input))
     }
+    const handleClick = (id_) => {
+        dispatch(resetArtLike())
+        dispatch(add_art({
+            cantidad: document.getElementById('cantidad').value,
+            codBarras: id_,
+            page: id
+        }))
 
-    const Row = ({ index, style }) => {
-        const prod = productos[index];
-        return (
-            <div style={style.articulosEncontradosC}>
-                <ArticuloEncontrados key={index} productos={prod} onClose={onClose} />
-            </div>
-        );
-    };
+    }
 
     return (
         <div className={style.listArticuloEncontrados}>
-            <table className="table">
-                <thead>
-                    <tr className={style.nomFilas}>
-                        <th scope="col">Código de barras  <button type="button" onClick={() => { handleSort("A") }} >🔀</button> </th>
-                        <th scope="col">Nombre <button type="button" onClick={() => { handleSort("B") }}>🔀</button></th>
-                        <th scope="col">Precio </th>
-                    </tr>
-                </thead>
-                <tbody>
+          
                     <AutoSizer>
                         {({ height, width }) => (
-                            <FixedSizeList
-                                height={550} // Adjust height as needed
-                                itemCount={productos.length}
-                                itemSize={50} // Adjust itemSize as needed
-                                width={width}
-                            >
-                                {Row}
-                            </FixedSizeList>
+                            <>
+                                {productos.map((prod, index) => (
+                                    <div key={prod.id}>
+                                        <p>{prod.id}</p>
+
+                                        <p>
+                                            <Link to={`/detail/${prod.id}`}>
+                                                {prod.name}
+                                            </Link>
+                                        </p>
+                                        <p>${prod.precioVenta}
+                                            {
+                                                pathname !== '/listaArticulos' &&
+                                                <button type="button" className="btn btn-success" onClick={()=>{handleClick(prod.id)}}>Agregar</button>
+                                            }
+                                        </p>
+
+                                    </div>
+
+                                ))}
+                            </>
                         )}
                     </AutoSizer>
-                    {/* {productos.map((prod, index) => {
-                        return (
-                            <ArticuloEncontrados key={index} productos={prod} onClose={props.onClose} />
-                        )
-                    }
-                    )} */}
-                </tbody>
-            </table>
+                    
         </div>
 
 

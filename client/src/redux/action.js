@@ -18,20 +18,20 @@ export const add_art = (input) => {
         }
       })
     } catch (error) {
-      // try {
-      //   const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
-      // return  dispatch({
-      //     type: ADD_ARTLike,
-      //     payload: data
-      //   })
+      try {
+        const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
+      return  dispatch({
+          type: ADD_ARTLike,
+          payload: data
+        })
 
-      // } catch (error) {
-      //   // const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
-      //   // return dispatch({
-      //   //   type: ADD_ARTLike,
-      //   //   payload: data
-      //   // })
-      // }
+      } catch (error) {
+        // const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
+        // return dispatch({
+        //   type: ADD_ARTLike,
+        //   payload: data
+        // })
+      }
     }
 
   }
@@ -118,6 +118,12 @@ export const order_articulos = (order) => {
 export const articuloActualizar=(data)=>{
   return{
     type:"ART_ACTUALIZAR",
+    payload:data
+  }
+}
+export const articuloActualizarReset=(data)=>{
+  return{
+    type:"ART_ACTUALIZAR_RESET",
     payload:data
   }
 }

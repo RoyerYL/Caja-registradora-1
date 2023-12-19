@@ -1,6 +1,4 @@
-require('dotenv').config();
 const { Sequelize } = require('sequelize');
-const { DB_USER, DB_PASSWORD, DB_HOST ,DB_PORT,DB_BDD } = process.env;
 const ArticuloFunction=require('./models/Articulo')
 const CategoriaFunction=require('./models/Categoria')
 const ProvedorFunction=require('./models/Provedor')
@@ -8,6 +6,8 @@ const ClienteFunction = require('./models/Cliente');
 const TicketFunction=require('./models/Ticket');
 const CompraFunction=require('./models/Compra');
 
+const CajaFunction=require('./models/Caja');
+const VendedorFunction=require('./models/Vendedor');
 // /**
 //  * Conexion con la base de datos
 //  */
@@ -60,8 +60,12 @@ ProvedorFunction(dataBase)
 ClienteFunction(dataBase)
 TicketFunction(dataBase)
 CompraFunction(dataBase)
+
+VendedorFunction(dataBase)
+CajaFunction(dataBase)
+
 // Creación de tablas
-const { Articulo, Provedor, Categoria,Cliente,Ticket,Compra } = dataBase.models;
+const { Articulo, Provedor, Categoria,Cliente,Ticket,Compra , Caja,Vendedor } = dataBase.models;
 
 Categoria.hasMany(Articulo, { foreignKey: 'CategoriaId' });
 Articulo.belongsTo(Categoria, { foreignKey: 'CategoriaId' });
@@ -72,12 +76,17 @@ Articulo.belongsTo(Provedor, { foreignKey: 'ProvedorId' });
 Cliente.hasMany(Ticket)
 Ticket.belongsTo(Cliente)
 
+Vendedor.hasMany(Ticket,{ foreignKey: 'VendedorId' })
+Ticket.belongsTo(Vendedor,{ foreignKey: 'VendedorId' })
+
 Ticket.hasMany(Compra)
 Compra.belongsTo(Ticket)
 
 Articulo.hasMany(Compra,{foreignKey:"ArticuloId"})
 Compra.belongsTo(Articulo,{foreignKey:"ArticuloId"})
 
+Caja.hasMany(Ticket)
+Ticket.belongsTo(Caja)
 
 
 module.exports = {
@@ -87,5 +96,7 @@ module.exports = {
   Categoria,
   Compra,
   Ticket,
-  Cliente
+  Cliente,
+  Vendedor,
+  Caja
 };

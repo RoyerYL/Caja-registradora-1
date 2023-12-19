@@ -23,52 +23,52 @@ export default function Navbar() {
         <div className={style.Navbar}>
 
 
-            <nav className="navbar ">
-                <div className="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Ventas</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Caja</button>
+            <nav >
+                <div >
+                    <button >Ventas</button>
+                    <button >Caja</button>
                     <Link to="/cliente">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">Clientes</button>
+                        <button >Clientes</button>
                     </Link>
                     <Link to="/provedor">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">Provedores</button>
+                        <button >Provedores</button>
                     </Link>
                     <Link to="/categoria">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">Categoria</button>
+                        <button >Categoria</button>
                     </Link>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Estadisticas</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Reportes</button>
+                    <button >Estadisticas</button>
+                    <button >Reportes</button>
                     <Link to="/provedor">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">Articulos</button>
+                        <button >Articulos</button>
                     </Link>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Operaciones</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Administracón</button>
+                    <button>Operaciones</button>
+                    <button>Administracón</button>
                 </div>
             </nav>
 
 
             <nav className="navbar">
-                <div className="btn-group" role="group" aria-label="Basic outlined example">
+                <div >
                     <Link to="./">
-                        <button type="button" className="btn btn-outline-primary">Caja</button>
+                        <button >Caja</button>
                     </Link>
                     <Link to={`/ventana/${id_}`}>
-                    <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo</button>
+                        <button onClick={handleClick}>Nuevo</button>
                     </Link>
 
 
 
                     <Link to="/altaArticulo">
-                        <button type="button" className="btn btn-outline-primary">Alta de articulo</button>
+                        <button >Alta de articulo</button>
                     </Link>
                     <Link to="/ventana">
-                        <button type="button" className="btn btn-outline-primary">Comprobantes</button>
+                        <button >Comprobantes</button>
                     </Link>
                     <Link to="/listaArticulos">
-                        <button type="button" className="btn btn-outline-primary">Lista de articulos</button>
+                        <button >Lista de articulos</button>
                     </Link>
                     <Link to="/actualizarArticulo">
-                        <button type="button" className="btn btn-outline-primary">Acrualizar datos</button>
+                        <button >Acrualizar datos</button>
                     </Link>
 
                 </div>

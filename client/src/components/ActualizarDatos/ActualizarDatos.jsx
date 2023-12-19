@@ -38,12 +38,13 @@ export default function ActualizarDatos() {
         const estaSeleccionado = articulosSeleccionados.includes(articulo);
         if (estaSeleccionado) {
             // Si está seleccionado, quitarlo de la lista
-            setArticulosSeleccionados(articulosSeleccionados.filter(item =>item.id !== articulo.id));
+            setArticulosSeleccionados(articulosSeleccionados.filter(item => item.id !== articulo.id));
         } else {
             // Si no está seleccionado, agregarlo a la lista
             setArticulosSeleccionados([...articulosSeleccionados, articulo]);
         }
     };
+
     useEffect(() => {
         axios("http://localhost:3001/tienda/provedor").then(({ data }) => {
 
@@ -62,9 +63,42 @@ export default function ActualizarDatos() {
         const value = event.target.value;
         setForm({ ...form, [property]: value });//cambio Form..
     }
-    const addArticulosActualizar=()=>{
+    const addArticulosActualizar = () => {
         dispatch(articuloActualizar(articulosSeleccionados))
     }
+
+    const actualizar = async(e) => {
+
+        const nombre=e.target.name
+        switch (nombre) {
+            case "precioVenta":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizprecio", {
+                        articuloId: prod.id,
+                        nuevoPrecio:form.precioVenta
+                        
+                    });
+                }
+                
+                break;
+            case "categoria":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarCategoria", {
+                        articuloId: prod.id,
+                        categoriaId:form.CategoriaId
+                        
+                    });
+                }
+                
+                break;
+            
+            default:
+                break;
+        }
+
+
+    }
+
     return (<>
         <div className={style.ActualizarDatos}>
             <div className={style.containerListArticulos}>
@@ -102,26 +136,79 @@ export default function ActualizarDatos() {
                     ))}
                 </ul>
             </div>
-            <div>
-                <select className="form-select" aria-label="Default select example" value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
-                    {
-                        provedor.map((prov) => {
-                            return (
-                                <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
-                            )
-                        })
-                    }
-                </select>
-                <select className="form-select" aria-label="Default select example" value={form.CategoriaId} name='CategoriaId' onChange={handleChange}>
-                    {
-                        categoria.map((cate) => {
-                            return (
-                                <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
-                            )
-                        })
-                    }
-                </select>
+            <div className={style.containerForm}>
+                <div>
 
+                    <select value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
+                        {
+                            provedor.map((prov) => {
+                                return (
+                                    <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <button>actualizar</button>
+                </div>
+                <div>
+
+                    <select value={form.CategoriaId} name='CategoriaId' onChange={handleChange}>
+                        {
+                            categoria.map((cate) => {
+                                return (
+                                    <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <button name='categoria' onClick={actualizar}>actualizar</button>
+                </div>
+                <div>
+                    <span>stock</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                </div>
+                <div>
+                    <span>stock min</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                </div>
+                <div>
+                    <span>Cost peso</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                    <span>Cost peso %</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                </div>
+                <div>
+                    <span>Costo dolar</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                    <span>Costo dolar%</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                </div>
+                <div>
+                    <span>Precio venta</span>
+                    <input type="text" name='precioVenta' value={form.precioVenta} onChange={handleChange} />
+                    <button name='precioVenta' onClick={actualizar}>actualizar</button>
+                </div>
+                <div>
+                    <span>iva</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                </div>
+                <div>
+                    <span>ganancia</span>
+                    <input type="text" />
+                    <button>actualizar</button>
+                </div>
+                <div>
+                    <span>activo</span>
+                    <input type="checkbox" />
+                    <button>actualizar</button>
+                </div>
 
             </div>
 

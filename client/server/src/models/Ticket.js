@@ -15,5 +15,8 @@ module.exports = (sequelize) => {
          type:DataTypes.DATE,
          allowNull:false
       },
+      VendedorId:{
+         type:DataTypes.INTEGER
+      }
    }, { timestamps: false });
 };

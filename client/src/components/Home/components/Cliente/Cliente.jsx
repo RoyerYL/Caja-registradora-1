@@ -37,17 +37,11 @@ export default function Navbar(props) {
     return (
         <>
             <div >
-                <div className="input-group mb-3">
-                    <span className="input-group-text">DNI/CUIT</span>
-                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='dni' value={clienteForm.dni} onChange={handleChange} />
-
-
+                <div >
+                    <span >Nombre</span>
+                    <input name='nombre' value={clienteForm.nombre} onChange={handleChange} />
                 </div>
-                <div className="input-group mb-3">
-                    <span className="input-group-text">Nombre</span>
-                    <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" name='nombre' value={clienteForm.nombre} onChange={handleChange} />
-                </div>
-                <button type="button" className="btn btn-info" onClick={handleClick}>Info</button>
+                <button onClick={handleClick}>Info</button>
 
 
             </div>

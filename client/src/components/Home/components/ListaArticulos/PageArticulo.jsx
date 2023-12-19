@@ -5,7 +5,6 @@ import { getAll, get_list } from '../../../../redux/action';
 import style from "./PageArticulo.module.css"
 export default function PageArticulo(props) {
     const { id, onClose } = props
-    const producto = useSelector((state) => state.producto);
     const dispatch = useDispatch()
     const handleClick = () => {
         dispatch(get_list(id))
@@ -14,10 +13,13 @@ export default function PageArticulo(props) {
     return (
         <>
             <div className={style.container}>
+
                 <Link to={`/ventana/${id}`}>
-                    <button type="button" className="btn btn-outline-primary" onClick={handleClick}>Nuevo {id}</button>
+                    <button onClick={handleClick}>Nuevo {id}</button>
                 </Link>
-                <button type="button" className={`${"btn-close "}${style.close}`} onClick={()=>{onClose(id)}} aria-label="Close"></button>
+
+                <button  className={`${style.close}`} onClick={()=>{onClose(id)}} ></button>
+
             </div>
         </>
     )

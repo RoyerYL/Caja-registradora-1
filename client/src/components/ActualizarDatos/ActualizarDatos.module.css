@@ -25,3 +25,9 @@ ul{
 }
 p{
 }
+.containerForm{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 3px;
+}

@@ -4,37 +4,28 @@ import axios from 'axios'
 // const { BrowserWindow } = remote;
 
 function Comprobante() {
-    const[collapse,setCollapse]=useState("collapse")
     const [comprobantes,setComprobantes]=useState([])
 
     useEffect(()=>{
         axios("http://localhost:3001/tienda/ticket").then(({data})=>{setComprobantes(data);})
     },[])
-
-    const handleClick=()=>{
-        collapse==="collapse"?setCollapse("collapse.show"):setCollapse("collapse")
-    }
-    const openNewWindow=()=>{
-        console.log(window);
-        window.electron.openNewWindow()
-    }
     
     return (
         <div>
             {
                 comprobantes.map((comprobante)=>{
                     return(
-                        <>
-                            <span>{comprobante.id}</span>
+                        <div key={comprobante.id}>
+                            <span># {comprobante.id}</span>
                             <br />
-                            <span>{comprobante.fecha}</span>
+                            <span>fecha: {comprobante.fecha}</span>
                             <br />
-                            <span>{comprobante.ClienteId}</span>
+                            <span>cliente: {comprobante.ClienteId}</span>
                             <br />
-                            <span>{comprobante.valorTotal}</span>
+                            <span>Valor Total:$ {comprobante.valorTotal}</span>
                             <br />
                             <br />
-                        </>
+                        </div>
                     )
                 })
             }

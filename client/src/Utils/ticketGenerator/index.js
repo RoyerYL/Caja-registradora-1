@@ -5,9 +5,9 @@ const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-async function createPDF() {
+async function ticketCreate(id) {
 
-    const id = 17
+    
     let compras = []
     let fecha = ""
     let ticketId = 0
@@ -88,4 +88,4 @@ async function createPDF() {
 }
 
 // Llama a la función para crear el PDF
-createPDF();
+module.exports = ticketCreate;

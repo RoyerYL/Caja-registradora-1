@@ -4,7 +4,7 @@ const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
   producto: [],
   productoLike: [],
-  Vendedor: "A",
+  Vendedor: "vendedor 2",
   cotizacionDolar: {
     mep: 0.00,
     blue: 0.00
@@ -24,11 +24,9 @@ export default (state = initialState, { type, payload }) => {
 
 
     case ADD_ARTLike:
-      console.log(payload);
       return { ...state, productoLike: payload };
 
     case 'GET_ALL':
-      console.log(payload);
       return { ...state, productoLike: payload };
 
     case 'GET_LIST':
@@ -81,6 +79,8 @@ export default (state = initialState, { type, payload }) => {
       };
       case "ART_ACTUALIZAR":
         return {...state,articulosActualizar:[...payload]}
+      case "ART_ACTUALIZAR_RESET":
+        return {...state,articulosActualizar:[]}
 
     default:
   return {

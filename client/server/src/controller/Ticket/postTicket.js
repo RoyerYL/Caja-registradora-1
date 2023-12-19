@@ -1,10 +1,12 @@
-const { Ticket ,Cliente} = require("../../DB_connection")
+const { Ticket ,Cliente ,Caja} = require("../../DB_connection")
 
 const postTicket = async (req, res) => {
     const {
         valorTotal,
         fecha,
-        clienteId
+        clienteId,
+        cajaId,
+        vendedorId
     } = req.body;
 
     // if (valorTotal,fecha,clienteId) {
@@ -16,7 +18,10 @@ const postTicket = async (req, res) => {
         const newUser = await Ticket.create({
                 valorTotal,
                 fecha,
-                ClienteId:clienteId
+                ClienteId:clienteId,
+                CajaId:cajaId,
+                VendedorId:vendedorId
+
         })
 
 

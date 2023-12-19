@@ -2,11 +2,11 @@ const { Articulo } = require("../../DB_connection")
 
 const actualizarPrecioPorcentaje = async (req, res) => {
 
-    const { categoryId, porcentajeAumento } = req.body;
+    const { provedorId, porcentajeAumento } = req.body;
 
     try {
         // Obtener los artículos con la categoryId específica
-        const articulos = await Articulo.findAll({ where: { CategoryId: categoryId } });
+        const articulos = await Articulo.findAll({ where: { ProvedorId: provedorId } });
 
         if (articulos.length === 0) {
             return res.status(404).json({ message: 'No se encontraron artículos con la categoryId proporcionada.' });
@@ -14,8 +14,8 @@ const actualizarPrecioPorcentaje = async (req, res) => {
 
         // Actualizar el precio de cada artículo con el porcentaje de aumento
         const updatePromises = articulos.map(async (articulo) => {
-            const precioActualizado = articulo.precio * (1 + porcentajeAumento / 100);
-            await Articulo.update({ precioVenta: precioActualizado }, { where: { id: articulo.id } });
+            const precioActualizado = articulo.costoDolar * (1 + porcentajeAumento / 100);
+            await Articulo.update({ costoDolar: precioActualizado }, { where: { id: articulo.id } });
         });
 
         // Esperar a que todas las actualizaciones se completen

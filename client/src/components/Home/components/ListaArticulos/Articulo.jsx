@@ -30,7 +30,7 @@ export default function Articulo(props) {
 
     return (
         <tr >
-            <th scope="row">{id}</th>
+            <th >{id}</th>
             <td className={style.containerProducto}>
                 <Link to={`/detail/${producto.id}`}>
                     {producto.id}
@@ -49,8 +49,8 @@ export default function Articulo(props) {
                 </div>
                 <div>
 
-                    <button type="button" className="btn btn-success" onClick={handleClick}>+</button>
-                    <button type="button" className="btn btn-danger" onClick={handleClickMenos }>-</button>
+                    <button  onClick={handleClick}>+</button>
+                    <button onClick={handleClickMenos }>-</button>
                 </div>
 
             </td>
@@ -58,7 +58,7 @@ export default function Articulo(props) {
             <td>$ {producto.precioVenta * cantidad}</td>
             <td >
 
-                <button type="button" className="btn btn-danger" onClick={onClose}>🗑</button>
+                <button onClick={onClose}>🗑</button>
 
             </td>
         </tr>

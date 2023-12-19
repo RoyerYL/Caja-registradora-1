@@ -22,17 +22,35 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    border: 1px solid;
+    padding: 15px;
+    margin: 5px;
     
 }
 .costo div{
-    width: 125px;
 }
-.costo span{
-}
-.nombre{
-    width: 50%;
-}.nombre input{
+
+.containerDatos{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid black;
+}.containerDatos input{
     margin-right: 5px;
+}
+.containerNombre{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 8px;
+   
+}
+.containerNombre label{
+    margin: 5px;
 }
 .containerNombreStock{
     display: flex;
@@ -45,4 +63,14 @@
 }
 .precioVenta{
     display: flex;
+}
+
+textarea{
+    width: 300px;
+    height: 90px;
+}
+.coments{
+    display: flex;
+    gap: 9px;
+    align-items: center;
 }

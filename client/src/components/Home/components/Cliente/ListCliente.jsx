@@ -23,11 +23,11 @@ export default function ListCliente(props) {
     }
     return (
         <>
-            <table className="table">
+            <table >
                 <thead>
                     <tr className="">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre <button type="button" onClick={() => {}}>🔀</button></th>
+                        <th >#</th>
+                        <th >Nombre <button onClick={() => {}}>🔀</button></th>
                     </tr>
                 </thead>
                 <tbody>
