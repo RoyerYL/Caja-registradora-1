@@ -22,8 +22,6 @@ const { getCategoria } = require('../controller/Categoria/getCategoria');
 const { getClienteLike } = require('../controller/Cliente/getClienteLike');
 const { getTicket } = require('../controller/Ticket/getTicket');
 const { getCompras } = require('../controller/Compra/getCompras');
-const { actualizarPrecioPorcentaje } = require('../controller/Articulo/acutalizarPreciosPorcentaje');
-const {  actualizarPrecios } = require('../controller/Articulo/acutalizarPrecios');
 const { actualizarPrecio } = require('../controller/Articulo/acutalizarPrecio');
 const { getVendedor } = require('../controller/Vendedor/getVendedor');
 const { postVendedor } = require('../controller/Vendedor/postVendedor');
@@ -41,6 +39,9 @@ const { actualizarStock } = require('../controller/Articulo/acutalizarStock');
 const { actualizarStockMin } = require('../controller/Articulo/acutalizarStockMin');
 const { actualizarActivo } = require('../controller/Articulo/acutalizarActivo');
 const { getAllCaja } = require('../controller/Caja/getAllCaja');
+const { actualizarPrecioPorcentajexCategoria } = require('../controller/Articulo/acutalizarPreciosPorcentajeCategoria');
+const { actualizarPorcentajeDolar } = require('../controller/Articulo/acutalizarPorcentajeDolar');
+const { actualizarPorcentajePeso } = require('../controller/Articulo/acutalizarPorcentajePeso');
 
 
 
@@ -52,8 +53,9 @@ router.post('/articulo',postArticulo)
 //Actualizar todo
 router.post('/actualizararticulo',updateArticulo)
 
-router.post('/actualizarpreciosporcentajexcategoria',actualizarPrecioPorcentaje)
-router.post('/actualizprecios',actualizarPrecios)
+router.post('/actualizarpreciosporcentajexcategoria',actualizarPrecioPorcentajexCategoria)
+router.post('/actualizarPorcentajeDolar',actualizarPorcentajeDolar)
+router.post('/actualizarPorcentajePeso',actualizarPorcentajePeso)
 //ACTUALIZAR DATOS UNICOS
 router.post('/actualizprecio',actualizarPrecio)
 router.post('/actualizarCategoria',actualizarCategoria)

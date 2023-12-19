@@ -107,6 +107,12 @@ export const add_cotizacion = (input) => {
     payload: input
   }
 };
+export const cajaAbierta = (input) => {
+  return {
+    type: "CAJA_ABIERTA",
+    payload: input
+  }
+};
 
 export const order_articulos = (order) => {
   return{

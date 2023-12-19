@@ -1,8 +1,10 @@
 .Navbar{
+    position: relative;
     padding: 0px 5px 0px 5px;
     display: flex;
     flex-direction: column;
     gap: 3px;
+    z-index: 9999;
 }
 .pageArticulo{
     display: flex;

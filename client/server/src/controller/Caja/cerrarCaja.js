@@ -6,8 +6,7 @@ const cerrarCaja = async (req, res) => {
 
     try {
 
-        // Actualizar el precio del artículo
-        await Articulo.update(
+        await Caja.update(
             { precioFinal, fechaCierre, apertura: false },
             { where: { id } });
 

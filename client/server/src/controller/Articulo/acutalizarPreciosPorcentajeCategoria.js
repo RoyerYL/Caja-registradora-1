@@ -1,6 +1,6 @@
 const { Articulo } = require("../../DB_connection")
 
-const actualizarPrecioPorcentaje = async (req, res) => {
+const actualizarPrecioPorcentajexCategoria = async (req, res) => {
 
     const { provedorId, porcentajeAumento } = req.body;
 
@@ -26,4 +26,4 @@ const actualizarPrecioPorcentaje = async (req, res) => {
         return res.status(500).json({ error: error.message });
     }
 }
-module.exports = {actualizarPrecioPorcentaje};
+module.exports = {actualizarPrecioPorcentajexCategoria};

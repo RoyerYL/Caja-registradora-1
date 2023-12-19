@@ -47,23 +47,23 @@ export default function Articulo(props) {
     };
 
     return (
-        <>
+        <div className={style.containerIngresar}>  
             <h5>Ingrese un articulo</h5>
-            <div >
+            <div>
                 <div className="coolinput">
                     <label htmlFor="input" className="text">Cod Barras:</label>
-                    <input type="text" placeholder="Write here..." name="codBarras" onChange={handleChangue} onKeyDown={handleKeyDown} className="input" value={Articulo.codBarras} />
+                    <input type="text" name="codBarras" onChange={handleChangue} onKeyDown={handleKeyDown} className="input" value={Articulo.codBarras} />
                 </div>
             </div>
             <div >
                 <div className="coolinput">
                     <label htmlFor="input" className="text">Cantidad:</label>
-                    <input id='cantidad' onClick={(event) => { event.target.value = "" }} type="text" placeholder="Write here..." name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} className="input" value={Articulo.cantidad} />
+                    <input id='cantidad' onClick={(event) => { event.target.value = "" }} type="text" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} className="input" value={Articulo.cantidad} />
                 </div>
 
             </div>
 
             <button onClick={addFunction}>Agregar</button>
-        </>
+        </div>
     )
 }

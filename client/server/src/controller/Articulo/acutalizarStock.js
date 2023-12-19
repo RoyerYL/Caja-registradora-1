@@ -7,7 +7,7 @@ const actualizarStock = async (req, res) => {
     try {
 
         // Actualizar el precio del artículo
-        await Articulo.update({ stockMin: stock }, { where: { id: articuloId } });
+        await Articulo.update({ stock: stock }, { where: { id: articuloId } });
 
         return res.status(200).json({ message: 'Precio actualizado correctamente.' });
     } catch (error) {

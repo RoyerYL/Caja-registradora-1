@@ -9,7 +9,8 @@ const initialState = {
     mep: 0.00,
     blue: 0.00
   },
-  articulosActualizar:[]
+  articulosActualizar:[],
+  caja:0
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -64,6 +65,8 @@ export default (state = initialState, { type, payload }) => {
 
     case "ADD_COTIZACION":
       return { ...state, cotizacionDolar: payload }
+    case "CAJA_ABIERTA":
+      return { ...state, caja: payload }
     case "ORDER":
       let orderedCharacters;
 

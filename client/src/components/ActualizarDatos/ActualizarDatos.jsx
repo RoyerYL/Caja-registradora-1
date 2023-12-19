@@ -19,7 +19,9 @@ export default function ActualizarDatos() {
         stock: 0,
         stockMin: 0,
         costoPeso: Number.parseFloat(0).toFixed(2),
+        costoPesoPorcentaje: 0,
         costoDolar: Number.parseFloat(0).toFixed(2),
+        costoDolarPorcentaje: 0,
         precioVenta: Number.parseFloat(0).toFixed(2),
         ganancia: 0,
         precioVenta_2: Number.parseFloat(0).toFixed(2),
@@ -61,37 +63,143 @@ export default function ActualizarDatos() {
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
+        if (property === "activo") {
+            setForm({ ...form, [property]: !form.activo });//cambio Form..
+            return ""
+        }
+        console.log(value);
         setForm({ ...form, [property]: value });//cambio Form..
     }
     const addArticulosActualizar = () => {
         dispatch(articuloActualizar(articulosSeleccionados))
     }
 
-    const actualizar = async(e) => {
+    const actualizar = async (e) => {
 
-        const nombre=e.target.name
+        const nombre = e.target.name
+        console.log(nombre);
         switch (nombre) {
             case "precioVenta":
                 for (const prod of articulosActualizar) {
                     await axios.post("http://localhost:3001/tienda/actualizprecio", {
                         articuloId: prod.id,
-                        nuevoPrecio:form.precioVenta
-                        
+                        nuevoPrecio: form.precioVenta
+
                     });
                 }
-                
+
                 break;
             case "categoria":
                 for (const prod of articulosActualizar) {
                     await axios.post("http://localhost:3001/tienda/actualizarCategoria", {
                         articuloId: prod.id,
-                        categoriaId:form.CategoriaId
-                        
+                        categoriaId: form.CategoriaId
+
                     });
                 }
-                
+
                 break;
-            
+            case "provedor":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarProvedor", {
+                        articuloId: prod.id,
+                        provedorId: form.ProvedorId
+
+                    });
+                }
+
+                break;
+            case "costoDolar":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarCostoDolar", {
+                        articuloId: prod.id,
+                        costoDolar: form.costoDolar
+
+                    });
+                }
+
+                break;
+            case "costoDolarPorcentaje":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarPorcentajeDolar", {
+                        id: prod.id,
+                        porcentajeAumento: form.costoDolarPorcentaje
+
+                    });
+                }
+
+                break;
+            case "costoPeso":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarCostoPeso", {
+                        articuloId: prod.id,
+                        costoPeso: form.costoPeso
+
+                    });
+                }
+
+                break;
+            case "costoPesoPorcentaje":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarPorcentajePeso", {
+                        id: prod.id,
+                        porcentajeAumento: form.costoPesoPorcentaje
+
+                    });
+                }
+
+                break;
+            case "ganancia":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarGanancia", {
+                        articuloId: prod.id,
+                        ganancia: form.ganancia
+
+                    });
+                }
+
+                break;
+            case "iva":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarIva", {
+                        articuloId: prod.id,
+                        iva: form.iva
+
+                    });
+                }
+
+                break;
+            case "stock":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarStock", {
+                        articuloId: prod.id,
+                        stock: form.stock
+
+                    });
+                }
+
+                break;
+            case "stockMin":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarStockMin", {
+                        articuloId: prod.id,
+                        stockMin: form.stockMin
+
+                    });
+                }
+
+                break;
+            case "activo":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarActivo", {
+                        articuloId: prod.id,
+                        activo: form.activo
+
+                    });
+                }
+
+                break;
+
             default:
                 break;
         }
@@ -148,7 +256,7 @@ export default function ActualizarDatos() {
                             })
                         }
                     </select>
-                    <button>actualizar</button>
+                    <button name='provedor' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
 
@@ -165,29 +273,31 @@ export default function ActualizarDatos() {
                 </div>
                 <div>
                     <span>stock</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='stock' value={form.stock} onChange={handleChange} />
+                    <button name='stock' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>stock min</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='stockMin' value={form.stockMin} onChange={handleChange} />
+                    <button name='stockMin' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>Cost peso</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='costoPeso' value={form.costoPeso} onChange={handleChange} />
+                    <button name='costoPeso' onClick={actualizar}>actualizar</button>
+
                     <span>Cost peso %</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='costoPesoPorcentaje' value={form.costoDolarPorcentaje} onChange={handleChange} />
+                    <button name='costoPesoPorcentaje' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>Costo dolar</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='costoDolar' value={form.costoDolar} onChange={handleChange} />
+                    <button name='costoDolar' onClick={actualizar}>actualizar</button>
+
                     <span>Costo dolar%</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='costoDolarPorcentaje' value={form.costoDolarPorcentaje} onChange={handleChange} />
+                    <button name='costoDolarPorcentaje' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>Precio venta</span>
@@ -196,18 +306,18 @@ export default function ActualizarDatos() {
                 </div>
                 <div>
                     <span>iva</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='iva' value={form.iva} onChange={handleChange} />
+                    <button name='iva' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>ganancia</span>
-                    <input type="text" />
-                    <button>actualizar</button>
+                    <input type="text" name='ganancia' value={form.ganancia} onChange={handleChange} />
+                    <button name='ganancia' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>activo</span>
-                    <input type="checkbox" />
-                    <button>actualizar</button>
+                    <input type="checkbox" name='activo' checked={form.activo} onChange={handleChange} />
+                    <button name='activo' onClick={actualizar}>actualizar</button>
                 </div>
 
             </div>

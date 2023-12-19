@@ -1,6 +1,6 @@
 const { Caja} = require("../../DB_connection")
 
-const actualizarCostoPeso = async (req, res) => {
+const axtraxxion = async (req, res) => {
 
     const { id, extracciones } = req.body;
 
@@ -14,4 +14,4 @@ const actualizarCostoPeso = async (req, res) => {
         return res.status(500).json({ error: error.message });
     }
 }
-module.exports = {actualizarCostoPeso};
+module.exports = {extraccion};
