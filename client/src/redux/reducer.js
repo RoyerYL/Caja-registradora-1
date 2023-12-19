@@ -4,11 +4,12 @@ const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
   producto: [],
   productoLike: [],
-  Vendedor: "A",
+  Vendedor: "vendedor 2",
   cotizacionDolar: {
     mep: 0.00,
     blue: 0.00
-  }
+  },
+  articulosActualizar:[]
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -26,13 +27,13 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, productoLike: payload };
 
     case 'GET_ALL':
-
       return { ...state, productoLike: payload };
 
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
-
+    case "RESET_ARTLIKE":
+      return {...state , productoLike:[]}
     case "MODIFICAR_CANT":
       const newLista1 = state.producto.map((prod, index) => {
 
@@ -76,7 +77,10 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         productoLike: orderedCharacters,
       };
-
+      case "ART_ACTUALIZAR":
+        return {...state,articulosActualizar:[...payload]}
+      case "ART_ACTUALIZAR_RESET":
+        return {...state,articulosActualizar:[]}
 
     default:
   return {

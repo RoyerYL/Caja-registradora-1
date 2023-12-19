@@ -15,5 +15,8 @@ module.exports = (sequelize) => {
          type:DataTypes.DATE,
          allowNull:false
       },
+      ArticuloId:{
+         type:DataTypes.STRING,
+      },
    }, { timestamps: false });
 };

@@ -16,6 +16,12 @@ const { getAllCompras } = require('../controller/Compra/getAllCompras');
 const { getAllTickets } = require('../controller/Ticket/getAllTickets');
 const { postCliente } = require('../controller/Cliente/postCliente');
 const { getAllClientes } = require('../controller/Cliente/getAllClientes');
+const { getCliente } = require('../controller/Cliente/getCliente');
+const { getProvedor } = require('../controller/Provedor/getProvedor');
+const { getCategoria } = require('../controller/Categoria/getCategoria');
+const { getClienteLike } = require('../controller/Cliente/getClienteLike');
+const { getTicket } = require('../controller/Ticket/getTicket');
+const { getCompras } = require('../controller/Compra/getCompras');
 
 
 
@@ -27,18 +33,24 @@ router.post('/actualizararticulo',updateArticulo)
 
 
 router.get('/categoria',getAllCategoria)
+router.get('/categoria/:id',getCategoria)
 router.post('/categoria',postCategoria)
 
 router.get('/provedor',getAllProvedores)
+router.get('/provedor/:id',getProvedor)
 router.post('/provedor',postProvedor)
 
 router.get('/compra',getAllCompras)
+router.get('/compra/:id',getCompras)
 router.post('/compra',postCompra)
 
 router.get('/ticket',getAllTickets)
+router.get('/ticket/:id',getTicket)
 router.post('/ticket',postTicket)
 
 router.get('/cliente',getAllClientes)
+router.get('/cliente/:id',getCliente)
+router.get('/clienteLike/:id',getClienteLike)
 router.post('/cliente',postCliente)
 
 

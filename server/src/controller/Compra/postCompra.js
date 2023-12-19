@@ -8,13 +8,16 @@ const postCompra = async (req, res) => {
         articuloId
     } = req.body;
 
-    if (!cantida || !fecha || !ticketId || !articuloId) {
-        return res.status(400).json({ error: "Faltan datos" })
-    }
+    // if (!cantida || !fecha || !ticketId || !articuloId) {
+    //     return res.status(400).json({ error: "Faltan datos" })
+    // }
 
     try {
-
-        const newCompra = await Compra.Create({
+        console.log("----------------");
+        console.log(req.body.articuloId);
+        console.log(req.body);
+        console.log("----------------");
+        const newCompra = await Compra.create({
                 cantidad,
                 fecha,
                 TicketId:ticketId,
@@ -27,7 +30,6 @@ const postCompra = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({ error: error.message })
-
     }
 }
 module.exports = {postCompra};

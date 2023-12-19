@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import style from "./Cliente.module.css"
+import Form from './Form';
+import ListClientes from './ListCliente';
 export default function Cliente() {
     const [collapse, setCollapse] = useState("collapse")
     const [form, setForm] = useState({
@@ -23,69 +25,18 @@ export default function Cliente() {
         collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
     }
     return (
+
         <div className={style.AltaArticulo}>
-            <h2>Alta Articulos</h2>
-            <div>
-                <div className={style.containerNombreStock}>
+            <h2>Alta Clientes</h2>
+            <div className={style.container}>
 
-                    <div className={style.nombre}>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Razon social</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Nombre</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >CUIT/DNI</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Direccon</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Zona</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Localidad</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Telefono 1 / celular 1</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Telefono 2 / celular 2</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Telefono 3 / celular 3</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input type="email" className="form-control" id="floatingInput" value={form.name} onChange={handleChange} />
-                            <label htmlFor="floatingInput" name='name' >Email</label>
-                        </div>
+                <div className={style.List}>
 
+                    <ListClientes />
+                </div>
+                <div className={style.form}>
 
-                    </div>
-
-                    <div>
-
-                        <div className="form-floating">
-                            <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name='descripcion' value={form.descripcion} onChange={handleChange}></textarea>
-                            <label htmlFor="floatingTextarea2">Comments</label>
-                        </div>
-                    </div>
-
-                    <div className={style.botones}>
-
-                        {/* <button type="button" className="btn btn-danger" onClick={actualizarDato}>Actualizar</button>
-            <button type="button" className="btn btn-danger" onClick={handleClick}>Nuevo</button> */}
-                    </div>
+                    <Form />
                 </div>
             </div>
         </div>

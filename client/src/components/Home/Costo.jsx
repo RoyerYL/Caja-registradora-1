@@ -2,15 +2,12 @@ import React, {useEffect, useState } from 'react';
 import style from './Venta.module.css'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-export default function Costo() {
+export default function Costo(props) {
     const [collapse, setCollapse] = useState("collapse")
     const producto=useSelector((state)=>state.producto)
 
-    const[costo,setCosto]=useState(
-        {
-            subTotal:"0.00",
-        }
-    )
+    const{costo,setCosto}=props
+    
 
     const{id}=useParams
     useEffect(()=>{
@@ -31,16 +28,16 @@ export default function Costo() {
     return (
         <div className={style.Costo}>
 
-            <table className="table table-success table-striped">
+            <table >
                 <tbody>
                     <tr>
-                        <th scope="row">Subtotal:</th>
+                        <th >Subtotal:</th>
                         <td></td>
                         <td>{costo.subTotal}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Descuento:</th>
-                        <td><select className="form-select form-select-sm" aria-label="Small select example" defaultValue="1">
+                        <th >Descuento:</th>
+                        <td><select defaultValue="1">
                             <option value="1">Sin descuento</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
@@ -48,7 +45,7 @@ export default function Costo() {
                         <td></td>
                     </tr>
                     <tr>
-                        <th scope="row">Total</th>
+                        <th >Total</th>
                         <td></td>
                         <td id='costoTotal' colSpan="2">{costo.subTotal}</td>
                     </tr>

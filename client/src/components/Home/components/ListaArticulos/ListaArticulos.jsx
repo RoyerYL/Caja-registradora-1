@@ -12,16 +12,16 @@ export default function ListaArticulos(props) {
 
     return (
         <div className={style.listArticulo}>
-            <table className="table">
+            <table>
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Código de barras</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Subtotal</th>
-                        <th scope="col">-</th>
+                        <th >#</th>
+                        <th >Código de barras</th>
+                        <th >Nombre</th>
+                        <th >Cantidad</th>
+                        <th >Precio</th>
+                        <th>Subtotal</th>
+                        <th >-</th>
                     </tr>
                 </thead>
                 <tbody>

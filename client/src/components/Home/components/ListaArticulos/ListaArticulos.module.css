@@ -2,11 +2,28 @@
     height: 450px;
     background-color: white;
     overflow: overlay;
+    border: 3px solid black;
+    /* box-shadow: 10 10 10 10 black; */
 }
-.nomFilas button{
+
+.nomFilas button {
     font-size: 1em;
     border: none;
     padding: 0px;
 }
-.nomFilas button:hover{
-transform: scale(1.2);}
+
+.nomFilas button:hover {
+    transform: scale(1.2);
+}
+.listArticuloEncontrados{
+    z-index: 999;
+    height: 450px;
+    overflow: overlay;
+    border: 1px solid black;
+}
+articulosEncontradosC{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: black;
+}

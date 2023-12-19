@@ -5,19 +5,50 @@ import ListaArticulos from './components/ListaArticulos/ListaArticulos';
 import Cliente from './components/Cliente/Cliente';
 import Costo from './Costo';
 import Condicion from './Condicion';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulosEncontrados';
+import { add_art, getAll } from '../../redux/action';
+import axios from 'axios';
+import createExcelFile from '../../Utils/excelGenerator/index.mjs';
+import getFecha from '../../Utils/getFecha/getFecha';
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
-    const fecha = new Date().toString()
-
+    
+    const fecha =getFecha( new Date())
+    const dispatch = useDispatch()
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
+    const vendedor = useSelector((state) => state.vendedor)
+    const[ticket,setTicket]=useState()
+    
+    const [costo,setCosto]=useState({
+        subTotal:0.00
+    })
+    useEffect(() => {
+        const cerrar = () => {
+            setCollapse("collapse")
+        }
 
+        document.addEventListener('click', cerrar)
+        return () => {
+            document.removeEventListener('click', cerrar)
+
+        }
+    }, [])
+
+    const collapseClick = (e) => {
+        e.stopPropagation()
+        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+        // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+    }
+
+    const [clienteForm, setClienteForm] = useState({
+        nombre: "default",
+    })
 
     const [productoProp, setProductoProp] = useState([])
     const [productoLikeProp, setproductoLikeProp] = useState([])
@@ -36,48 +67,98 @@ export default function Navbar() {
         } setproductoLikeProp(productoLike)
     }, [id, productos, listProductos, productoLike])
 
-    const generarRecibo = () => {
-        console.log({
-            productos,
-            fecha,
-            costoTotal: document.getElementById('costoTotal').textContent
-        });
+    const addHandler = (Articulo) => {
+        const { cantidad, codBarras, page } = Articulo
+        if (!codBarras) {
+            dispatch(getAll())   
+            return         
+        }
+         dispatch(add_art({
+            cantidad,
+            codBarras,
+            page
+        }))
+
+
+    }
+    const generarRecibo =  async() => {
+        try {
+            // Buscar el cliente por nombre
+            const responseCliente = await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`);
+            const cliente = responseCliente.data[0];
+    
+            // Crear un nuevo ticket
+            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", {
+                clienteId: cliente.id,
+                valorTotal: costo.subTotal,
+                fecha: new Date(),
+                vendedorId:vendedor,
+                cajaId:1
+            });
+    
+            const ticketId = responseTicket.data.id;
+            setTicket(ticketId)
+            // Crear compras para cada producto en la lista
+            for (const prod of productos) {
+                await axios.post("http://localhost:3001/tienda/compra", {
+                    ticketId: ticketId,
+                    fecha: fecha,
+                    cantidad: prod.cantidad,
+                    articuloId: prod.producto.id,
+                    subTotal: prod.producto.precioVenta*prod.cantidad,
+                });
+            }
+    
+            alert("Compra realizada")
+        } catch (error) {
+            console.error("Error al generar el recibo:", error.message);
+        }
+    };
+
+    const imprimirRecibo=()=>{
+     window.electronAPI.executeTicketCreate(ticket)
+
     }
 
+    const handleChange = (event) => {
+        const value = event.target.value
+        const name = event.target.name
 
-    const handleClick = () => {
-        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+        setClienteForm({ ...clienteForm, [name]: value })
     }
 
     return (
         <div className={style.Home}>
-            <span className="input-group-text">{fecha}</span>
+            <span>{fecha}</span>
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
-                    <h2>Ingrese un articulo</h2>
-                    <Articulo />
+                    <div className={style.Articulo}>
+                        
+                        <Articulo addHandler={addHandler} collapseClick={collapseClick} />
+
+                    </div>
+                    <div>
+
+                        <ListaArticulosEncontrados productos={productoLikeProp} />
+                    </div>
                     <div className={style.cliente}>
-                        <h2>Cliente</h2>
-                        <Cliente />
+                        <h5>Cliente</h5>
+                        <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
                     </div>
 
-                    <ListaArticulosEncontrados productos={productoLikeProp} />
                 </div>
                 <div className={style.ListArticulo}>
                     <div>
-
-
                         <ListaArticulos productos={productoProp} />
                         <div className={style.info}>
                             <Condicion />
-                            <Costo />
+                            <Costo costo={costo} setCosto={setCosto}/>
 
                         </div>
 
-
-
                     </div>
-                    <button type="button" className="btn btn-success" onClick={generarRecibo}>Generar recibo</button>
+                    <button  onClick={generarRecibo}>Generar recibo</button>
+                    <button  onClick={imprimirRecibo}>Imprimir recibo</button>
                 </div>
             </div>
             <div >
