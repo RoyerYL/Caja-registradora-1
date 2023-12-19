@@ -241,7 +241,7 @@ function AltaArticulo(props) {
                         </div>
                     </div>
 
-                    <div className={style.gap|}>
+                    <div className=''>
                         <div className={style.stock}>
                             <div>
 
