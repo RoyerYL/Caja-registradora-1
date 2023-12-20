@@ -32,7 +32,7 @@ export default function ListaArticulosEncontrados(props) {
                         {({ height, width }) => (
                             <>
                                 {productos.map((prod, index) => (
-                                    <div key={prod.id}>
+                                    <div className={style.articulos} key={prod.id}>
                                         <p>{prod.id}</p>
 
                                         <p>

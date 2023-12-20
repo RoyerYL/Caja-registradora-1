@@ -16,17 +16,19 @@ import getFecha from '../../Utils/getFecha/getFecha';
 
 export default function Navbar() {
     const [collapse, setCollapse] = useState("collapse")
-    
-    const fecha =getFecha( new Date())
+
+    const fecha = getFecha(new Date())
     const dispatch = useDispatch()
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
     const vendedor = useSelector((state) => state.vendedor)
-    const[ticket,setTicket]=useState()
-    
-    const [costo,setCosto]=useState({
-        subTotal:0.00
+    const caja = useSelector((state) => state.caja)
+    const [ticket, setTicket] = useState()
+
+
+    const [costo, setCosto] = useState({
+        subTotal: 0.00
     })
     useEffect(() => {
         const cerrar = () => {
@@ -70,10 +72,10 @@ export default function Navbar() {
     const addHandler = (Articulo) => {
         const { cantidad, codBarras, page } = Articulo
         if (!codBarras) {
-            dispatch(getAll())   
-            return         
+            dispatch(getAll())
+            return
         }
-         dispatch(add_art({
+        dispatch(add_art({
             cantidad,
             codBarras,
             page
@@ -81,21 +83,22 @@ export default function Navbar() {
 
 
     }
-    const generarRecibo =  async() => {
+    const generarRecibo = async () => {
         try {
+
             // Buscar el cliente por nombre
             const responseCliente = await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`);
             const cliente = responseCliente.data[0];
-    
+
             // Crear un nuevo ticket
             const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", {
                 clienteId: cliente.id,
                 valorTotal: costo.subTotal,
                 fecha: new Date(),
-                vendedorId:vendedor,
-                cajaId:1
+                vendedorId: vendedor,
+                cajaId: Number(caja)
             });
-    
+
             const ticketId = responseTicket.data.id;
             setTicket(ticketId)
             // Crear compras para cada producto en la lista
@@ -105,20 +108,35 @@ export default function Navbar() {
                     fecha: fecha,
                     cantidad: prod.cantidad,
                     articuloId: prod.producto.id,
-                    subTotal: prod.producto.precioVenta*prod.cantidad,
+                    subTotal: prod.producto.precioVenta * prod.cantidad,
                 });
             }
-    
+
             alert("Compra realizada")
         } catch (error) {
             console.error("Error al generar el recibo:", error.message);
         }
     };
 
-    const imprimirRecibo=()=>{
-     window.electronAPI.executeTicketCreate(ticket)
+    const imprimirRecibo = () => {
+        window.electronAPI.executeTicketCreate(ticket)
 
     }
+
+    const openNewWindow = () => {
+        window.electron.openNewWindow({
+            width: 800,
+            height: 600,
+            // Otras configuraciones si es necesario
+        });
+    };
+
+    const closeNewWindow = () => {
+        const openWindows = window.electron.getOpenWindows(); // Asumiendo que hay una función getOpenWindows en el preload.js
+        if (openWindows.length > 0) {
+            window.electron.closeWindow(openWindows[0]); // Cerrar la primera ventana abierta
+        }
+    };
 
     const handleChange = (event) => {
         const value = event.target.value
@@ -133,7 +151,7 @@ export default function Navbar() {
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
                     <div className={style.Articulo}>
-                        
+
                         <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
                     </div>
@@ -152,13 +170,15 @@ export default function Navbar() {
                         <ListaArticulos productos={productoProp} />
                         <div className={style.info}>
                             <Condicion />
-                            <Costo costo={costo} setCosto={setCosto}/>
+                            <Costo costo={costo} setCosto={setCosto} />
 
                         </div>
 
                     </div>
-                    <button  onClick={generarRecibo}>Generar recibo</button>
-                    <button  onClick={imprimirRecibo}>Imprimir recibo</button>
+                    <button onClick={generarRecibo}>Generar recibo</button>
+                    <button onClick={imprimirRecibo}>Imprimir recibo</button>
+                    <button onClick={openNewWindow}>new window</button>
+                    <button onClick={closeNewWindow}>Cerrar Nueva Ventana</button>
                 </div>
             </div>
             <div >

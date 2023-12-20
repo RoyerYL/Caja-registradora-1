@@ -42,6 +42,8 @@ const { getAllCaja } = require('../controller/Caja/getAllCaja');
 const { actualizarPrecioPorcentajexCategoria } = require('../controller/Articulo/acutalizarPreciosPorcentajeCategoria');
 const { actualizarPorcentajeDolar } = require('../controller/Articulo/acutalizarPorcentajeDolar');
 const { actualizarPorcentajePeso } = require('../controller/Articulo/acutalizarPorcentajePeso');
+const { postCotizacion } = require('../controller/Cotizacion/postCotizacion');
+const { getCotizacion } = require('../controller/Cotizacion/getCotizacion');
 
 
 
@@ -100,6 +102,9 @@ router.post('/cerrarCaja',cerrarCaja)
 router.get('/vendedor/:id',getVendedor)
 router.get('/vendedor',getAllVendedors)
 router.post('/vendedor',postVendedor)
+
+router.get('/cotizacion',getCotizacion)
+router.post('/cotizacion',postCotizacion)
 
 
 

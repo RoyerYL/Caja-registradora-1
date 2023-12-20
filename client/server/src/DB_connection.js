@@ -8,6 +8,7 @@ const CompraFunction=require('./models/Compra');
 
 const CajaFunction=require('./models/Caja');
 const VendedorFunction=require('./models/Vendedor');
+const CotizacionFunction=require('./models/Cotizacion');
 // /**
 //  * Conexion con la base de datos
 //  */
@@ -63,9 +64,10 @@ CompraFunction(dataBase)
 
 VendedorFunction(dataBase)
 CajaFunction(dataBase)
+CotizacionFunction(dataBase)
 
 // Creación de tablas
-const { Articulo, Provedor, Categoria,Cliente,Ticket,Compra , Caja,Vendedor } = dataBase.models;
+const { Articulo, Provedor, Categoria,Cliente,Ticket,Compra , Caja,Vendedor,Cotizacion } = dataBase.models;
 
 Categoria.hasMany(Articulo, { foreignKey: 'CategoriaId' });
 Articulo.belongsTo(Categoria, { foreignKey: 'CategoriaId' });
@@ -98,5 +100,6 @@ module.exports = {
   Ticket,
   Cliente,
   Vendedor,
-  Caja
+  Caja,
+  Cotizacion
 };

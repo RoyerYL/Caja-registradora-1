@@ -1,6 +1,6 @@
 // See the Electron documentation for details on how to use preload scripts:
 
-import { contextBridge, ipcRenderer } from "electron";
+import { BrowserWindow, contextBridge, ipcRenderer } from "electron";
 
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
@@ -15,5 +15,31 @@ contextBridge.exposeInMainWorld("electronAPI",
          ipcRenderer.on("ticketCreateResult", (event, result) => {
             console.log(result);
          });
+      },
+      openNewWindow:(windowOptions)=>{
+         ipcRenderer.send("openNewWindow",windowOptions)
       }
+      
    })
+   let openWindows = [];
+   contextBridge.exposeInMainWorld('electron', {
+      openNewWindow: (options) => {
+        ipcRenderer.send('openNewWindow', options);
+      },
+      closeWindow: (windowId) => {
+        ipcRenderer.send('closeWindow', windowId);
+      },
+      getOpenWindows: () => {
+         return openWindows;
+       },
+    });
+    ipcRenderer.on('newWindowOpened', (event, windowId) => {
+      openWindows.push(windowId);
+    });
+    
+    ipcRenderer.on('windowClosed', (event, windowId) => {
+      const index = openWindows.indexOf(windowId);
+      if (index !== -1) {
+        openWindows.splice(index, 1);
+      }
+    });

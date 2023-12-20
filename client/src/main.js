@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
-const ticketCreate = require(path.join(app.getAppPath() ,"src", "Utils","ticketGenerator",'index.js'));
+const ticketCreate = require(path.join(app.getAppPath(), "src", "Utils", "ticketGenerator", 'index.js'));
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -11,6 +11,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1500,
     height: 1600,
+    minWidth: 1000,
+    minHeight: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -51,16 +53,39 @@ const createWindow = () => {
   Menu.setApplicationMenu(menu)
 };
 
-ipcMain.on("executeTicketCreate", (event,id) => {
+ipcMain.on("executeTicketCreate", (event, id) => {
   console.log("hola app");
-    // Ejecutar la función ticketCreate
-     ticketCreate(id);
+  // Ejecutar la función ticketCreate
+  ticketCreate(id);
 
-    // Enviar el resultado de vuelta al proceso de renderizado
-    event.reply('ticketCreateResult', 'Ticket creado con éxito');
-  
+  // Enviar el resultado de vuelta al proceso de renderizado
+  event.reply('ticketCreateResult', 'Ticket creado con éxito');
+
+});
+let openWindows = [];
+
+ipcMain.on('openNewWindow', (event, options) => {
+  const newWindow = new BrowserWindow(options);
+  newWindow.loadURL("http://localhost:6969/#/ListaArticulos"); // Cambia la ruta según tu estructura de archivos
+
+
+  openWindows.push(newWindow.id);
+
+  // Enviar el id de la nueva ventana al proceso de renderizado
+  event.reply('newWindowOpened', newWindow.id);
 });
 
+ipcMain.on('closeWindow', (event, windowId) => {
+  const windowIndex = openWindows.indexOf(windowId);
+  if (windowIndex !== -1) {
+    openWindows.splice(windowIndex, 1);
+  }
+
+  const window = BrowserWindow.fromId(windowId);
+  if (window) {
+    window.close();
+  }
+});
 app.whenReady().then(() => {
   createWindow();
 
@@ -69,7 +94,7 @@ app.whenReady().then(() => {
   });
 
   // Inicia tu servidor Express
-  const serverProcess = spawn('node', [path.join(app.getAppPath(),'src', 'index.js')]);
+  const serverProcess = spawn('node', [path.join(app.getAppPath(), 'src', 'index.js')]);
   serverProcess.stdout.on('data', (data) => {
     console.log(`Server output: ${data}`);
   });

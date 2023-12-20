@@ -6,7 +6,7 @@ import Provedor from './components/Window/Provedor/Provedor';
 import Comprobante from './components/Window/Comprobante';
 
 
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Detail from './components/Home/components/Detail/detail';
 import ListaArticulos from './components/ListaDeArticulos/ListaArticulos';
 import Login from './components/Login/Login';
@@ -17,7 +17,7 @@ import ActualizarDatos from './components/ActualizarDatos/ActualizarDatos';
 
 
 function App() {
-   const navigate = useNavigate();
+   const navigate = useLocation();
    /************ SEGURIDAD ************/
 
    const [access,setAccess] = useState(false)

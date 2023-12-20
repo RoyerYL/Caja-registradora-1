@@ -6,8 +6,8 @@ const initialState = {
   productoLike: [],
   Vendedor: "vendedor 2",
   cotizacionDolar: {
-    mep: 0.00,
-    blue: 0.00
+    cotizacionMep: 0.00,
+    cotizacionBlue: 0.00
   },
   articulosActualizar:[],
   caja:0

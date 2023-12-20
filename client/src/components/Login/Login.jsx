@@ -8,40 +8,51 @@ export default function Login(props) {
 
     const dispatch = useDispatch()
     const Vendedor = useSelector((state) => state.Vendedor)
-    const cotizacionDolar = useSelector((state) => state.cotizacionDolar)
     const caja = useSelector((state) => state.caja)
-    const [cajaAbierta_,setCajaAbierta]=useState(0)
+    const [cajaAbierta_, setCajaAbierta] = useState(0)
     const [Cotizacion, setCotizacion] = useState({
         precioInicial: 0,
         precioFinal: 0,
-        mep: Number.parseFloat(cotizacionDolar.mep).toFixed(2),
-        blue: Number.parseFloat(cotizacionDolar.blue).toFixed(2),
+        cotizacionBlue: Number.parseFloat(0).toFixed(2),
+        cotizacionMep: Number.parseFloat(0).toFixed(2),
 
     })
 
-    const vendedor = useSelector((state) => state.Vendedor)
     const [vendedores, setVendedores] = useState([])
+
+
+
+
     useEffect(() => {
+      
         axios("http://localhost:3001/tienda/vendedor").then(({ data }) => { setVendedores(data) })
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
             if (data[0].apertura) {
-                
+
                 dispatch(cajaAbierta(data[0].id))
                 setCotizacion({ ...Cotizacion, precioInicial: data[0].precioInicial })
-            }else{
-                setCotizacion({ ...Cotizacion, precioInicial:0 })
+            } else {
+                setCotizacion({ ...Cotizacion, precioInicial: 0 })
                 dispatch(cajaAbierta(0))
             }
         })
-
+        axios("http://localhost:3001/tienda/cotizacion").then(({ data }) => {
+            setCotizacion({
+                ...Cotizacion,
+                cotizacionBlue: data[0].cotizacionBlue,
+                cotizacionMep: data[0].cotizacionMep,
+            })
+        })
     }, [cajaAbierta_])
 
     const submitHandler = (event) => {
+        axios.post("http://localhost:3001/tienda/cotizacion", {
+            cotizacionBlue: Cotizacion.cotizacionBlue,
+            cotizacionMep: Cotizacion.cotizacionMep
+        })
 
-        dispatch(add_cotizacion(Cotizacion))
 
         event.preventDefault()//evitamos que submit recargue la pagina
-        setValidado(false)
     }
 
     const handleChange = (event) => {
@@ -76,12 +87,12 @@ export default function Login(props) {
             <div className={style.cajaApertura}>
 
                 {
-                    caja!==0 ?
+                    caja !== 0 ?
                         (<>
                             <div>
 
                                 <label>Precio Inicial</label>
-                                <input name='precioInicial' value={Cotizacion.precioInicial} readOnly/>
+                                <input name='precioInicial' value={Cotizacion.precioInicial} readOnly />
                             </div>
                             <div>
 
@@ -121,11 +132,11 @@ export default function Login(props) {
 
                 <div>
                     <label>Cotizacion dolar MEP : </label>
-                    <input name='mep' value={Cotizacion.mep} onChange={handleChange} />
+                    <input name='cotizacionMep' value={Cotizacion.cotizacionMep} onChange={handleChange} />
                 </div>
                 <div>
                     <label >Cotizacion dolar BLUE : </label>
-                    <input name='blue' value={Cotizacion.blue} onChange={handleChange} />
+                    <input name='cotizacionBlue' value={Cotizacion.cotizacionBlue} onChange={handleChange} />
                 </div>
 
                 <div >

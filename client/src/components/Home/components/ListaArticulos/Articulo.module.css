@@ -1,9 +1,16 @@
-.cantidad{
+.cantidad {
     display: flex;
     justify-content: space-around;
 }
-.containerProducto{
+
+.containerProducto {}
+
+.containerProducto:hover {
+    background-color: rgb(191, 191, 191) !important;
+    cursor: pointer;
 }
-.containerProducto :hover{
-    background-color: rgb(191, 191, 191);
+.cros{
+}
+.cros:hover {
+    background-color: red;
 }

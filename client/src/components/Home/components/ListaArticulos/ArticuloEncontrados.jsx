@@ -37,22 +37,6 @@ export default function ArticuloEncontrados(props) {
             </td>
 
         </tr>
-        // <>
-        //     <span>{productos.id}</span>
-
-        //     <span>
-        //         <Link to={`/detail/${productos.id}`}>
-        //             {productos.name}
-        //         </Link>
-        //     </span>
-        //     <span>${productos.precioVenta}
-        //         {
-        //             pathname !== '/listaArticulos' &&
-        //             <button type="button" className="btn btn-success" onClick={handleClick}>Agregar</button>
-        //         }
-        //     </span>
-
-        // </>
     )
 
 }

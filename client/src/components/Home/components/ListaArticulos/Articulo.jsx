@@ -58,7 +58,7 @@ export default function Articulo(props) {
             <td>$ {producto.precioVenta * cantidad}</td>
             <td >
 
-                <button onClick={onClose}>🗑</button>
+                <button className={style.cros} onClick={onClose}>X</button>
 
             </td>
         </tr>
