@@ -28,31 +28,23 @@ export default function ListaArticulosEncontrados(props) {
     return (
         <div className={style.listArticuloEncontrados}>
           
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <>
+                    
                                 {productos.map((prod, index) => (
-                                    <div className={style.articulos} key={prod.id}>
-                                        <p>{prod.id}</p>
+                                    <div onClick={()=>{handleClick(prod.id)}} className={style.articulos} key={prod.id}>
+                                        <p className={style.codBarras}>{prod.id}</p>
 
-                                        <p>
-                                            <Link to={`/detail/${prod.id}`}>
+                                        <p className={style.nombre}>
                                                 {prod.name}
-                                            </Link>
                                         </p>
-                                        <p>${prod.precioVenta}
-                                            {
-                                                pathname !== '/listaArticulos' &&
-                                                <button type="button" className="btn btn-success" onClick={()=>{handleClick(prod.id)}}>Agregar</button>
-                                            }
+                                        <p className={style.precio}>${prod.precioVenta}
+                                            
                                         </p>
 
                                     </div>
 
                                 ))}
-                            </>
-                        )}
-                    </AutoSizer>
+                            
+                    
                     
         </div>
 

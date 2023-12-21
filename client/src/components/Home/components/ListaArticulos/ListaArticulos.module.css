@@ -28,17 +28,43 @@ width: 100%;
 }
 .listArticuloEncontrados{
     z-index: 999;
-    height: 450px;
+    height: 360px;
     overflow: overlay;
     border: 1px solid black;
+    margin: 0px;
+}
+.listArticuloEncontrados p{
+    text-align: center;
+    margin: 0px;
+    height: 100%;
 }
 .articulos{
+    cursor: pointer;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid black;
 }
-articulosEncontradosC{
+.codBarras{
+    width: 110px !important;
+    border-right: 1px solid;
+    font-size: 12px;
+}
+.precio{
+    font-size: 12px;
+    border-left: 1px solid;
+    width: 90px;
+}
+.nombre{
+    font-size: 13px;
+width: 150px;
+}
+.articulos:hover{
+    background-color: aqua;
+}
+/* articulosEncontradosC{
     display: flex;
     flex-direction: column;
     gap: 15px;
     background-color: black;
-}
+} */
