@@ -44,6 +44,7 @@ const { actualizarPorcentajeDolar } = require('../controller/Articulo/acutalizar
 const { actualizarPorcentajePeso } = require('../controller/Articulo/acutalizarPorcentajePeso');
 const { postCotizacion } = require('../controller/Cotizacion/postCotizacion');
 const { getCotizacion } = require('../controller/Cotizacion/getCotizacion');
+const { articuloVendido } = require('../controller/Articulo/articuloVendido');
 
 
 
@@ -69,6 +70,8 @@ router.post('/actualizarIva',actualizarIva)
 router.post('/actualizarStock',actualizarStock)
 router.post('/actualizarStockMin',actualizarStockMin)
 router.post('/actualizarActivo',actualizarActivo)
+
+router.post('/articuloVendido',articuloVendido)
 
 
 

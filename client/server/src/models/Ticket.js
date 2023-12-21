@@ -17,6 +17,10 @@ module.exports = (sequelize) => {
       },
       VendedorId:{
          type:DataTypes.INTEGER
+      },
+      CajaId:{
+         type:DataTypes.INTEGER,
+         allowNull:true
       }
    }, { timestamps: false });
 };

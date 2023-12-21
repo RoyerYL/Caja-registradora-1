@@ -21,27 +21,28 @@ export default function Login(props) {
     const [vendedores, setVendedores] = useState([])
 
 
-
-
     useEffect(() => {
       
         axios("http://localhost:3001/tienda/vendedor").then(({ data }) => { setVendedores(data) })
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
-            if (data[0].apertura) {
+            if(data.length>0){
 
-                dispatch(cajaAbierta(data[0].id))
-                setCotizacion({ ...Cotizacion, precioInicial: data[0].precioInicial })
-            } else {
-                setCotizacion({ ...Cotizacion, precioInicial: 0 })
-                dispatch(cajaAbierta(0))
-            }
-        })
-        axios("http://localhost:3001/tienda/cotizacion").then(({ data }) => {
-            setCotizacion({
-                ...Cotizacion,
-                cotizacionBlue: data[0].cotizacionBlue,
-                cotizacionMep: data[0].cotizacionMep,
+                if (data[0].apertura) {
+                    console.log(data[0]);
+                    dispatch(cajaAbierta(data[0].id))
+                    setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial }));
+                }
+            }  
             })
+        axios("http://localhost:3001/tienda/cotizacion").then(({ data }) => {
+            if (data.length>0) {
+                
+                setCotizacion(prevCotizacion => ({
+                    ...prevCotizacion,
+                    cotizacionBlue: data[0].cotizacionBlue,
+                    cotizacionMep: data[0].cotizacionMep,
+                }));
+            }
         })
     }, [cajaAbierta_])
 

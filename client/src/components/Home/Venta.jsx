@@ -11,7 +11,6 @@ import { useParams } from 'react-router-dom';
 import ListaArticulosEncontrados from './components/ListaArticulos/ListaArticulosEncontrados';
 import { add_art, getAll } from '../../redux/action';
 import axios from 'axios';
-import createExcelFile from '../../Utils/excelGenerator/index.mjs';
 import getFecha from '../../Utils/getFecha/getFecha';
 
 export default function Navbar() {
@@ -25,7 +24,6 @@ export default function Navbar() {
     const vendedor = useSelector((state) => state.vendedor)
     const caja = useSelector((state) => state.caja)
     const [ticket, setTicket] = useState()
-
 
     const [costo, setCosto] = useState({
         subTotal: 0.00
@@ -50,6 +48,7 @@ export default function Navbar() {
 
     const [clienteForm, setClienteForm] = useState({
         nombre: "default",
+        contado: true
     })
 
     const [productoProp, setProductoProp] = useState([])
@@ -96,20 +95,32 @@ export default function Navbar() {
                 valorTotal: costo.subTotal,
                 fecha: new Date(),
                 vendedorId: vendedor,
-                cajaId: Number(caja)
+                // cajaId: Number(caja)
             });
 
             const ticketId = responseTicket.data.id;
             setTicket(ticketId)
             // Crear compras para cada producto en la lista
+            console.log(productos);
+            console.log(productos.length);
             for (const prod of productos) {
-                await axios.post("http://localhost:3001/tienda/compra", {
-                    ticketId: ticketId,
-                    fecha: fecha,
-                    cantidad: prod.cantidad,
-                    articuloId: prod.producto.id,
-                    subTotal: prod.producto.precioVenta * prod.cantidad,
-                });
+                console.log(prod);
+                try {
+                    await axios.post("http://localhost:3001/tienda/compra", {
+                        ticketId: ticketId,
+                        fecha: fecha,
+                        cantidad: prod.cantidad,
+                        articuloId: prod.producto.id,
+                        subTotal: prod.producto.precioVenta * prod.cantidad,
+                    });
+            
+                    await axios.post("http://localhost:3001/tienda/articuloVendido", {
+                        id: prod.producto.id,
+                        cantVendidos: prod.cantidad
+                    });
+                } catch (error) {
+                    console.error("Error en el bucle:", error);
+                }
             }
 
             alert("Compra realizada")
@@ -142,6 +153,10 @@ export default function Navbar() {
         const value = event.target.value
         const name = event.target.name
 
+        if (name === "contado") {
+            setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
+            return ""
+        }
         setClienteForm({ ...clienteForm, [name]: value })
     }
 
@@ -170,6 +185,18 @@ export default function Navbar() {
                         <ListaArticulos productos={productoProp} />
                         <div className={style.info}>
                             <Condicion />
+                            <div className={style.contado}>
+                                <div>
+
+                                    <p>Contado</p>
+                                    <input type="checkbox" name='contado' checked={clienteForm.contado} onChange={handleChange} />
+                                </div>
+                                <div>
+
+                                    <p>Cuenta Corriente</p>
+                                    <input type="checkbox" name='contado' checked={!clienteForm.contado} onChange={handleChange} />
+                                </div>
+                            </div>
                             <Costo costo={costo} setCosto={setCosto} />
 
                         </div>

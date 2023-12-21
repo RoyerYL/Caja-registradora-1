@@ -57,3 +57,14 @@
     display: flex;
     justify-content: space-around;
 }
+.contado{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+.contado div{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid;
+    padding: 5px;
+}
