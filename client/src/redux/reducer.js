@@ -4,7 +4,7 @@ const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
   producto: [],
   productoLike: [],
-  Vendedor: "vendedor 2",
+  Vendedor: 0,
   cotizacionDolar: {
     cotizacionMep: 0.00,
     cotizacionBlue: 0.00

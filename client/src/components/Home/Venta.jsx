@@ -21,10 +21,9 @@ export default function Navbar() {
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
-    const vendedor = useSelector((state) => state.vendedor)
+    const vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
     const [ticket, setTicket] = useState()
-
     const [costo, setCosto] = useState({
         subTotal: 0.00
     })
@@ -39,7 +38,6 @@ export default function Navbar() {
 
         }
     }, [])
-
     const collapseClick = (e) => {
         e.stopPropagation()
         collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
@@ -90,21 +88,23 @@ export default function Navbar() {
             const cliente = responseCliente.data[0];
 
             // Crear un nuevo ticket
-            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", {
+            const body={
                 clienteId: cliente.id,
                 valorTotal: costo.subTotal,
                 fecha: new Date(),
                 vendedorId: vendedor,
-                // cajaId: Number(caja)
-            });
+                cajaId: Number(caja)
+            }
+            console.log(vendedor);
+            if (!clienteForm.contado) {
+                body.cajaId=null
+            }
+            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket",body);
 
             const ticketId = responseTicket.data.id;
             setTicket(ticketId)
             // Crear compras para cada producto en la lista
-            console.log(productos);
-            console.log(productos.length);
             for (const prod of productos) {
-                console.log(prod);
                 try {
                     await axios.post("http://localhost:3001/tienda/compra", {
                         ticketId: ticketId,
@@ -204,8 +204,6 @@ export default function Navbar() {
                     </div>
                     <button onClick={generarRecibo}>Generar recibo</button>
                     <button onClick={imprimirRecibo}>Imprimir recibo</button>
-                    <button onClick={openNewWindow}>new window</button>
-                    <button onClick={closeNewWindow}>Cerrar Nueva Ventana</button>
                 </div>
             </div>
             <div >

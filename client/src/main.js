@@ -54,8 +54,8 @@ const createWindow = () => {
 };
 
 ipcMain.on("executeTicketCreate", (event, id) => {
-  console.log("hola app");
   // Ejecutar la función ticketCreate
+  console.log(id);
   ticketCreate(id);
 
   // Enviar el resultado de vuelta al proceso de renderizado

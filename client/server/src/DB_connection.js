@@ -9,10 +9,15 @@ const CompraFunction=require('./models/Compra');
 const CajaFunction=require('./models/Caja');
 const VendedorFunction=require('./models/Vendedor');
 const CotizacionFunction=require('./models/Cotizacion');
+const path = require('path');
+const documentsPath = path.join(process.env.USERPROFILE, 'Documents');
+
+// Construye la ruta completa al archivo SQLite en el directorio "Documents"
+const databasePath = path.join(documentsPath,"CajaRegistradora", 'tienda.sqlite');
 
 const dataBase=new Sequelize({
    dialect:'sqlite',
-   storage:'./tienda.sqlite',
+   storage:databasePath,
    database:"tienda"
 })
 

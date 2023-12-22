@@ -133,7 +133,6 @@ function AltaArticulo(props) {
             });
     };
 
-    // Luego puedes utilizar el estado `loading` para mostrar un indicador de carga en tu interfaz de usuario
 
 
 

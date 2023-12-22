@@ -15,7 +15,6 @@
 
 }
 .Provedor span{
-    background-color: grey;
 }
 
 .costo{
@@ -34,7 +33,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    border: 1px solid black;
 }.containerDatos input{
     margin-right: 5px;
 }

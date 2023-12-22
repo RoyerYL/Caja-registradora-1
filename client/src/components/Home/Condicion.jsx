@@ -9,7 +9,8 @@ export default function Condicion() {
     const vendedor = useSelector((state) => state.Vendedor)
     const [vendedores, setVendedores] = useState([])
     useEffect(() => {
-        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => { setVendedores(data) })
+        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
+        setVendedores(data) })
     }, [])
 
     const changeVendedor = (e) => {

@@ -22,21 +22,24 @@ export default function Login(props) {
 
 
     useEffect(() => {
-      
-        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => { setVendedores(data) })
+
+        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
+            console.log(data[0].id);
+            dispatch(add_vendedor(data[0].id))
+            setVendedores(data)
+        })
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
-            if(data.length>0){
+            if (data.length > 0) {
 
                 if (data[0].apertura) {
-                    console.log(data[0]);
                     dispatch(cajaAbierta(data[0].id))
                     setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial }));
                 }
-            }  
-            })
+            }
+        })
         axios("http://localhost:3001/tienda/cotizacion").then(({ data }) => {
-            if (data.length>0) {
-                
+            if (data.length > 0) {
+
                 setCotizacion(prevCotizacion => ({
                     ...prevCotizacion,
                     cotizacionBlue: data[0].cotizacionBlue,

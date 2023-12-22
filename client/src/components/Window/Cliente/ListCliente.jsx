@@ -6,7 +6,6 @@ export default function ListClientes() {
 
     useEffect(() => {
         axios("http://localhost:3001/tienda/cliente").then(({ data }) => {
-            console.log(data);
             setProvedores(data)
         })
     }, [])
@@ -23,16 +22,16 @@ export default function ListClientes() {
                 </thead>
                 <tbody>
 
-                    {provedores.map((prov) => {
-                        console.log(provedores);
+                    {provedores.map((prov,index) => {
+                        console.log(index);
+                        if (index===0) {
+                            return ""
+                        }
                         return (
                                 <tr key={prov.id}>
-                                    <td>{prov.id}</td>
-
+                                    <td>{prov.id-1}</td>
                                     <td className={style.selectClient}>
-                                        {/* <Link to={`/detail/${productos.id}`}> */}
                                             {prov.razonSocial}
-                                        {/* </Link> */}
                                     </td>
                                    
                                 </tr>
