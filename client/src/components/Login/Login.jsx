@@ -95,6 +95,7 @@ export default function Login(props) {
                 {
                     Cotizacion.apertura?
                         (<>
+                            <span>Caja abierta</span>
                             <div>
 
                                 <label>Precio Inicial</label>

@@ -38,7 +38,6 @@ export default (state = initialState, { type, payload }) => {
       return {...state ,allProductoLike:[], productoLike:[]}
     case "MODIFICAR_CANT":
       const newLista1 = state.producto.map((prod, index) => {
-
         if (index === payload.id) {
           const { page, producto, cantidad } = prod
           return {
@@ -51,8 +50,10 @@ export default (state = initialState, { type, payload }) => {
       })
 
       const newProductos3 = [...state.listProductos]
-      newProductos3[payload.page] = [...newLista1]
+
+      newProductos3[payload.page.id] = [...newLista1]
       return { ...state, listProductos: newProductos3, producto: newLista1 };
+
     case REMOVE_ART:
 
       const newLista = state.producto.filter((prod, index) => index !== payload.id)
@@ -87,9 +88,7 @@ export default (state = initialState, { type, payload }) => {
         return {...state,articulosActualizar:[]}
       
       case "FILTER_ARTICULOSLIKE":
-        console.log(payload);
         const filterArt=state.allProductoLike.filter((prod)=>prod.name.toLowerCase().includes(payload))
-        console.log(filterArt);
         return {...state,productoLike:[...filterArt]}
 
     default:

@@ -15,6 +15,8 @@ import Categoria from './components/Window/Categoria/Categoria';
 import ActualizarDatos from './components/ActualizarDatos/ActualizarDatos';
 import DetailClient from './components/Window/Cliente/DetailCliente';
 import Reportes from './components/Reportes/Reportes';
+import Vendedor from './components/Window/Vendedor/Vendedor';
+import Operaciones from './components/Window/Operaciones/Operaciones';
 
 
 
@@ -59,6 +61,9 @@ function App() {
             } />
             <Route path='/cliente' element={
                <Cliente />
+            } />
+            <Route path='/operaciones' element={
+               <Operaciones />
             } />
             <Route path='/detail/:id' element={
                <Detail />

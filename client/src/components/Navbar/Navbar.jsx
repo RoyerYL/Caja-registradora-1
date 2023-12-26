@@ -46,7 +46,13 @@ export default function Navbar() {
                     <Link to="/provedor">
                         <button >Articulos</button>
                     </Link>
+                    
+                    <Link to="/vendedor">
+                        <button >Vendedor</button>
+                    </Link>
+                    <Link to="/operaciones">
                     <button>Operaciones</button>
+                    </Link>
                     <button>Administracón</button>
                 </div>
             </nav>

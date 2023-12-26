@@ -12,13 +12,15 @@ export default function Articulo(props) {
     const handleClick = () => {
         dispatch(modificar_cant({
             id,
-            cant: 1
+            cant: 1,
+            page
         }))
     }
     const handleClickMenos = () => {
         dispatch(modificar_cant({
             id,
-            cant: -1
+            cant: -1,
+            page
         }))
     }
     const onClose = () => {

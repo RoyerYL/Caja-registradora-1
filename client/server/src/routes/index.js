@@ -28,7 +28,7 @@ const { postVendedor } = require('../controller/Vendedor/postVendedor');
 const { getCaja } = require('../controller/Caja/getCaja');
 const { postCaja } = require('../controller/Caja/postCaja');
 const { cerrarCaja } = require('../controller/Caja/cerrarCaja');
-const { getAllVendedors } = require('../controller/Vendedor/getAllTickets');
+const { getAllVendedors } = require('../controller/Vendedor/getAllVendedor');
 const { actualizarCategoria } = require('../controller/Articulo/acutalizarCategoria');
 const { actualizarProvedor } = require('../controller/Articulo/acutalizarProvedor');
 const { actualizarCostoDolar } = require('../controller/Articulo/acutalizarCostoDolar');
@@ -49,6 +49,8 @@ const { getArticulosMasVendidos } = require('../controller/Articulo/getArticulos
 const { getAllTicketsByClient } = require('../controller/Ticket/getAllTicketsByClient');
 const { getVentasCliente } = require('../controller/Cliente/getVentasCliente');
 const { getCajaTicket } = require('../controller/Caja/getCajaTicket');
+const { updateVendedor } = require('../controller/Vendedor/updateVendedor');
+const { deleteVendedor } = require('../controller/Vendedor/deleteVendedor');
 
 
 
@@ -113,6 +115,8 @@ router.post('/cerrarCaja',cerrarCaja)
 router.get('/vendedor/:id',getVendedor)
 router.get('/vendedor',getAllVendedors)
 router.post('/vendedor',postVendedor)
+router.post('/updateVendedor',updateVendedor)
+router.delete(`/deleteVendedor/:id`,deleteVendedor)
 
 router.get('/cotizacion',getCotizacion)
 router.post('/cotizacion',postCotizacion)

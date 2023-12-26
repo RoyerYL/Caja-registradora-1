@@ -97,7 +97,6 @@ export default function Navbar() {
                 descuento:costo.descuento,
                 cajaId: Number(caja)
             }
-            console.log(body);
             if (!clienteForm.contado) {
                 body.cajaId = null
             }
@@ -161,7 +160,6 @@ export default function Navbar() {
         }
         setClienteForm({ ...clienteForm, [name]: value })
     }
-
     return (
         <div className={style.Home}>
             <span>{fecha}</span>
