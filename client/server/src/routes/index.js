@@ -45,10 +45,15 @@ const { actualizarPorcentajePeso } = require('../controller/Articulo/acutalizarP
 const { postCotizacion } = require('../controller/Cotizacion/postCotizacion');
 const { getCotizacion } = require('../controller/Cotizacion/getCotizacion');
 const { articuloVendido } = require('../controller/Articulo/articuloVendido');
+const { getArticulosMasVendidos } = require('../controller/Articulo/getArticulosMasVendidos');
+const { getAllTicketsByClient } = require('../controller/Ticket/getAllTicketsByClient');
+const { getVentasCliente } = require('../controller/Cliente/getVentasCliente');
+const { getCajaTicket } = require('../controller/Caja/getCajaTicket');
 
 
 
 router.get('/articulo',getAllArticulos)
+router.get('/articuloMasVendidos',getArticulosMasVendidos)
 router.get('/articulo/:id',getArticulo)
 router.get('/articuloLike/:id',getArticuloLike)
 
@@ -89,15 +94,18 @@ router.get('/compra/:id',getCompras)
 router.post('/compra',postCompra)
 
 router.get('/ticket',getAllTickets)
+router.get('/ticketByClient/:id',getAllTicketsByClient)
 router.get('/ticket/:id',getTicket)
 router.post('/ticket',postTicket)
 
 router.get('/cliente',getAllClientes)
+router.get('/ventasCliente/:id',getVentasCliente)
 router.get('/cliente/:id',getCliente)
 router.get('/clienteLike/:id',getClienteLike)
 router.post('/cliente',postCliente)
 
 router.get('/caja',getAllCaja)
+router.get('/cajaTicket/:id',getCajaTicket)
 router.get('/caja/:id',getCaja)
 router.post('/caja',postCaja)
 router.post('/cerrarCaja',cerrarCaja)

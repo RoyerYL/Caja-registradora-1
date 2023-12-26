@@ -1,0 +1,11 @@
+.Comprobante{
+    
+}
+.tickets{
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 5px;
+    margin: 5px;
+}

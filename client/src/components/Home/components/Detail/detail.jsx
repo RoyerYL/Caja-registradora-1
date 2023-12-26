@@ -8,7 +8,6 @@ export default function Detail() {
     const [infoArticulo, setInfoArticulo] = useState({})
     const { id } = useParams()
 
-    const navigate = useNavigate();
 
     useEffect(() => {
 

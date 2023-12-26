@@ -1,0 +1,73 @@
+.reportesButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin: 25px;
+    padding: 25px;
+    border: 1px solid;
+}
+.reportesButtons span{
+    height: 3px;
+    padding: 3px;
+    border:1px solid;
+    box-shadow: 5px 5px 5px black;
+}
+.reportesButtons a{
+    color: black;
+    text-decoration: none;
+}
+.reportesButtons span:hover{
+    background-color: red;
+}
+
+/**Mas Vendidos**/
+.masVendidos{
+    height: 775px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid;
+    margin: 25px;
+    padding: 3px;
+}
+.masVendidos>div{
+    
+    display: flex;
+    justify-content: space-between;
+}
+.masVendidos>div p{
+    
+    color: black;
+    border: 1px solid;
+}
+.masVendidos> div:hover{
+    background-color: aqua;
+}
+.masVendidos a{
+    text-decoration: none;
+}
+.cantidad{
+    width: 50px;
+}
+/** Ventas x clientes **/
+.VentasXCliente{
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.details summary{
+    border: 1px solid;
+    padding: 5px;
+    list-style: none;
+    cursor: pointer;
+}
+summary::before{
+    content: "";
+    
+}
+
+.details[open] summary{
+    background-color: rgb(153, 151, 151);
+}

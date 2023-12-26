@@ -1,3 +1,4 @@
+const { where, fn, col } = require("sequelize");
 const { Articulo } = require("../../DB_connection")
 
 const actualizarPorcentajeDolar = async (req, res) => {
@@ -10,11 +11,9 @@ const actualizarPorcentajeDolar = async (req, res) => {
         });
 
         const precioActualizado = articulo.costoDolar * (1 + porcentajeAumento / 100);
-        await Articulo.update({ costoDolar: precioActualizado }, { where: { id: id } });
+        const articulo_=await Articulo.update({ costoDolar: precioActualizado }, { where: where(fn('lower', col('id')), fn('lower', id)) });
 
-        // Esperar a que todas las actualizaciones se completen
-        await Promise.all(updatePromises);
-
+        console.log(articulo_);
         return res.status(200).json({ message: 'Precios actualizados correctamente.' });
     } catch (error) {
         return res.status(500).json({ error: error.message });

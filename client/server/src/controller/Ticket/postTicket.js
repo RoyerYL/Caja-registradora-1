@@ -4,6 +4,7 @@ const postTicket = async (req, res) => {
     const {
         valorTotal,
         fecha,
+        descuento,
         clienteId,
         cajaId,
         vendedorId
@@ -18,6 +19,7 @@ const postTicket = async (req, res) => {
         const newUser = await Ticket.create({
                 valorTotal,
                 fecha,
+                descuento,
                 ClienteId:clienteId,
                 CajaId:cajaId,
                 VendedorId:vendedorId

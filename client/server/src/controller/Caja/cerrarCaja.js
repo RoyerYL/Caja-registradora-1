@@ -1,13 +1,21 @@
-const { Caja } = require("../../DB_connection")
+const { Caja,Ticket } = require("../../DB_connection")
 
 const cerrarCaja = async (req, res) => {
 
     const { precioFinal, fechaCierre, id } = req.body;
 
     try {
-
+        const ticket=await Ticket.findAll({
+            where:{
+                id
+            }
+        })
+        let totalIngreso=0
+        ticket.forEach((t)=>{
+            totalIngreso+=t.valorTotal
+        })
         await Caja.update(
-            { precioFinal, fechaCierre, apertura: false },
+            { precioFinal, fechaCierre, apertura: false ,precioFinalCaja:totalIngreso},
             { where: { id } });
 
         return res.status(200).json({ message: 'Precio actualizado correctamente.' });

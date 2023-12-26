@@ -4,6 +4,7 @@ import style from "./Login.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { add_cotizacion, add_vendedor, cajaAbierta } from '../../redux/action';
 import axios from 'axios';
+import Caja from './Caja/Caja';
 export default function Login(props) {
 
     const dispatch = useDispatch()
@@ -11,6 +12,7 @@ export default function Login(props) {
     const caja = useSelector((state) => state.caja)
     const [cajaAbierta_, setCajaAbierta] = useState(0)
     const [Cotizacion, setCotizacion] = useState({
+        apertura:false,
         precioInicial: 0,
         precioFinal: 0,
         cotizacionBlue: Number.parseFloat(0).toFixed(2),
@@ -33,7 +35,7 @@ export default function Login(props) {
 
                 if (data[0].apertura) {
                     dispatch(cajaAbierta(data[0].id))
-                    setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial }));
+                    setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial ,apertura:data[0].apertura}));
                 }
             }
         })
@@ -84,14 +86,14 @@ export default function Login(props) {
             id: caja,
             precioFinal: Cotizacion.precioFinal,
             fechaCierre: new Date()
-        }).then(({ data }) => { setCajaAbierta(2) })
+        }).then(({ data }) => { setCajaAbierta(2),setCotizacion({...Cotizacion,apertura:false}) })
     }
     return (
         <div className={style.login}>
             <div className={style.cajaApertura}>
 
                 {
-                    caja !== 0 ?
+                    Cotizacion.apertura?
                         (<>
                             <div>
 
@@ -147,8 +149,8 @@ export default function Login(props) {
 
                     <button onClick={submitHandler}> Confirmar </button>
                 </div>
-
             </div>
+                    <Caja/>
         </div>
     )
 

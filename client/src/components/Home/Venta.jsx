@@ -25,6 +25,7 @@ export default function Navbar() {
     const caja = useSelector((state) => state.caja)
     const [ticket, setTicket] = useState()
     const [costo, setCosto] = useState({
+        descuento:0,
         subTotal: 0.00
     })
     useEffect(() => {
@@ -88,18 +89,19 @@ export default function Navbar() {
             const cliente = responseCliente.data[0];
 
             // Crear un nuevo ticket
-            const body={
+            const body = {
                 clienteId: cliente.id,
                 valorTotal: costo.subTotal,
                 fecha: new Date(),
                 vendedorId: vendedor,
+                descuento:costo.descuento,
                 cajaId: Number(caja)
             }
-            console.log(vendedor);
+            console.log(body);
             if (!clienteForm.contado) {
-                body.cajaId=null
+                body.cajaId = null
             }
-            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket",body);
+            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", body);
 
             const ticketId = responseTicket.data.id;
             setTicket(ticketId)
@@ -113,7 +115,7 @@ export default function Navbar() {
                         articuloId: prod.producto.id,
                         subTotal: prod.producto.precioVenta * prod.cantidad,
                     });
-            
+
                     await axios.post("http://localhost:3001/tienda/articuloVendido", {
                         id: prod.producto.id,
                         cantVendidos: prod.cantidad
@@ -152,7 +154,7 @@ export default function Navbar() {
     const handleChange = (event) => {
         const value = event.target.value
         const name = event.target.name
-
+        
         if (name === "contado") {
             setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
             return ""
@@ -165,17 +167,11 @@ export default function Navbar() {
             <span>{fecha}</span>
             <div className={style.registrarCompra}>
                 <div className={style.addArticulo}>
-                    <div className={style.Articulo}>
 
-                        <Articulo addHandler={addHandler} collapseClick={collapseClick} />
+                    <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
-                    </div>
-                    <div>
-
-                        <ListaArticulosEncontrados productos={productoLikeProp} />
-                    </div>
                     <div className={style.cliente}>
-                        <h5>Cliente</h5>
+                        
                         <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
                     </div>
 
@@ -184,7 +180,10 @@ export default function Navbar() {
                     <div>
                         <ListaArticulos productos={productoProp} />
                         <div className={style.info}>
+
+
                             <Condicion />
+
                             <div className={style.contado}>
                                 <div>
 
@@ -204,6 +203,10 @@ export default function Navbar() {
                     </div>
                     <button onClick={generarRecibo}>Generar recibo</button>
                     <button onClick={imprimirRecibo}>Imprimir recibo</button>
+                </div>
+                <div className={style.ListaEncontrados}>
+
+                    <ListaArticulosEncontrados productos={productoLikeProp} />
                 </div>
             </div>
             <div >

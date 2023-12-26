@@ -3,7 +3,7 @@ import style from "./ActualizarDatos.module.css"
 import ListaArticulosEncontrados from '../Home/components/ListaArticulos/ListaArticulosEncontrados';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { articuloActualizar } from '../../redux/action';
+import { articuloActualizar, filterArtLike, getAll, order_articulos } from '../../redux/action';
 
 
 export default function ActualizarDatos() {
@@ -12,7 +12,12 @@ export default function ActualizarDatos() {
     const articulosActualizar = useSelector((state) => state.articulosActualizar)
     const [categoria, setCategoria] = useState([])
     const [provedor, setProvedor] = useState([])
+    
     const [articulosSeleccionados, setArticulosSeleccionados] = useState([]);
+    const [seleccionando, setSeleccionando] = useState(false);
+
+    const [buscador,setBuscador]=useState("")
+    const [order,setOrder]=useState("A")
     const [form, setForm] = useState({
         name: "",
         id: "",
@@ -57,7 +62,7 @@ export default function ActualizarDatos() {
 
             setCategoria(data)
         })
-
+        dispatch(getAll())
     }, [])
 
     const handleChange = (event) => {
@@ -72,6 +77,10 @@ export default function ActualizarDatos() {
     }
     const addArticulosActualizar = () => {
         dispatch(articuloActualizar(articulosSeleccionados))
+        setArticulosSeleccionados([])
+    }
+    const addArticulosAll = () => {
+        dispatch(articuloActualizar(articulos))
     }
 
     const actualizar = async (e) => {
@@ -206,12 +215,24 @@ export default function ActualizarDatos() {
 
 
     }
-
+    const search=(e)=>{
+        const value=e.target.value
+        setBuscador(value)
+        dispatch(filterArtLike(e.target.value))
+    }
+    const ordenar=()=>{
+        order?dispatch(order_articulos("A")):dispatch(order_articulos("D"))
+        setOrder(!order)
+    }
     return (<>
         <div className={style.ActualizarDatos}>
             <div className={style.containerListArticulos}>
+                <div>
+                    <input type="text" name='buscador' placeholder='nombre' value={buscador} onChange={search}/>
+                    <button onClick={ordenar}>{order ?"asc":"desc"}</button>
+                </div>
 
-                <h2>Lista de Artículos</h2>
+                <p>Lista de Artículos</p>
                 <ul>
                     {articulos.map((articulo) => (
                         <li
@@ -225,12 +246,13 @@ export default function ActualizarDatos() {
                     ))}
                 </ul>
             </div>
-            <div>
+            <div className='flex-2'>
                 <button onClick={addArticulosActualizar}>{`->`}</button>
+                <button onClick={addArticulosAll}>{`Todos`}</button>
             </div>
             <div className={style.containerListArticulos}>
 
-                <h2>Lista de Artículos</h2>
+                <p>Lista de Artículos</p>
                 <ul>
                     {articulosActualizar.map((articulo) => (
                         <li
@@ -246,7 +268,7 @@ export default function ActualizarDatos() {
             </div>
             <div className={style.containerForm}>
                 <div>
-
+                    <span>Provedor:</span>
                     <select value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
                         {
                             provedor.map((prov) => {
@@ -259,7 +281,7 @@ export default function ActualizarDatos() {
                     <button name='provedor' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
-
+                    <span>Categoria:</span>
                     <select value={form.CategoriaId} name='CategoriaId' onChange={handleChange}>
                         {
                             categoria.map((cate) => {
@@ -287,7 +309,7 @@ export default function ActualizarDatos() {
                     <button name='costoPeso' onClick={actualizar}>actualizar</button>
 
                     <span>Cost peso %</span>
-                    <input type="text" name='costoPesoPorcentaje' value={form.costoDolarPorcentaje} onChange={handleChange} />
+                    <input type="text" name='costoPesoPorcentaje' value={form.costoPesoPorcentaje} onChange={handleChange} />
                     <button name='costoPesoPorcentaje' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>

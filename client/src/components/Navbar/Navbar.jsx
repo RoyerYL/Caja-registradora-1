@@ -25,8 +25,10 @@ export default function Navbar() {
 
             <nav >
                 <div >
-                    <button >Ventas</button>
-                    <button >Caja</button>
+                    <Link to="/ventana">
+                        <button >Ventas</button>
+                    </Link>
+
                     <Link to="/cliente">
                         <button >Clientes</button>
                     </Link>
@@ -37,7 +39,10 @@ export default function Navbar() {
                         <button >Categoria</button>
                     </Link>
                     <button >Estadisticas</button>
-                    <button >Reportes</button>
+                    <Link to="/reportes">
+                        <button >Reportes</button>
+                    </Link>
+
                     <Link to="/provedor">
                         <button >Articulos</button>
                     </Link>
@@ -61,14 +66,14 @@ export default function Navbar() {
                     <Link to="/altaArticulo">
                         <button >Alta de articulo</button>
                     </Link>
-                    <Link to="/ventana">
+                    {/* <Link to="/ventana">
                         <button >Comprobantes</button>
-                    </Link>
+                    </Link> */}
                     <Link to="/listaArticulos">
                         <button >Lista de articulos</button>
                     </Link>
                     <Link to="/actualizarArticulo">
-                        <button >Acrualizar datos</button>
+                        <button >Actualizar datos</button>
                     </Link>
 
                 </div>

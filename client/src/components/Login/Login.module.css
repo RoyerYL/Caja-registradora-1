@@ -34,3 +34,20 @@
 .precioInical{
     cursor: none;
 }
+
+/****CAJA***/
+.containerCaja{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px 10px 5px black;
+    border: 1px solid;
+    height: 250px;
+    width: 450px;
+    overflow: scroll;
+    padding: 5px;
+}
+.containerCaja>div{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}

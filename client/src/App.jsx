@@ -3,7 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 import AltaArticulo from './components/AltaArticulo/AltaArticulo';
 import Venta from './components/Home/Venta';
 import Provedor from './components/Window/Provedor/Provedor';
-import Comprobante from './components/Window/Comprobante';
+import Comprobante from './components/Window/Comprobante/Comprobante';
 
 
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -13,6 +13,8 @@ import Login from './components/Login/Login';
 import Cliente from './components/Window/Cliente/Cliente';
 import Categoria from './components/Window/Categoria/Categoria';
 import ActualizarDatos from './components/ActualizarDatos/ActualizarDatos';
+import DetailClient from './components/Window/Cliente/DetailCliente';
+import Reportes from './components/Reportes/Reportes';
 
 
 
@@ -61,8 +63,14 @@ function App() {
             <Route path='/detail/:id' element={
                <Detail />
             } />
+            <Route path='/cliente/:id' element={
+               <DetailClient />
+            } />
             <Route path='/actualizarArticulo' element={
                <ActualizarDatos />
+            } />
+            <Route path='/reportes/*' element={
+               <Reportes />
             } />
 
          </Routes>

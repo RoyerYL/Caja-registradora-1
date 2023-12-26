@@ -1,2 +1,15 @@
-.busqueda {
+.containerIngresar{
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0px 3px 3px 3px ;
+}
+.containerIngresar p{ 
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3px;
+}
+.containerIngresar button:hover{
+    cursor: pointer;
 }

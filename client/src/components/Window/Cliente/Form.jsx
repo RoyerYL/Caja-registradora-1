@@ -103,7 +103,7 @@ export default function Form() {
 
                     <div className={style.botones}>
 
-                        <button type="button" className="btn btn-danger" onClick={()=>{console.log(console.log("form"))}}>Actualizar</button>
+                       
                         <button type="button" className="btn btn-danger" onClick={crearCliente}>Nuevo</button>
                     </div>
                 </div>

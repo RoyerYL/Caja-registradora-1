@@ -27,12 +27,17 @@ width: 100%;
     transform: scale(1.2);
 }
 .listArticuloEncontrados{
+    height: 100%;
+    width: 100%;
+    background-color: white;
     z-index: 999;
-    height: 360px;
     overflow: overlay;
-    border: 1px solid black;
     margin: 0px;
+    
+
 }
+
+
 .listArticuloEncontrados p{
     text-align: center;
     margin: 0px;

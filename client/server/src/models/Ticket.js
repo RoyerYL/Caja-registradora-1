@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
          type:DataTypes.DATE,
          allowNull:false
       },
+      descuento:{
+         type:DataTypes.INTEGER,
+         defaultValue:0
+      },
       VendedorId:{
          type:DataTypes.INTEGER
       },

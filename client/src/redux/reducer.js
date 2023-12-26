@@ -4,6 +4,7 @@ const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
   producto: [],
   productoLike: [],
+  allProductoLike:[],
   Vendedor: 0,
   cotizacionDolar: {
     cotizacionMep: 0.00,
@@ -25,16 +26,16 @@ export default (state = initialState, { type, payload }) => {
 
 
     case ADD_ARTLike:
-      return { ...state, productoLike: payload };
+      return { ...state,allProductoLike:payload, productoLike: payload };
 
     case 'GET_ALL':
-      return { ...state, productoLike: payload };
+      return { ...state,allProductoLike:payload, productoLike: payload };
 
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
     case "RESET_ARTLIKE":
-      return {...state , productoLike:[]}
+      return {...state ,allProductoLike:[], productoLike:[]}
     case "MODIFICAR_CANT":
       const newLista1 = state.producto.map((prod, index) => {
 
@@ -84,6 +85,12 @@ export default (state = initialState, { type, payload }) => {
         return {...state,articulosActualizar:[...payload]}
       case "ART_ACTUALIZAR_RESET":
         return {...state,articulosActualizar:[]}
+      
+      case "FILTER_ARTICULOSLIKE":
+        console.log(payload);
+        const filterArt=state.allProductoLike.filter((prod)=>prod.name.toLowerCase().includes(payload))
+        console.log(filterArt);
+        return {...state,productoLike:[...filterArt]}
 
     default:
   return {

@@ -37,11 +37,11 @@ const postCliente = async (req, res) => {
         }
         const [newUser, created] = await Cliente.findOrCreate({
             where: {
-                razonSocial,
-                nombre,
+                razonSocial
 
             },
             defaults: {
+                nombre,
                 dni: dni || 0,
                 direccion: direccion || "",
                 zona: zona || "",
@@ -55,7 +55,7 @@ const postCliente = async (req, res) => {
         })
         if (!created) { return res.status(409).json({ error: "El Cliente ya está registrado " }) }
 
-        const allClientes = await Articulo.findAll()
+        const allClientes = await Cliente.findAll()
 
         return res.status(201).json(allClientes);
 

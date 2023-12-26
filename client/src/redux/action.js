@@ -113,6 +113,12 @@ export const cajaAbierta = (input) => {
     payload: input
   }
 };
+export const filterArtLike = (input) => {
+  return {
+    type: "FILTER_ARTICULOSLIKE",
+    payload: input
+  }
+};
 
 export const order_articulos = (order) => {
   return{

@@ -1,14 +1,28 @@
-.selectClient :active{
-    --bs-table-bg: #d1e7dd ;
+.cliente{
+    text-align: center;
+    margin: 5px;
 }
-.selectClient :hover{
-    transform: scale(1.5);
+.selectClient:hover{
+    background-color: aqua;
 }
 .selectClient{
     --bs-table-bg: #bbb;
     cursor: default;
 }
 .tablaCliente{
-    border: 1px solid black;
-    transition: all .5s !important;
+    width: 100%;
+}
+.tablaCliente button{
+ width: 1.5em;
+ padding: 0px;
+}
+.nombre{
+    display: flex;
+    gap: 3px;
+}
+.containerNombre{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-bottom: 5px;
 }

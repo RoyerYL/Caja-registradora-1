@@ -23,10 +23,9 @@ export default function ListCliente(props) {
     }
     return (
         <>
-            <table >
+            <table className={style.tablaCliente}>
                 <thead>
                     <tr className="">
-                        <th >#</th>
                         <th >Nombre <button onClick={() => {}}>🔀</button></th>
                     </tr>
                 </thead>
@@ -36,11 +35,10 @@ export default function ListCliente(props) {
                             return (
                                 
                                     <tr key={c.id}>
-                                        <td>{c.id}</td>
 
                                         <td className={style.selectClient} onClick={handleClick}>
                                             {/* <Link to={`/detail/${productos.id}`}> */}
-                                                {c.razonSocial}
+                                                {c.nombre}
                                             {/* </Link> */}
                                         </td>
                                     </tr>

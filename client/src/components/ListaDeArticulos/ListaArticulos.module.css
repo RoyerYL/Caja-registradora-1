@@ -1,3 +1,74 @@
 .listaArticulos{
     margin: 15px;
 }
+
+
+.listArticulo {
+    height: 450px;
+    background-color: white;
+    overflow: overlay;
+    border: 3px solid black;
+    /* box-shadow: 10 10 10 10 black; */
+}
+.listArticulo table{
+width: 100%;
+}
+.listArticulo thead th{
+    border: 1px solid;
+}
+.listArticulo button{
+    height: 2em !important;
+    width: 1.5em !important;
+    padding: 1px;
+    outline: none;
+}
+.nomFilas button {
+    font-size: 1em;
+    border: none;
+    padding: 0px;
+}
+
+.nomFilas button:hover {
+    transform: scale(1.2);
+}
+.listArticuloEncontrados{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 999;
+    overflow: overlay;
+    margin: 0px;
+    
+
+}
+
+
+.listArticuloEncontrados p{
+    text-align: center;
+    margin: 0px;
+    height: 100%;
+}
+.articulos{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+}
+.codBarras{
+    width: 110px !important;
+    border-right: 1px solid;
+    font-size: 12px;
+}
+.precio{
+    font-size: 12px;
+    border-left: 1px solid;
+    width: 90px;
+}
+.nombre{
+    font-size: 13px;
+width: 150px;
+}
+.articulos:hover{
+    background-color: aqua;
+}

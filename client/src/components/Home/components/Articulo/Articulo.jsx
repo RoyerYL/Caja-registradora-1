@@ -48,7 +48,7 @@ export default function Articulo(props) {
 
     return (
         <div className={style.containerIngresar}>  
-            <h5>Ingrese un articulo</h5>
+            <p>Ingrese un articulo</p>
             <div>
                 <div className="coolinput">
                     <label htmlFor="input" className="text">Cod Barras:</label>

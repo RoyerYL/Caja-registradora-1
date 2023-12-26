@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from "./Cliente.module.css"
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 export default function ListClientes() {
     const [provedores, setProvedores] = useState([])
 
@@ -13,28 +14,31 @@ export default function ListClientes() {
     return (
         <>
 
-            <table className={`table  ${style.tabla}`}>
+            <table className={`${style.tabla}`}>
                 <thead>
                     <tr >
-                        <th scope="col">#</th>
-                        <th scope="col">Razon social</th>
+                        <th >Razon social</th>
+                        <th >Nombre</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    {provedores.map((prov,index) => {
-                        console.log(index);
-                        if (index===0) {
+                    {provedores.map((prov, index) => {
+                        if (index === 0) {
                             return ""
                         }
                         return (
-                                <tr key={prov.id}>
-                                    <td>{prov.id-1}</td>
-                                    <td className={style.selectClient}>
-                                            {prov.razonSocial}
-                                    </td>
-                                   
-                                </tr>
+                            <tr key={prov.id}>
+                                <td className={style.selectClient}>
+                                <Link key={prov.id} to={`/cliente/${prov.id}`}>
+                                    {prov.razonSocial}
+                            </Link>
+                                </td>
+                                <td className={style.selectClient}>
+                                    {prov.nombre}
+                                </td>
+
+                            </tr>
 
                         )
                     }

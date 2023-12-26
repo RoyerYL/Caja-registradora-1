@@ -24,7 +24,8 @@ function AltaArticulo(props) {
         img: "",
         activo: true,
         CategoriaId: 0,
-        ProvedorId: 1
+        ProvedorId: 1,
+        dolar:true
 
     })
 
@@ -40,59 +41,69 @@ function AltaArticulo(props) {
             setCategoria(data)
         }
         )
-        axios(`http://localhost:3001/tienda/articulo/${id}`)
-            .then(({ data }) => {
-                if (data.name) {
-                    const {
-                        activo,
-                        costoDolar,
-                        costoPeso,
-                        descripcion,
-                        ganancia,
-                        ganancia_2,
-                        id,
-                        img,
-                        iva,
-                        name,
-                        precioVenta,
-                        precioVenta_2,
-                        stock,
-                        stockMin,
-                        CategoriaId,
-                        ProvedorId
-                    } = data
+        if (id) {
 
-                    // console.log(data);
-                    setForm({
-                        activo,
-                        costoDolar: Number.parseFloat(costoDolar).toFixed(2),
-                        costoPeso: Number.parseFloat(costoPeso).toFixed(2),
-                        descripcion: descripcion || "",
-                        ganancia,
-                        ganancia_2: ganancia_2 || 0,
-                        id,
-                        img,
-                        iva,
-                        name,
-                        precioVenta: Number.parseFloat(precioVenta).toFixed(2),
-                        precioVenta_2: Number.parseFloat(precioVenta_2).toFixed(2),
-                        stock,
-                        stockMin,
-                        CategoriaId,
-                        ProvedorId
-                    })
-                }
-            })
+            axios(`http://localhost:3001/tienda/articulo/${id}`)
+                .then(({ data }) => {
+                    if (data.name) {
+                        const {
+                            activo,
+                            costoDolar,
+                            costoPeso,
+                            descripcion,
+                            ganancia,
+                            ganancia_2,
+                            id,
+                            img,
+                            iva,
+                            name,
+                            precioVenta,
+                            precioVenta_2,
+                            stock,
+                            stockMin,
+                            CategoriaId,
+                            ProvedorId
+                        } = data
+
+                        // console.log(data);
+                        setForm({
+                            activo,
+                            costoDolar: Number.parseFloat(costoDolar).toFixed(2),
+                            costoPeso: Number.parseFloat(costoPeso).toFixed(2),
+                            descripcion: descripcion || "",
+                            ganancia,
+                            ganancia_2: ganancia_2 || 0,
+                            id,
+                            img,
+                            iva,
+                            name,
+                            precioVenta: Number.parseFloat(precioVenta).toFixed(2),
+                            precioVenta_2: Number.parseFloat(precioVenta_2).toFixed(2),
+                            stock,
+                            stockMin,
+                            CategoriaId,
+                            ProvedorId
+                        })
+                    }
+                })
+        }
     }, [id]);
 
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
+        if (property === "dolar") {
+            setForm({ ...form, [property]: !form.dolar });//cambio Form..
+            return ""
+        }
         setForm({ ...form, [property]: value });//cambio Form..
     }
 
     const handleClick = () => {
-        console.log(form);
+        if (!(form.id === "" || form.name === "")) {
+            console.log(form);
+            //    axios.post("http://localhost:3001/tienda/articulo",{})
+        }
     }
 
     const [loading, setLoading] = useState(false);
@@ -174,7 +185,6 @@ function AltaArticulo(props) {
                                 <select value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
                                     {
                                         provedor.map((prov) => {
-                                            console.log(form.ProvedorId);
                                             return (
                                                 <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
                                             )
@@ -184,6 +194,20 @@ function AltaArticulo(props) {
                             </div>
                         </div>
                         {/* ****** */}
+                        <div className='flex-1'>
+                            <div>
+                                <input type="checkbox" name='dolar' checked={form.dolar} onChange={handleChange}/>
+                                <label>
+                                    Dolar
+                                </label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="dolar" checked={!form.dolar} onChange={handleChange}/>
+                                <label>
+                                    Peso
+                                </label>
+                            </div>
+                        </div>
                         <div className={style.costo}>
                             <h3>Lista de precios 1</h3>
                             <div>
@@ -240,7 +264,7 @@ function AltaArticulo(props) {
                         </div>
                     </div>
 
-                    <div className=''>
+                    <div className={style.containerStock}>
                         <div className={style.stock}>
                             <div>
 
@@ -255,18 +279,7 @@ function AltaArticulo(props) {
 
                             </div>
 
-                            <div>
-                                <input type="checkbox" value="" />
-                                <label>
-                                    por unidad
-                                </label>
-                            </div>
-                            <div>
-                                <input type="checkbox" value="" />
-                                <label>
-                                    por peso
-                                </label>
-                            </div>
+
 
                         </div>
                         <div className={style.coments}>

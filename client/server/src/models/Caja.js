@@ -20,6 +20,9 @@ module.exports = (sequelize) => {
       precioFinal: {
          type: DataTypes.DECIMAL(10, 2),
       },
+      precioFinalCaja: {
+         type: DataTypes.DECIMAL(10, 2),
+      },
       fechaApertura:{
          type:DataTypes.DATE,
          allowNull:false
