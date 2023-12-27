@@ -1,0 +1,18 @@
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+    sequelize.define('Mercaderia', {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        // Provedor  
+        //  Vendedor
+        //  Comentarios 
+        // 
+        // SubTotal
+        // ListArt-cant
+        //     
+    }, { timestamps: false });
+};

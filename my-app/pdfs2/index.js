@@ -7,7 +7,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 async function createPDF() {
   // Define el tamaño de la página en puntos (aproximadamente 80 mm de ancho)
-  const pageSize = { width: 160, height: "auto" };
+  const pageSize = { width: 140, height: "auto" };
   const costo = 1500
   // Define la estructura del documento PDF
   const documentDefinition = {

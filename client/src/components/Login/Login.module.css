@@ -49,5 +49,8 @@
 .containerCaja>div{
     display: flex;
     justify-content: center;
-    gap: 15px;
+}
+.containerCaja p{
+    padding: 5px;
+    border: 1px solid;
 }

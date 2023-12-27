@@ -7,7 +7,7 @@ const cerrarCaja = async (req, res) => {
     try {
         const ticket=await Ticket.findAll({
             where:{
-                id
+                CajaId:id
             }
         })
         let totalIngreso=0
