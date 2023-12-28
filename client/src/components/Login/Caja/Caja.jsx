@@ -32,6 +32,7 @@ export default function Caja(props) {
                         <p>{c.fechaApertura}</p>
                         <p>{c.fechaCierre || "Abierto"}</p>
                         <p>{c.precioInicial}</p>
+                        <p>{c.precioFinalCaja || "Abierto"}</p>
                         <p>{c.precioFinal || "Abierto.."}</p>
 
                     </div>

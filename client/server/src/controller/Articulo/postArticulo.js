@@ -2,11 +2,6 @@ const { Articulo, Categoria, Provedor } = require("../../DB_connection")
 
 const postArticulo = async (req, res) => {
 
- 
-
-
-
-
     const {
         id,
         name,

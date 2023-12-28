@@ -51,6 +51,8 @@ const { getVentasCliente } = require('../controller/Cliente/getVentasCliente');
 const { getCajaTicket } = require('../controller/Caja/getCajaTicket');
 const { updateVendedor } = require('../controller/Vendedor/updateVendedor');
 const { deleteVendedor } = require('../controller/Vendedor/deleteVendedor');
+const { postMercaderia } = require('../controller/Mercaderia/postMercaderia');
+const { getMercaderia } = require('../controller/Mercaderia/getMercaderia');
 
 
 
@@ -121,6 +123,8 @@ router.delete(`/deleteVendedor/:id`,deleteVendedor)
 router.get('/cotizacion',getCotizacion)
 router.post('/cotizacion',postCotizacion)
 
+router.get('/mercaderia',getMercaderia)
+router.post('/mercaderia',postMercaderia)
 
 
 module.exports={router}

@@ -7,12 +7,13 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
-        // Provedor  
-        //  Vendedor
-        //  Comentarios 
-        // 
-        // SubTotal
-        // ListArt-cant
-        //     
+        comentarios: {
+            type: DataTypes.STRING,
+            defaultValue: ""
+        },
+        articulos: {
+            type: DataTypes.JSONB, // Puedes ajustar el tipo de datos según tus necesidades
+            allowNull: false,
+        },
     }, { timestamps: false });
 };
