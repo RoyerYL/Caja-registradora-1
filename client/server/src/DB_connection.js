@@ -60,7 +60,7 @@ Caja.hasMany(Ticket)
 Ticket.belongsTo(Caja)
 
 Provedor.hasMany(Mercaderia)
-Mercaderia.hasMany(Provedor)
+Mercaderia.belongsTo(Provedor)
 
 Vendedor.hasMany(Mercaderia)
 Mercaderia.belongsTo(Vendedor)

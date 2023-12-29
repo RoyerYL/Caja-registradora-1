@@ -28,30 +28,15 @@ export default function Navbar() {
                     <Link to="/ventana">
                         <button >Ventas</button>
                     </Link>
-
-                    <Link to="/cliente">
-                        <button >Clientes</button>
-                    </Link>
-                    <Link to="/provedor">
-                        <button >Provedores</button>
-                    </Link>
-                    <Link to="/categoria">
-                        <button >Categoria</button>
-                    </Link>
                     <button >Estadisticas</button>
                     <Link to="/reportes">
                         <button >Reportes</button>
                     </Link>
-
                     <Link to="/provedor">
                         <button >Articulos</button>
                     </Link>
-                    
-                    <Link to="/vendedor">
-                        <button >Vendedor</button>
-                    </Link>
                     <Link to="/operaciones">
-                    <button>Operaciones</button>
+                        <button>Operaciones</button>
                     </Link>
                     <button>Administracón</button>
                 </div>

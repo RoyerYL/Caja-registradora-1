@@ -53,16 +53,7 @@ function App() {
             <Route path='/ventana' element={
                <Comprobante />
             } />
-            <Route path='/provedor' element={
-               <Provedor />
-            } />
-            <Route path='/categoria' element={
-               <Categoria />
-            } />
-            <Route path='/cliente' element={
-               <Cliente />
-            } />
-            <Route path='/operaciones' element={
+            <Route path='/operaciones/*' element={
                <Operaciones />
             } />
             <Route path='/detail/:id' element={
