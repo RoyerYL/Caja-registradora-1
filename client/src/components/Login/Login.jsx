@@ -26,7 +26,6 @@ export default function Login(props) {
     useEffect(() => {
 
         axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
-            console.log(data[0].id);
             dispatch(add_vendedor(data[0].id))
             setVendedores(data)
         })

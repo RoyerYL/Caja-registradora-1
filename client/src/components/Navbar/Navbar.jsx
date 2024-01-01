@@ -28,13 +28,16 @@ export default function Navbar() {
                     <Link to="/ventana">
                         <button >Ventas</button>
                     </Link>
-                    <button >Estadisticas</button>
                     <Link to="/reportes">
                         <button >Reportes</button>
                     </Link>
                     <Link to="/provedor">
                         <button >Articulos</button>
                     </Link>
+                    <Link to="/mercaderia">
+                        <button >Mercaderia</button>
+                    </Link>
+
                     <Link to="/operaciones">
                         <button>Operaciones</button>
                     </Link>

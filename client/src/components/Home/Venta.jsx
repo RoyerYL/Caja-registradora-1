@@ -109,7 +109,7 @@ export default function Navbar() {
                 try {
                     await axios.post("http://localhost:3001/tienda/compra", {
                         ticketId: ticketId,
-                        fecha: fecha,
+                        fecha: new Date(),
                         cantidad: prod.cantidad,
                         articuloId: prod.producto.id,
                         subTotal: prod.producto.precioVenta * prod.cantidad,

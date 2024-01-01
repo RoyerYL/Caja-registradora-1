@@ -1,0 +1,12 @@
+.listaArticulos{
+    border: 1px solid;
+    width: 500px;
+    height: 680px;
+    overflow: scroll;
+}
+.articulos{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid;
+}

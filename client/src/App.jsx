@@ -17,6 +17,8 @@ import DetailClient from './components/Window/Cliente/DetailCliente';
 import Reportes from './components/Reportes/Reportes';
 import Vendedor from './components/Window/Vendedor/Vendedor';
 import Operaciones from './components/Window/Operaciones/Operaciones';
+import IngresoMercaderia from './components/InrgesoMercaderia/IngresoMercaderia';
+import axios from 'axios';
 
 
 
@@ -32,6 +34,14 @@ function App() {
    //       !access && navigate("/");
    //    }, [access]);
 
+   const [allProductos, setAllProductos] = useState([])
+   const [allProductosAux, setAllProductosAux] = useState([])
+   useEffect(() => {
+      axios(`http://localhost:3001/tienda/articulo`).then(({ data }) => {
+          setAllProductos(data)
+          setAllProductosAux(data)
+      })
+  }, [])
 
 
    return (
@@ -45,12 +55,12 @@ function App() {
                <Venta />
             } />
             <Route path='/listaArticulos' element={
-               <ListaArticulos />
+               <ListaArticulos allProductos={allProductos} allProductosAux={allProductosAux} setAllProductos={setAllProductos}/>
             } />
             <Route path='/altaArticulo' element={
                <AltaArticulo />
             } />
-            <Route path='/ventana' element={
+            <Route path='/comprobantes' element={
                <Comprobante />
             } />
             <Route path='/operaciones/*' element={
@@ -67,6 +77,9 @@ function App() {
             } />
             <Route path='/reportes/*' element={
                <Reportes />
+            } />
+            <Route path='/mercaderia' element={
+               <IngresoMercaderia />
             } />
 
          </Routes>

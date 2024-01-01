@@ -1,9 +1,17 @@
-const { Compra } = require("../../DB_connection")
+const { Compra, Articulo } = require("../../DB_connection")
 
 const getAllCompras = async (req, res) => {
 
     try {
-        const allCompras=await Compra.findAll()
+        const allCompras = await Compra.findAll({
+            include: [
+                {
+                    model: Articulo,
+                    attributes: ["id","name","stock","stockMin","costoPeso","costoDolar","iva","ganancia","CategoriaId","ProvedorId","precioVenta"],
+                    as: "Articulo"
+                }
+            ]
+        })
 
         return res.status(201).json(allCompras);
 
@@ -12,4 +20,4 @@ const getAllCompras = async (req, res) => {
 
     }
 }
-module.exports = {getAllCompras};
+module.exports = { getAllCompras };

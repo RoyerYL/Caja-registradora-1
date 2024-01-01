@@ -5,30 +5,16 @@ import style from "./ListaArticulos.module.css"
 import { Link } from 'react-router-dom';
 
 export default function ListaArticulos(props) {
-    const [allProductos, setAllProductos] = useState([])
-    const [allProductosAux, setAllProductosAux] = useState([])
+    const {allProductos,allProductosAux,setAllProductos}=props
     const currentUrl = window.location.href;
-    const [loading, setLoading] = useState(false);
-    // Hacer algo con la URL
-
-    useEffect(() => {
-        setLoading(true);
-        axios(`http://localhost:3001/tienda/articulo`).then(({ data }) => {
-            setAllProductos(data)
-            setAllProductosAux(data)
-        })
-            .finally(() => setLoading(false));
-    }, [])
 
     const order = () => {
         const newList = [...allProductosAux].sort((a, b) => a.id.toString().localeCompare(b.id.toString()))
         setAllProductos(newList)
     }
     const order_1 = () => {
-        setLoading(true);
         const newList = [...allProductosAux].sort((a, b) => a.name.toString().localeCompare(b.name.toString()));
         setAllProductos(newList);
-        setLoading(false);
     };
     const order_2 = () => {
         const newList = [...allProductosAux].sort((a, b) => a.precioVenta - b.precioVenta)
@@ -49,10 +35,7 @@ export default function ListaArticulos(props) {
                     <p onClick={order_3}>Cantidad</p>
                     <p onClick={order_2}>precio</p>
                 </div>
-                {loading ? (
-                    // Show loading image while sorting
-                    <img src="./img.webp" alt="Loading" />
-                ) : (
+                {
                     allProductos.map((prod, index) => (
                         <Link key={prod.id} to={`/detail/${prod.id}`}>
                             <div className={style.articulos} key={prod.id}>
@@ -63,7 +46,7 @@ export default function ListaArticulos(props) {
                             </div>
                         </Link>
                     ))
-                )}
+                }
 
 
             </div>
