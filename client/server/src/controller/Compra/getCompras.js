@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Compra } = require("../../DB_connection")
+const { Compra ,Articulo} = require("../../DB_connection")
 
 const getCompras = async (req, res) => {
     const {id}=req.params
@@ -9,7 +9,15 @@ const getCompras = async (req, res) => {
                 TicketId:{
                     [Op.eq]:id 
                 }
-            }
+            },
+            include: [
+                {
+                    model: Articulo,
+                    attributes: ["id","name","stock","stockMin","costoPeso","costoDolar","iva","ganancia","CategoriaId","ProvedorId","precioVenta"],
+                    as: "Articulo"
+                },
+                
+            ]
         })
 
         return res.status(201).json(cliente);

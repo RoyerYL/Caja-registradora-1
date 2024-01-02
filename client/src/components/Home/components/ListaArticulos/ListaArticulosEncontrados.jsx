@@ -24,31 +24,36 @@ export default function ListaArticulosEncontrados(props) {
         }))
 
     }
+    const resetEncontrados = () => {
+        console.log("cerrar");
+        dispatch(resetArtLike())
+    }
+
 
     return (
         <div className={style.listArticuloEncontrados}>
-          
-                    
-                                {productos.map((prod, index) => (
-                                    <div onClick={()=>{handleClick(prod.id)}} className={style.articulos} key={prod.id}>
-                                        <p className={style.codBarras}>{prod.id}</p>
+            <div className={style.container}>
 
-                                        <p className={style.nombre}>
-                                                {prod.name}
-                                        </p>
-                                        <p className={style.precio}>${prod.precioVenta}
-                                            
-                                        </p>
+                <button className={style.cerrarButton} onClick={resetEncontrados}>X</button>
+                <div className={style.containerLista}>
 
-                                    </div>
+                    {productos.map((prod, index) => (
+                        <div onClick={() => { handleClick(prod.id) }} className={style.articulos} key={prod.id}>
+                            <p className={style.codBarras}>{prod.id}</p>
 
-                                ))}
-                            
-                    
-                    
+                            <p className={style.nombre}>
+                                {prod.name}
+                            </p>
+                            <p className={style.precio}>${prod.precioVenta}
+
+                            </p>
+
+                        </div>
+
+                    ))}
+
+                </div>
+            </div>
         </div>
-
-
-
     )
 }

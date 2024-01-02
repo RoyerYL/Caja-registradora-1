@@ -25,7 +25,7 @@ export default function Navbar() {
 
             <nav >
                 <div >
-                    <Link to="/ventana">
+                    <Link to="/comprobantes">
                         <button >Ventas</button>
                     </Link>
                     <Link to="/reportes">

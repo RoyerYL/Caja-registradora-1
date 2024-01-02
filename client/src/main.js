@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const generateBarcode = require(path.join(app.getAppPath(), "src", "Utils", "generarCodBarras", 'generarCodBarras.js'));
 const ticketCreate = require(path.join(app.getAppPath(), "src", "Utils", "ticketGenerator", 'index.js'));
 
 if (require('electron-squirrel-startup')) {
@@ -62,6 +63,16 @@ ipcMain.on("executeTicketCreate", (event, id) => {
   event.reply('ticketCreateResult', 'Ticket creado con éxito');
 
 });
+ipcMain.on("executeGeneratorCodBarras", (event, id) => {
+  // Ejecutar la función ticketCreate
+  console.log(id);
+  generateBarcode(id);
+
+  // Enviar el resultado de vuelta al proceso de renderizado
+  event.reply('generatedResult', 'Cod Barras creado con éxito');
+
+});
+
 let openWindows = [];
 
 ipcMain.on('openNewWindow', (event, options) => {

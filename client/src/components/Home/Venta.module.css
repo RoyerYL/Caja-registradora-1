@@ -1,3 +1,10 @@
+.Home{
+    position: relative;
+    background-color: white;
+    margin: 15px;
+    padding: 5px;
+    border: 1px solid;
+}
 .registrarCompra {
     position: relative;
     display: flex;

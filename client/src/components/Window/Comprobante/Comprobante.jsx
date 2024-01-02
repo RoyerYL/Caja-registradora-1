@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import style from './Comprobante.module.css'
 import Cliente from '../Cliente/Cliente';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
+import DetailComprobante from './DetailComprobante';
 // const { remote } = window.require('electron');
 // const { BrowserWindow } = remote;
 
@@ -11,32 +12,49 @@ function Comprobante() {
     const [vendedor_, setVendedor] = useState("")
 
     useEffect(() => {
+
         axios("http://localhost:3001/tienda/ticket").then(({ data }) => { setComprobantes(data); })
     }, [])
-
+    const succesStyle = (param) => {
+        console.log(param);
+        return param === null ? style.cancel : style.success
+    }
     return (
-        <div className={style.Comprobante}>
-            {
-                comprobantes.map((comprobante) => {
-                    return (
-                        <Link key={comprobante.id} to={``}>
-                            <div className={style.tickets} key={comprobante.id}>
-                                <span># {comprobante.id}</span>
-                                <span>fecha: {comprobante.fecha}</span>
-                                {
-                                    comprobante.ClienteId !== 1 &&
-                                    <span>cliente: {comprobante.ClienteId}</span>
-                                }
-                                <span>Vendedor: {comprobante.Vendedor.vendedor}</span>
+        <div className={style.container}>
 
-                                <span>Valor Total:$ {comprobante.valorTotal}</span>
-                            </div>
-                        </Link>
-                    )
-                })
-            }
+            <div className={style.Comprobante}>
+                {
+                    comprobantes.map((comprobante) => {
+                        return (
+                            <Link key={comprobante.id} to={`comprobantes/${comprobante.id}/${comprobante.descuento}`}>
+                                <div className={`${style.tickets} ${succesStyle(comprobante.CajaId)}`} key={comprobante.id}>
+                                    <div className='flex-1'>
 
+                                        <span># {comprobante.id}</span>
+                                        <span>fecha: {comprobante.fecha}</span>
+                                    </div>
+                                    <div className='flex-1'>
+
+                                        {
+                                            comprobante.ClienteId !== 1 &&
+                                            <span>cliente: {comprobante.ClienteId}</span>
+                                        }
+                                        <span>Vendedor: {comprobante.Vendedor.vendedor}</span>
+
+                                        <span>Valor Total:$ {comprobante.valorTotal}</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        )
+                    })
+                }
+
+            </div>
+            <Routes>
+                <Route path="comprobantes/:id/:desc" element={<DetailComprobante />} />
+            </Routes>
         </div>
+
     );
 
 }

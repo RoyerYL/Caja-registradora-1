@@ -1,0 +1,21 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "excel_bd.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "bwip-js": "^4.2.0",
+    "fs": "^0.0.1-security",
+    "pg": "^8.11.3",
+    "sequelize": "^6.35.1",
+    "sqlite3": "^5.1.6",
+    "xlsx": "^0.18.5"
+  }
+}

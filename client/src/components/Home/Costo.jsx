@@ -24,7 +24,6 @@ export default function Costo(props) {
     const handleChange = (event) => {
         const value = event.target.value
         const name = event.target.name
-
         
         setCosto({ ...costo, [name]: value })
     }
@@ -60,7 +59,7 @@ export default function Costo(props) {
                         <th >Total</th>
                         <td></td>
                         <td id='costoTotal' colSpan="2">{
-                        Number.parseFloat(costo.subTotal-(costo.subTotal* costo.descuento/100)).toFixed(2)
+                        Number.parseFloat(costo.subTotal*((100-costo.descuento)/100)).toFixed(2)
                          ||0}</td>
                     </tr>
                 </tbody>

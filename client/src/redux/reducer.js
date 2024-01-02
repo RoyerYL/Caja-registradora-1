@@ -4,14 +4,14 @@ const initialState = {
   listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
   producto: [],
   productoLike: [],
-  allProductoLike:[],
+  allProductoLike: [],
   Vendedor: 0,
   cotizacionDolar: {
     cotizacionMep: 0.00,
     cotizacionBlue: 0.00
   },
-  articulosActualizar:[],
-  caja:0
+  articulosActualizar: [],
+  caja: 0
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -26,24 +26,26 @@ export default (state = initialState, { type, payload }) => {
 
 
     case ADD_ARTLike:
-      return { ...state,allProductoLike:payload, productoLike: payload };
+      return { ...state, allProductoLike: payload, productoLike: payload };
 
     case 'GET_ALL':
-      return { ...state,allProductoLike:payload, productoLike: payload };
+      return { ...state, allProductoLike: payload, productoLike: payload };
 
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
     case "RESET_ARTLIKE":
-      return {...state ,allProductoLike:[], productoLike:[]}
+      return { ...state, allProductoLike: [], productoLike: [] }
     case "MODIFICAR_CANT":
       const newLista1 = state.producto.map((prod, index) => {
         if (index === payload.id) {
           const { page, producto, cantidad } = prod
+          let cantidadTotal=Number(cantidad) + payload.cant
+          if (cantidadTotal === 0) {cantidadTotal=cantidad}
           return {
             page,
             producto,
-            cantidad: Number(cantidad) + payload.cant
+            cantidad: cantidadTotal
           }
         }
         return prod
@@ -82,20 +84,20 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         productoLike: orderedCharacters,
       };
-      case "ART_ACTUALIZAR":
-        return {...state,articulosActualizar:[...payload]}
-      case "ART_ACTUALIZAR_RESET":
-        return {...state,articulosActualizar:[]}
-      
-      case "FILTER_ARTICULOSLIKE":
-        const filterArt=state.allProductoLike.filter((prod)=>prod.name.toLowerCase().includes(payload))
-        return {...state,productoLike:[...filterArt]}
+    case "ART_ACTUALIZAR":
+      return { ...state, articulosActualizar: [...payload] }
+    case "ART_ACTUALIZAR_RESET":
+      return { ...state, articulosActualizar: [] }
+
+    case "FILTER_ARTICULOSLIKE":
+      const filterArt = state.allProductoLike.filter((prod) => prod.name.toLowerCase().includes(payload))
+      return { ...state, productoLike: [...filterArt] }
 
     default:
-  return {
-    ...state,
-  };
+      return {
+        ...state,
+      };
 
-}
+  }
 
 }

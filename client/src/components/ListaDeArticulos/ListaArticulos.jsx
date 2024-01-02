@@ -5,9 +5,16 @@ import style from "./ListaArticulos.module.css"
 import { Link } from 'react-router-dom';
 
 export default function ListaArticulos(props) {
-    const {allProductos,allProductosAux,setAllProductos}=props
     const currentUrl = window.location.href;
-
+    const [allProductos, setAllProductos] = useState([])
+    const [allProductosAux, setAllProductosAux] = useState([])
+    useEffect(() => {
+       axios(`http://localhost:3001/tienda/articulo`).then(({ data }) => {
+           setAllProductos(data)
+           setAllProductosAux(data)
+       })
+   }, [])
+ 
     const order = () => {
         const newList = [...allProductosAux].sort((a, b) => a.id.toString().localeCompare(b.id.toString()))
         setAllProductos(newList)

@@ -16,11 +16,24 @@ contextBridge.exposeInMainWorld("electronAPI",
             console.log(result);
          });
       },
+      executeGeneratorCodBarras: async (id) => {
+         // Emitir un evento para solicitar la ejecución de la función ticketCreate
+         ipcRenderer.send("executeGeneratorCodBarras",id);
+
+         // Escuchar la respuesta (puedes personalizar el nombre del evento)
+         ipcRenderer.on("generatedResult", (event, result) => {
+            console.log(result);
+         });
+      },
+
+
+
       openNewWindow:(windowOptions)=>{
          ipcRenderer.send("openNewWindow",windowOptions)
       }
       
    })
+
    let openWindows = [];
    contextBridge.exposeInMainWorld('electron', {
       openNewWindow: (options) => {

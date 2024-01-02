@@ -37,45 +37,68 @@ const postArticulo = async (req, res) => {
     let categoria = null
     let provedor = null
 
-    try {
-        const find = await Categoria.findByPk(categoriaId)
-        if (!find){
 
-            const [newCategoria, created] = await Categoria.findOrCreate({
-                where: {
-                    // id: categoriaId,
-                    nameCategoria: "No tiene categoria",
-                },
-            })
-            
-            categoria = newCategoria
-        }
-        categoria=find
+
+    try {
+
+        const [newCategoria, created] = await Categoria.findOrCreate({
+            where: {
+                id: 0,
+                nameCategoria: "No tiene categoria",
+            },
+        })
+
+        categoria = newCategoria
+
     } catch (error) {
 
         console.log("error de categoria");
     }
 
     try {
-        const find = await Provedor.findByPk(provedorId)
-        if (!find) {
 
-            const [newProvedor, created] = await Provedor.findOrCreate({
-                where: {
-                    // id: provedorId,
-                    razonSocial: "No tiene provedor",
-                    nombreComercial: "No tiene provedor",
-                },
-            })
-            provedor = newProvedor
-        } else {
-            provedor = find
-        }
+
+        const [newProvedor, created] = await Provedor.findOrCreate({
+            where: {
+                // id: provedorId,
+                razonSocial: "No tiene provedor",
+                nombreComercial: "No tiene provedor",
+            },
+        })
+        provedor = newProvedor
+
     } catch (error) {
         console.log("error de provedor");
     }
+    try {
 
-    console.log("Todos los datos están presentes");
+
+        const [newCliente, created] = await Cliente.findOrCreate({
+            where: {
+                // id: provedorId,
+                razonSocial: "default",
+                nombre: "default",
+            },
+        })
+
+
+    } catch (error) {
+        console.log("error de cliente");
+    }
+    try {
+
+
+        const [newVendedor, created] = await Vendedor.findOrCreate({
+            where: {
+                // id: provedorId,
+                vendedor: "Admin",
+            },
+        })
+
+
+    } catch (error) {
+        console.log("error de cliente");
+    }
 
     try {
 
@@ -89,8 +112,8 @@ const postArticulo = async (req, res) => {
                 iva,
                 ganancia,
                 precioVenta,
-                ProvedorId: provedor.id,
-                CategoriaId: categoria.id
+                ProvedorId: provedor.getDataValue('id'),
+                CategoriaId: categoria.getDataValue('id')
             },
             defaults: {
                 stockMin: stockMin || 0.00,

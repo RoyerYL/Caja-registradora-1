@@ -34,14 +34,6 @@ function App() {
    //       !access && navigate("/");
    //    }, [access]);
 
-   const [allProductos, setAllProductos] = useState([])
-   const [allProductosAux, setAllProductosAux] = useState([])
-   useEffect(() => {
-      axios(`http://localhost:3001/tienda/articulo`).then(({ data }) => {
-          setAllProductos(data)
-          setAllProductosAux(data)
-      })
-  }, [])
 
 
    return (
@@ -55,12 +47,12 @@ function App() {
                <Venta />
             } />
             <Route path='/listaArticulos' element={
-               <ListaArticulos allProductos={allProductos} allProductosAux={allProductosAux} setAllProductos={setAllProductos}/>
+               <ListaArticulos/>
             } />
             <Route path='/altaArticulo' element={
                <AltaArticulo />
             } />
-            <Route path='/comprobantes' element={
+            <Route path='/comprobantes/*' element={
                <Comprobante />
             } />
             <Route path='/operaciones/*' element={

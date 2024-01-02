@@ -101,8 +101,7 @@ function AltaArticulo(props) {
 
     const handleClick = () => {
         if (!(form.id === "" || form.name === "")) {
-            console.log(form);
-            //    axios.post("http://localhost:3001/tienda/articulo",{})
+               axios.post("http://localhost:3001/tienda/articulo",form)
         }
     }
 
@@ -146,7 +145,10 @@ function AltaArticulo(props) {
 
 
 
+    const imprimirRecibo = () => {
+        window.electronAPI.executeGeneratorCodBarras(form.id)
 
+    }
     return (
         <div className={style.AltaArticulo}>
             <h2>Alta Articulos</h2>
@@ -164,6 +166,7 @@ function AltaArticulo(props) {
 
                                 <label>Codigo de barras (o codigo de articulo):</label>
                                 <input name='id' value={form.id} onChange={handleChange} />
+                                <button onClick={imprimirRecibo}>generar cod. Barras</button>
                             </div>
 
                             {/* ****** */}

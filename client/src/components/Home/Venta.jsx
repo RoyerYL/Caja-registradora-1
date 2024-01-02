@@ -25,7 +25,7 @@ export default function Navbar() {
     const caja = useSelector((state) => state.caja)
     const [ticket, setTicket] = useState()
     const [costo, setCosto] = useState({
-        descuento:0,
+        descuento: 0,
         subTotal: 0.00
     })
     useEffect(() => {
@@ -87,16 +87,17 @@ export default function Navbar() {
             // Buscar el cliente por nombre
             const responseCliente = await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`);
             const cliente = responseCliente.data[0];
-
+            console.log(costo.descuento);
             // Crear un nuevo ticket
             const body = {
                 clienteId: cliente.id,
                 valorTotal: costo.subTotal,
                 fecha: new Date(),
                 vendedorId: vendedor,
-                descuento:costo.descuento,
+                descuento: costo.descuento,
                 cajaId: Number(caja)
             }
+            console.log(body);
             if (!clienteForm.contado) {
                 body.cajaId = null
             }
@@ -153,13 +154,14 @@ export default function Navbar() {
     const handleChange = (event) => {
         const value = event.target.value
         const name = event.target.name
-        
+
         if (name === "contado") {
             setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
             return ""
         }
         setClienteForm({ ...clienteForm, [name]: value })
     }
+
     return (
         <div className={style.Home}>
             <span>{fecha}</span>
@@ -169,7 +171,7 @@ export default function Navbar() {
                     <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
                     <div className={style.cliente}>
-                        
+
                         <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
                     </div>
 
@@ -202,10 +204,9 @@ export default function Navbar() {
                     <button onClick={generarRecibo}>Generar recibo</button>
                     <button onClick={imprimirRecibo}>Imprimir recibo</button>
                 </div>
-                <div className={style.ListaEncontrados}>
 
-                    <ListaArticulosEncontrados productos={productoLikeProp} />
-                </div>
+                {productoLikeProp.length > 0 &&
+                    <ListaArticulosEncontrados productos={productoLikeProp} />}
             </div>
             <div >
 

@@ -53,6 +53,7 @@ const { updateVendedor } = require('../controller/Vendedor/updateVendedor');
 const { deleteVendedor } = require('../controller/Vendedor/deleteVendedor');
 const { postMercaderia } = require('../controller/Mercaderia/postMercaderia');
 const { getMercaderia } = require('../controller/Mercaderia/getMercaderia');
+const { cancelarTicket } = require('../controller/Ticket/cancelarTicket');
 
 
 
@@ -101,6 +102,7 @@ router.get('/ticket',getAllTickets)
 router.get('/ticketByClient/:id',getAllTicketsByClient)
 router.get('/ticket/:id',getTicket)
 router.post('/ticket',postTicket)
+router.post('/cancelarTicket/:id',cancelarTicket)
 
 router.get('/cliente',getAllClientes)
 router.get('/ventasCliente/:id',getVentasCliente)
