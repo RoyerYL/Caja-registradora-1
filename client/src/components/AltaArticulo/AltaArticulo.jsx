@@ -25,7 +25,7 @@ function AltaArticulo(props) {
         activo: true,
         CategoriaId: 0,
         ProvedorId: 1,
-        dolar:true
+        dolar: true
 
     })
 
@@ -92,6 +92,7 @@ function AltaArticulo(props) {
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
+        console.log(value);
         if (property === "dolar") {
             setForm({ ...form, [property]: !form.dolar });//cambio Form..
             return ""
@@ -101,7 +102,7 @@ function AltaArticulo(props) {
 
     const handleClick = () => {
         if (!(form.id === "" || form.name === "")) {
-               axios.post("http://localhost:3001/tienda/articulo",form)
+            axios.post("http://localhost:3001/tienda/articulo", form)
         }
     }
 
@@ -111,8 +112,8 @@ function AltaArticulo(props) {
         setLoading(true);
         const body = {
             "activo": form.activo,
-            "costoDolar": Number.parseFloat(form.costoDolar).toFixed(2),
-            "costoPeso": Number.parseFloat(form.costoPeso).toFixed(2),
+            "costoDolar": Number.parseFloat(form.costoDolar),
+            "costoPeso": Number.parseFloat(form.costoPeso),
             "descripcion": form.descripcion,
             "ganancia": form.ganancia,
             "ganancia_2": form.ganancia_2,
@@ -147,8 +148,14 @@ function AltaArticulo(props) {
 
     const imprimirRecibo = () => {
         window.electronAPI.executeGeneratorCodBarras(form.id)
-
     }
+
+
+    const calcular=()=>{
+        const{costoDolar,costoPeso,ganancia,iva}=form
+        setForm({ ...form, precioVenta: Number.parseFloat(((100+iva)/100)*((100+ganancia)/100)).toFixed(2) });//cambio Form..
+    }
+
     return (
         <div className={style.AltaArticulo}>
             <h2>Alta Articulos</h2>
@@ -199,13 +206,13 @@ function AltaArticulo(props) {
                         {/* ****** */}
                         <div className='flex-1'>
                             <div>
-                                <input type="checkbox" name='dolar' checked={form.dolar} onChange={handleChange}/>
+                                <input type="checkbox" name='dolar' checked={form.dolar} onChange={handleChange} />
                                 <label>
                                     Dolar
                                 </label>
                             </div>
                             <div>
-                                <input type="checkbox" name="dolar" checked={!form.dolar} onChange={handleChange}/>
+                                <input type="checkbox" name="dolar" checked={!form.dolar} onChange={handleChange} />
                                 <label>
                                     Peso
                                 </label>
@@ -226,17 +233,18 @@ function AltaArticulo(props) {
                             <div>
                                 <div>
                                     <label>Iva %</label>
-                                    <input name='iva' value={` ${form.iva}`} onChange={handleChange} />
+                                    <input name='iva' value={`${form.iva}`} onChange={handleChange} />
                                 </div>
                                 <div>
                                     <label>Ganancias %</label>
-                                    <input name='ganancia' value={` ${form.ganancia}`} onChange={handleChange} />
+                                    <input name='ganancia' value={`${form.ganancia}`} onChange={handleChange} />
                                 </div>
                             </div>
                             <div>
                                 <label>Precio Venta $</label>
                                 <input name='precioVenta' value={`${form.precioVenta}`} onChange={handleChange} />
                             </div>
+                            <button onClick={calcular}>calcular</button>
                         </div>
                         <div className={style.costo}>
                             <h3>Lista de precios 2</h3>
@@ -264,6 +272,7 @@ function AltaArticulo(props) {
                                 <label>Precio Venta $</label>
                                 <input name='precioVenta_2' value={`${form.precioVenta_2}`} onChange={handleChange} />
                             </div>
+                            <button>calcular</button>
                         </div>
                     </div>
 

@@ -4,6 +4,12 @@
 .close{
     position: absolute;
     top: 3px;
-    right: -3px;
-    height: 2px;
+    right: 3px;
+    padding: 0px;
+    text-decoration: none;
+    border: none;
+}
+.close:hover{
+    transform: scale(1.1);
+    background-color: red;
 }

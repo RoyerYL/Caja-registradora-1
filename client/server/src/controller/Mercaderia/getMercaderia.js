@@ -1,8 +1,19 @@
-const { Mercaderia } = require("../../DB_connection")
+const { Mercaderia ,Provedor,Vendedor} = require("../../DB_connection")
 
 const getMercaderia = async (req, res) => {
     try{
-        const allMercaderia=await Mercaderia.findAll()
+        const allMercaderia=await Mercaderia.findAll(
+            {
+                include: [
+                    {
+                        model: Provedor,
+                    },
+                    {
+                        model: Vendedor,
+                    }
+                ]
+            }
+        )
         return res.status(201).json(allMercaderia);
 
     } catch (error) {

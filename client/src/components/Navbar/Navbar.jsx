@@ -1,41 +1,57 @@
 import React, { useState } from 'react';
 import style from './Navbar.module.css'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate  } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
 import { useDispatch } from 'react-redux';
 import { get_list } from '../../redux/action';
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+    const {Cotizacion}=props
     const [id_, setID] = useState(0)
     const dispatch = useDispatch()
     const [button, setButton] = useState([])
+    const navigate = useNavigate();
     const handleClick = () => {
-        setButton([...button, { id: id_ }])
-        setID(id_ + 1)
-        dispatch(get_list(id_))
+        if(Cotizacion.apertura){
 
+            setButton([...button, { id: id_ }])
+            setID(id_ + 1)
+            dispatch(get_list(id_))
+        }
+            
     }
     const onClose = (idFilter) => {
         const newButtons = button.filter((b) => b.id !== idFilter)
         setButton(newButtons)
     }
+
+    const handleLinkClick = (to) => {
+        if (Cotizacion.apertura) {
+            // Si Cotizacion es true, navega al Link
+            navigate(to);
+        } else {
+            // Si Cotizacion es false, muestra un mensaje de aviso
+            alert('No puedes acceder a esta sección sin Cotización activa.');
+        }
+    };
     return (
         <div className={style.Navbar}>
 
 
             <nav >
                 <div >
-                    <Link to="/comprobantes">
+                <Link to="/comprobantes">
                         <button >Ventas</button>
                     </Link>
                     <Link to="/reportes">
                         <button >Reportes</button>
                     </Link>
-                    <Link to="/provedor">
+                    {/* <Link to="/provedor">
                         <button >Articulos</button>
-                    </Link>
+                    </Link> */}
                     <Link to="/mercaderia">
-                        <button >Mercaderia</button>
+                        <button >Ingreso Mercaderia</button>
                     </Link>
 
                     <Link to="/operaciones">
@@ -51,7 +67,7 @@ export default function Navbar() {
                     <Link to="./">
                         <button >Caja</button>
                     </Link>
-                    <Link to={`/ventana/${id_}`}>
+                    <Link onClick={() => handleLinkClick(`/ventana/${id_}`)}>
                         <button onClick={handleClick}>Nuevo</button>
                     </Link>
 

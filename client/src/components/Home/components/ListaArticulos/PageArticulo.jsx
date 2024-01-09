@@ -18,7 +18,7 @@ export default function PageArticulo(props) {
                     <button onClick={handleClick}>Nuevo {id}</button>
                 </Link>
 
-                <button  className={`${style.close}`} onClick={()=>{onClose(id)}} ></button>
+                <button  className={`${style.close}`} onClick={()=>{onClose(id)}} >X</button>
 
             </div>
         </>

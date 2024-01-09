@@ -6,19 +6,11 @@ import { add_cotizacion, add_vendedor, cajaAbierta } from '../../redux/action';
 import axios from 'axios';
 import Caja from './Caja/Caja';
 export default function Login(props) {
-
+    const {Cotizacion,setCotizacion}=props
     const dispatch = useDispatch()
     const Vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
     const [cajaAbierta_, setCajaAbierta] = useState(0)
-    const [Cotizacion, setCotizacion] = useState({
-        apertura:false,
-        precioInicial: 0,
-        precioFinal: 0,
-        cotizacionBlue: Number.parseFloat(0).toFixed(2),
-        cotizacionMep: Number.parseFloat(0).toFixed(2),
-
-    })
 
     const [vendedores, setVendedores] = useState([])
 

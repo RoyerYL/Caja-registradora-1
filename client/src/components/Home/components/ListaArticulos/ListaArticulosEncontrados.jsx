@@ -33,7 +33,11 @@ export default function ListaArticulosEncontrados(props) {
     return (
         <div className={style.listArticuloEncontrados}>
             <div className={style.container}>
-
+                <div className={style.articulos}>
+                    <label className={style.codBarras} htmlFor="">codBarras</label>
+                    <label className={style.nombre} htmlFor="">nombre</label>
+                    <label className={style.precio} htmlFor="">precio</label>
+                </div>
                 <button className={style.cerrarButton} onClick={resetEncontrados}>X</button>
                 <div className={style.containerLista}>
 

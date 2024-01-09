@@ -258,7 +258,7 @@ export default function ActualizarDatos() {
                         <li
                             className={`${style.elemento} ${articulosSeleccionados.includes(articulo.id) ? style.seleccionado : ''}`}
                             key={articulo.id}
-                            onClick={() => handleToggleSeleccion(articulo.id)}
+                           
                         >
                             <p className={style.articulo}>{articulo.id} - {articulo.name}</p>
                             {/* Otros elementos de texto y formatos según tus necesidades */}

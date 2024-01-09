@@ -5,18 +5,22 @@
     border: 3px solid black;
     /* box-shadow: 10 10 10 10 black; */
 }
-.listArticulo table{
-width: 100%;
+
+.listArticulo table {
+    width: 100%;
 }
-.listArticulo thead th{
+
+.listArticulo thead th {
     border: 1px solid;
 }
-.listArticulo button{
+
+.listArticulo button {
     height: 2em !important;
     width: 1.5em !important;
     padding: 1px;
     outline: none;
 }
+
 .nomFilas button {
     font-size: 1em;
     border: none;
@@ -26,18 +30,31 @@ width: 100%;
 .nomFilas button:hover {
     transform: scale(1.2);
 }
-.listArticuloEncontrados{
+
+.listArticuloEncontrados {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
     box-shadow: 0px 0px 35px black;
-    
+
     background-color: white;
     z-index: 999;
 }
-.containerLista{
+
+.orders {
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 3px;
+}
+
+.orders label {
+    text-align: center !important;
+    border: 1px solid;
+}
+
+.containerLista {
     border: 1px solid;
     height: 550px;
     width: 350px;
@@ -45,7 +62,7 @@ width: 100%;
 
 }
 
-.cerrarButton{
+.cerrarButton {
     cursor: pointer;
     padding: 3px;
     position: absolute;
@@ -53,35 +70,44 @@ width: 100%;
     right: -20px;
     z-index: 99999 !important;
 }
-.listArticuloEncontrados p{
+
+.listArticuloEncontrados p {
     text-align: center;
     margin: 0px;
     height: 100%;
 }
-.articulos{
+
+.articulos {
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border: 1px solid black;
 }
-.codBarras{
+
+.codBarras {
     width: 110px !important;
     border-right: 1px solid;
     font-size: 12px;
+    text-align: center;
 }
-.precio{
+
+.precio {
+    text-align: center;
     font-size: 12px;
     border-left: 1px solid;
-    width: 90px;
+    width: 85px;
 }
-.nombre{
+
+.nombre {
+    text-align: center;
     font-size: 13px;
-width: 150px;
+    width: 138px;
 }
-.articulos:hover{
+
+.articulos:hover {
     background-color: aqua;
 }
+
 /* articulosEncontradosC{
     display: flex;
     flex-direction: column;

@@ -10,13 +10,12 @@ import DetailComprobante from './DetailComprobante';
 function Comprobante() {
     const [comprobantes, setComprobantes] = useState([])
     const [vendedor_, setVendedor] = useState("")
-
+    const [actualizar,setActualizar]=useState(0)
     useEffect(() => {
 
         axios("http://localhost:3001/tienda/ticket").then(({ data }) => { setComprobantes(data); })
-    }, [])
+    }, [actualizar])
     const succesStyle = (param) => {
-        console.log(param);
         return param === null ? style.cancel : style.success
     }
     return (
@@ -51,7 +50,7 @@ function Comprobante() {
 
             </div>
             <Routes>
-                <Route path="comprobantes/:id/:desc" element={<DetailComprobante />} />
+                <Route path="comprobantes/:id/:desc" element={<DetailComprobante actualizar={actualizar} setActualizar={setActualizar}/>} />
             </Routes>
         </div>
 

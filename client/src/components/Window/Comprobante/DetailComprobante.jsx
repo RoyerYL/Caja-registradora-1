@@ -6,10 +6,12 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 // const { remote } = window.require('electron');
 // const { BrowserWindow } = remote;
 
-export default function DetailComprobante() {
+export default function DetailComprobante(props) {
+    const{actualizar,setActualizar}=props
     const [compras, setAllCompras] = useState([])
     const { id, desc } = useParams()
     let location = useLocation
+ 
 
     let total = 0
     useEffect(() => {
@@ -17,19 +19,34 @@ export default function DetailComprobante() {
             setAllCompras(data)
 
         })
-    }, [id])
+    }, [id,actualizar])
 
-    const cancelarTicket=()=>{
-        console.log(id);
+    const cancelarTicket = async() => {
+        await axios.post(`http://localhost:3001/tienda/cancelarTicket/${id}`)
+        setActualizar(actualizar+1)
     }
-    
+    const imprimirRecibo = () => {
+        window.electronAPI.executeTicketCreate(id)
+
+    }
     return (
         <>
             <div className={style.DetailComprobante}>
-                <div className='flex-1'>
+                <div className={style.header}>
 
-                    <p className={style.codBarras}>{String(id).padStart(12, '0')}</p>
-                    <button onClick={cancelarTicket}>Cancelar ticket</button>
+                    <p className={style.id}>N°{String(id).padStart(12, '0')}</p>
+                    <div>
+                        <button onClick={imprimirRecibo}>Imprimir ticket</button>
+                        <button onClick={cancelarTicket}>Cancelar ticket</button>
+                    </div>
+                </div>
+                <div className={style.indice}>
+                    <p>Cod Barras</p>
+                    <p className={style.nameIndice}>Nombre</p>
+                    <p>subTotal</p>
+                    <p>Cantidad</p>
+                    <p className={style.totalIndice}>Total</p>
+
                 </div>
                 <div className={style.listaArticulos}>
                     {
@@ -44,9 +61,9 @@ export default function DetailComprobante() {
 
                                         <p className={style.nombre}>{prod.Articulo.name}</p>
 
-                                        <p className={style.cantidad}>{prod.cantidad}</p>
+                                        <p className={style.precio}>${prod.subTotal / prod.cantidad}</p>
+                                        <p className={style.cantidad}>x{prod.cantidad}</p>
 
-                                        <p className={style.precio}>${prod.Articulo.precioVenta}</p>
                                         <p className={style.precio}>${prod.subTotal}</p>
 
                                     </div>
@@ -57,8 +74,13 @@ export default function DetailComprobante() {
                     }
                 </div>
                 <div className={style.total}>
-                    <span>Descuento: {desc}</span>
-                    <span>Total: {Number.parseFloat(total * ((100 - desc) / 100)).toFixed(2)
+                    <span>SubTotal: ${Number.parseFloat(total).toFixed(2)}</span>
+                    {
+                        desc === 0 ?
+                            <span className={style.descuento}>{`Descuento: ${desc} `}</span>
+                            : <span className={style.descuento}>{`Descuento: ${desc}%`}</span>
+                    }
+                    <span>Total: ${Number.parseFloat(total * ((100 - desc) / 100)).toFixed(2)
                         || 0}</span>
                 </div>
             </div>

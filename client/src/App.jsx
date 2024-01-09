@@ -29,7 +29,14 @@ function App() {
    const [access,setAccess] = useState(false)
 
  
+   const [Cotizacion, setCotizacion] = useState({
+      apertura:false,
+      precioInicial: 0,
+      precioFinal: 0,
+      cotizacionBlue: Number.parseFloat(0).toFixed(2),
+      cotizacionMep: Number.parseFloat(0).toFixed(2),
 
+  })
    // useEffect(() => {
    //       !access && navigate("/");
    //    }, [access]);
@@ -38,10 +45,10 @@ function App() {
 
    return (
       <div className="App">
-         <Navbar />
+         <Navbar Cotizacion={Cotizacion}/>
          <Routes>
             <Route path='/' element={
-               <Login />
+               <Login Cotizacion={Cotizacion}  setCotizacion={setCotizacion}/>
             } />
             <Route path='/ventana/:id' element={
                <Venta />

@@ -1,27 +1,65 @@
-.container{
+/** Comprobante css*/
+.container {
     position: relative;
     display: flex;
     justify-content: center;
     padding: 5px;
     gap: 15px;
 }
-.Comprobante{
+
+.container a {
+    text-decoration: none;
+}
+
+.Comprobante {
+    background-color: white;
+    box-shadow: 5px 5px 5px black;
     position: absolute;
     left: 15px;
     height: 713px;
     width: 25%;
     border: 1px solid;
-    overflow-y: auto; /* Utiliza 'auto' para permitir que aparezca solo cuando sea necesario */
-    overflow-x: hidden; /* Deshabilita el desplazamiento vertical */
-    white-space: nowrap; 
+    overflow-y: auto;
+    /* Utiliza 'auto' para permitir que aparezca solo cuando sea necesario */
+    overflow-x: hidden;
+    /* Deshabilita el desplazamiento vertical */
+    white-space: nowrap;
+    padding: 0px 5px 0px 5px;
 }
-.cancel{
+
+.Comprobante span {
+    color: black;
+    font-weight: bold;
+}
+
+
+.tickets {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    z-index: 9999;
+    margin: 5px 0px 5px 0px;
+}
+
+.tickets:hover {
+    transform: scale(1.1);
+}
+
+.cancel {
     background-color: rgba(245, 65, 65, 0.26);
 }
-.success{
-    background-color:  rgba(75, 230, 83, 0.24);
+
+.success {
+    background-color: rgba(75, 230, 83, 0.24);
 }
-.DetailComprobante{
+
+/** Detail Comprobante*/
+.DetailComprobante {
+    background-color: white;
+    box-shadow: 5px 5px 5px black;
     position: absolute;
     right: 15px;
     display: flex;
@@ -29,47 +67,81 @@
     justify-content: space-between;
     gap: 3px;
     width: 70%;
-    height: 723px;
+    height: 715px;
     border: 1px solid;
 }
-.tickets{
-    border: 1px solid;
+.header{
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    width: 100%;
+    justify-content: space-between;
+    padding:3px;
+    border-bottom: 1px solid;
 }
-.listaArticulos{
+.header div{
+    display: flex;
+    gap: 5px;
+}
+.id {
+    background-color: rgba(173, 173, 173, 0.705);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    border: 1px solid;
+    padding: 3px;
+    margin: 3px;
+}
+.indice{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.nameIndice{
+    width: 500px;
+}
+.totalIndice{
+    width: 100px;
+}
+.listaArticulos {
     display: flex;
     flex-direction: column;
-    height: 550px;
+    height: 530px;
     border: 1px solid;
     margin: 5px;
 }
-.articulos{
+
+.articulos {
     display: flex;
     justify-content: space-between;
-    margin: 3px;
+    margin: 3px 0px 3px 0px;
+    background-color: rgba(173, 173, 173, 0.705);
+    padding: 2px;
 }
-.articulos p{
-    border: 1px solid;
+
+.articulos p {
     padding: 3px;
+    color: black;
 }
-.nombre{
+
+.nombre {
     width: 450px;
 }
-.precio{
-    width: 50px;
+
+.precio {
+    width: 100px;
 }
-.cantidad{
+
+.cantidad {
     width: 27px;
 }
-.total{
+
+.total {
     border: 1px solid;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    text-align: center;
     gap: 5px;
-    margin: 15px;
+    margin: 15px ;
+}
+.descuento{
+    background-color: rgba(173, 173, 173, 0.705);
 }
