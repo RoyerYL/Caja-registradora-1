@@ -10,7 +10,7 @@ const postMercaderia = async (req, res) => {
         descuento,
         iva,
         percepciones,
-        total
+        total,
     } = req.body;
 
     try {
@@ -24,7 +24,7 @@ const postMercaderia = async (req, res) => {
             precepciones:percepciones,
             total,
             comentarios,
-            articulos
+            articulos,
         })
         const allMercaderia = await Mercaderia.findAll()
         return res.status(201).json(allMercaderia);

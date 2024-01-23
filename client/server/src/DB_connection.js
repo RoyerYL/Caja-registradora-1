@@ -10,6 +10,7 @@ const CajaFunction=require('./models/Caja');
 const VendedorFunction=require('./models/Vendedor');
 const CotizacionFunction=require('./models/Cotizacion');
 const MercaderiaFunction=require('./models/Mercaderia');
+const ValidadorFunction=require("./models/Validador")
 const path = require('path');
 const documentsPath = path.join(process.env.USERPROFILE, 'Documents');
 
@@ -35,8 +36,12 @@ CajaFunction(dataBase)
 CotizacionFunction(dataBase)
 MercaderiaFunction(dataBase)
 
+ValidadorFunction(dataBase)
+
 // Creación de tablas
-const { Articulo, Provedor, Categoria,Cliente,Ticket,Compra , Caja,Vendedor,Cotizacion,Mercaderia } = dataBase.models;
+const { Articulo, Provedor , Categoria,Cliente,Ticket,Compra , Caja,Vendedor,Cotizacion,Mercaderia,Validador } = dataBase.models;
+
+
 
 Categoria.hasMany(Articulo, { foreignKey: 'CategoriaId' });
 Articulo.belongsTo(Categoria, { foreignKey: 'CategoriaId' });
@@ -64,6 +69,7 @@ Mercaderia.belongsTo(Provedor)
 
 Vendedor.hasMany(Mercaderia)
 Mercaderia.belongsTo(Vendedor)
+
 
 module.exports = {
   dataBase,

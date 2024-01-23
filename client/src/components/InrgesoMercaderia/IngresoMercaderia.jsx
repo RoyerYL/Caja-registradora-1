@@ -118,7 +118,7 @@ export default function IngresoMercaderia() {
         setForm({ ...form, [property]: value });//cambio Form..
     }
     const handleClick = async () => {
-
+        const fecha=new Date()
         const listArticulo = []
         for (const prod of productosSeleccionados) {
             const { id, name, stock, precioVenta } = prod
@@ -131,7 +131,7 @@ export default function IngresoMercaderia() {
         }
         await axios.post("http://localhost:3001/tienda/mercaderia",
             {
-                articulos: { listArticulo },
+                articulos: { listArticulo,fecha },
                 vendedorId: Vendedor,
                 provedorId: form.ProvedorId,
                 comentarios: form.comentarios,
@@ -139,13 +139,14 @@ export default function IngresoMercaderia() {
                 descuento: form.descuento,
                 iva: form.iva,
                 percepciones: form.percepciones,
-                total: form.total
+                total: form.total,
             });
         setSeleccionados([])
 
     }
-    const getHistorial =async () => {
-        axios("http://localhost:3001/tienda/mercaderia").then(({data})=>{
+    const getHistorial = async () => {
+        axios("http://localhost:3001/tienda/mercaderia").then(({ data }) => {
+            console.log(data);
             setListMercaderia(data)
         })
     }
@@ -292,11 +293,13 @@ export default function IngresoMercaderia() {
                 <button onClick={handleClick}>Ingresar</button>
             </div>
             {
-                listMercaderia.length>0 && listMercaderia.map((mercaderia)=>{
-                    console.log(mercaderia);
-                    return <div key={mercaderia.id}>
-                        {mercaderia.id}
-                        </div>
+                listMercaderia.length > 0 && listMercaderia.map((mercaderia) => {
+                    return <div className={style.listMercaderia} key={mercaderia.id}>
+                        <p>{!mercaderia.ProvedorId ? provedor[0].razonSocial : provedor[mercaderia.ProvedorId - 1].razonSocial}</p>
+                        <p></p>
+                        <p>{mercaderia.total || 0}</p>
+
+                    </div>
                 })
             }
         </div>

@@ -24,6 +24,8 @@ export default function Navbar() {
     const vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
     const [ticket, setTicket] = useState()
+    const [compraRealizada, setCompraRealizada] = useState(0)
+
     const [costo, setCosto] = useState({
         descuento: 0,
         subTotal: 0.00
@@ -56,6 +58,7 @@ export default function Navbar() {
     const { id } = useParams()
 
     useEffect(() => {
+        compraRealizada(1)
         if (listProductos[id]) {
             setProductoProp(productos)
         }
@@ -82,6 +85,7 @@ export default function Navbar() {
 
     }
     const generarRecibo = async () => {
+        setCompraRealizada(1)
         try {
 
             // Buscar el cliente por nombre
@@ -202,6 +206,7 @@ export default function Navbar() {
 
                     </div>
                     <button onClick={generarRecibo}>Generar recibo</button>
+                    
                     <button onClick={imprimirRecibo}>Imprimir recibo</button>
                 </div>
 
