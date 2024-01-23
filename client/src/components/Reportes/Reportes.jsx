@@ -21,6 +21,9 @@ export default function Reportes() {
                 <Link to={"reportes/ventasXVendedor"}>
                     <span>Ventas x vendedor</span>
                 </Link>
+                <Link to={"reportes/mercaderia"}>
+                    <span>Ventas x vendedor</span>
+                </Link>
             </div>
             <Routes>
 
@@ -33,6 +36,10 @@ export default function Reportes() {
                     <VentasXCliente />
                 } />
                 <Route path="reportes/ventasXVendedor" element={
+
+                    <CantidadVentas />
+                } />
+                <Route path="reportes/cantidadVentas" element={
 
                     <CantidadVentas />
                 } />

@@ -54,6 +54,8 @@ const { deleteVendedor } = require('../controller/Vendedor/deleteVendedor');
 const { postMercaderia } = require('../controller/Mercaderia/postMercaderia');
 const { getMercaderia } = require('../controller/Mercaderia/getMercaderia');
 const { cancelarTicket } = require('../controller/Ticket/cancelarTicket');
+const { actualizprecioPorcentaje } = require('../controller/Articulo/actualizprecioPorcentaje');
+const { addStock } = require('../controller/Articulo/addStock');
 
 
 
@@ -69,6 +71,7 @@ router.post('/actualizararticulo',updateArticulo)
 router.post('/actualizarpreciosporcentajexcategoria',actualizarPrecioPorcentajexCategoria)
 router.post('/actualizarPorcentajeDolar',actualizarPorcentajeDolar)
 router.post('/actualizarPorcentajePeso',actualizarPorcentajePeso)
+router.post('/actualizprecioPorcentaje',actualizprecioPorcentaje)
 //ACTUALIZAR DATOS UNICOS
 router.post('/actualizprecio',actualizarPrecio)
 router.post('/actualizarCategoria',actualizarCategoria)
@@ -78,6 +81,7 @@ router.post('/actualizarCostoPeso',actualizarCostoPeso)
 router.post('/actualizarGanancia',actualizarGanancia)
 router.post('/actualizarIva',actualizarIva)
 router.post('/actualizarStock',actualizarStock)
+router.post('/aumentarStock',addStock)
 router.post('/actualizarStockMin',actualizarStockMin)
 router.post('/actualizarActivo',actualizarActivo)
 

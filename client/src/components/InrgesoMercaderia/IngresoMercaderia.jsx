@@ -3,14 +3,40 @@ import ListaArticulos from '../ListaDeArticulos/ListaArticulos'
 import axios from 'axios'
 import style from './IngresoMercaderia.module.css'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 export default function IngresoMercaderia() {
+    const [provedor, setProvedor] = useState([])
+    const [vendedor, setVendedor] = useState([])
+    const [listMercaderia, setListMercaderia] = useState([])
     const [allProductos, setAllProductos] = useState([])
     const [productosSeleccionados, setSeleccionados] = useState([])
     const [allProductosAux, setAllProductosAux] = useState([])
     const [cantidad, setCantidad] = useState(1)
     const [buscador, setBuscador] = useState("")
-    useEffect(() => {
+    const Vendedor = useSelector((state) => state.Vendedor)
 
+
+    const [form, setForm] = useState({
+        comentarios: "",
+        ProvedorId: 1,
+        subTotal: 0,
+        descuento: 0,
+        iva: 0,
+        percepciones: 0,
+        total: 0
+
+    })
+    useEffect(() => {
+        axios("http://localhost:3001/tienda/provedor").then(({ data }) => {
+            console.log(data);
+            setProvedor(data)
+        }
+        )
+        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
+
+            setVendedor(data)
+        }
+        )
     }, [])
     const order = () => {
         const newList = [...allProductosAux].sort((a, b) => a.id.toString().localeCompare(b.id.toString()))
@@ -61,34 +87,75 @@ export default function IngresoMercaderia() {
 
         }
     }
-    const addCantidad = (index, e,cant) => {
-        const name=e.target.name
-        if (name==="input") {
+    const addCantidad = (index, e, cant) => {
+        const name = e.target.name
+        if (name === "input") {
             const value = e.target.value
             const nuevosSeleccionados = [...productosSeleccionados];
             const { stock } = nuevosSeleccionados[index]
             nuevosSeleccionados[index] = { ...nuevosSeleccionados[index], stock: Number(value) };
             setSeleccionados(nuevosSeleccionados);
-            
+
         }
-        if (name==="button") {
+        if (name === "button") {
 
             const nuevosSeleccionados = [...productosSeleccionados];
             const { stock } = nuevosSeleccionados[index]
-            nuevosSeleccionados[index] = { ...nuevosSeleccionados[index], stock: Number(stock)+Number(cant) };
+            nuevosSeleccionados[index] = { ...nuevosSeleccionados[index], stock: Number(stock) + Number(cant) };
             setSeleccionados(nuevosSeleccionados);
         }
         // !cant?
         // productosSeleccionados[index]={...productosSeleccionados[index],stock:value}
         // :productosSeleccionados[index]={...productosSeleccionados[index],stock:value}
     }
+    const handleChange = (event) => {
+        const property = event.target.name;
+        const value = event.target.value;
+        if (property === "activo") {
+            setForm({ ...form, [property]: !form.activo });//cambio Form..
+            return ""
+        }
+        setForm({ ...form, [property]: value });//cambio Form..
+    }
+    const handleClick = async () => {
 
+        const listArticulo = []
+        for (const prod of productosSeleccionados) {
+            const { id, name, stock, precioVenta } = prod
+            const art = { id, stock, name, precioVenta }
+            axios.post("http://localhost:3001/tienda/aumentarStock", {
+                id,
+                stock,
+            })
+            listArticulo.push(art)
+        }
+        await axios.post("http://localhost:3001/tienda/mercaderia",
+            {
+                articulos: { listArticulo },
+                vendedorId: Vendedor,
+                provedorId: form.ProvedorId,
+                comentarios: form.comentarios,
+                subTotal: form.subTotal,
+                descuento: form.descuento,
+                iva: form.iva,
+                percepciones: form.percepciones,
+                total: form.total
+            });
+        setSeleccionados([])
+
+    }
+    const getHistorial =async () => {
+        axios("http://localhost:3001/tienda/mercaderia").then(({data})=>{
+            setListMercaderia(data)
+        })
+    }
     return (
         <div>
             <div className={style.search}>
                 <input type="text" name='buscador' value={buscador} onChange={filter} />
                 <button>buscar</button>
                 <button onClick={getAll}>todo</button>
+                <button onClick={getHistorial}>historial</button>
 
             </div>
             <div className={style.container}>
@@ -142,8 +209,8 @@ export default function IngresoMercaderia() {
 
                                             <input name="input" onChange={(e) => addCantidad(index, e)} value={prod.stock} />
                                             <div>
-                                                <button name="button" onClick={(e) => addCantidad(index, e,1)}>+</button>
-                                                <button name="button" onClick={(e) => addCantidad(index, e,-1)}>-</button>
+                                                <button name="button" onClick={(e) => addCantidad(index, e, 1)}>+</button>
+                                                <button name="button" onClick={(e) => addCantidad(index, e, -1)}>-</button>
                                             </div>
                                         </div>
                                         <p>${prod.precioVenta * prod.stock}</p>
@@ -155,37 +222,65 @@ export default function IngresoMercaderia() {
                         </div>
                     </div>
                     <div className={style.containerTotal}>
+                        <div>
+                            <div>
 
+                                <span>Provedor:</span>
+                                <select value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
+                                    {
+                                        provedor.map((prov) => {
+                                            return (
+                                                <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div>
+
+                                <span>Vendedor:</span>
+                                <select value={Vendedor} name='vendedor' onChange={handleChange}>
+                                    {
+                                        vendedor.map((vendedor) => {
+                                            return (
+                                                <option key={vendedor.id} value={vendedor.id}>{vendedor.vendedor}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
                         <div className='flex-2'>
                             <label htmlFor="">Comentarios</label>
-                            <textarea name="comentarios" id="" cols="30" rows="10"></textarea>
+                            <textarea name="comentarios" id="" cols="30" rows="10" onChange={handleChange} value={form.comentarios}></textarea>
 
                         </div>
                         <div className={style.total}>
 
                             <div>
                                 <label htmlFor="">Sub total</label>
-                                <input type="text" />
+                                <input type="text" name='subTotal' value={form.subTotal} onChange={handleChange} />
 
                             </div>
                             <div>
                                 <label htmlFor="">Descuento</label>
-                                <input type="text" />
+                                <input type="text" name='descuento' value={form.descuento} onChange={handleChange} />
 
                             </div>
                             <div>
                                 <label htmlFor="">Total iva</label>
-                                <input type="text" />
+                                <input type="text" name='iva' value={form.iva} onChange={handleChange} />
 
                             </div>
                             <div>
                                 <label htmlFor="">Percepciones</label>
-                                <input type="text" />
+                                <input type="text" name='percepciones' value={form.percepciones} onChange={handleChange} />
 
                             </div>
                             <div>
                                 <label htmlFor="">Total</label>
-                                <input type="text" />
+                                <input type="text" name='total' value={form.total} onChange={handleChange} />
 
                             </div>
                         </div>
@@ -194,9 +289,16 @@ export default function IngresoMercaderia() {
 
             </div>
             <div>
-
+                <button onClick={handleClick}>Ingresar</button>
             </div>
-
+            {
+                listMercaderia.length>0 && listMercaderia.map((mercaderia)=>{
+                    console.log(mercaderia);
+                    return <div key={mercaderia.id}>
+                        {mercaderia.id}
+                        </div>
+                })
+            }
         </div>
     )
 }

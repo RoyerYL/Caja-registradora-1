@@ -25,7 +25,6 @@ export default function ListaArticulosEncontrados(props) {
 
     }
     const resetEncontrados = () => {
-        console.log("cerrar");
         dispatch(resetArtLike())
     }
 

@@ -1,22 +1,32 @@
-const { Mercaderia,Vendedor,Provedor } = require("../../DB_connection")
+const { Mercaderia, Vendedor, Provedor } = require("../../DB_connection")
 
 const postMercaderia = async (req, res) => {
     const {
         provedorId,
         vendedorId,
         articulos,
-        comentarios
+        comentarios,
+        subTotal,
+        descuento,
+        iva,
+        percepciones,
+        total
     } = req.body;
 
-    try{
+    try {
 
-        await Mercaderia.create({
-            ProvedorId:provedorId,
-            VendedorId:vendedorId,
+        const newMercaderia = await Mercaderia.create({
+            ProvedorId: provedorId,
+            VendedorId: vendedorId,
+            subTotal,
+            descuento,
+            iva,
+            precepciones:percepciones,
+            total,
             comentarios,
             articulos
         })
-        const allMercaderia=await Mercaderia.findAll()
+        const allMercaderia = await Mercaderia.findAll()
         return res.status(201).json(allMercaderia);
 
     } catch (error) {

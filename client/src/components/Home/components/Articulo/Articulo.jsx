@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 export default function Articulo(props) {
+    const productos = useSelector((state) => state.producto)
     const { addHandler, collapseClick } = props
     const { id } = useParams()
     const [Articulo, setArticulo] = useState({
@@ -21,15 +22,11 @@ export default function Articulo(props) {
             codBarras: "",
             cantidad: 1
         })
-    }, [id])
+    }, [id,productos])
 
     const addFunction = () => {
         props.addHandler(Articulo)
-        setArticulo({
-            page: id,
-            codBarras: "",
-            cantidad: 1
-        })
+
     }
 
     const handleChangue = (event) => {

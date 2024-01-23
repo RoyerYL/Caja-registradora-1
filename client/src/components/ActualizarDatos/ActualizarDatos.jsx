@@ -28,6 +28,7 @@ export default function ActualizarDatos() {
         costoDolar: Number.parseFloat(0).toFixed(2),
         costoDolarPorcentaje: 0,
         precioVenta: Number.parseFloat(0).toFixed(2),
+        precioVentaPorcentaje: 0,
         ganancia: 0,
         precioVenta_2: Number.parseFloat(0).toFixed(2),
         ganancia_2: 0,
@@ -72,7 +73,6 @@ export default function ActualizarDatos() {
             setForm({ ...form, [property]: !form.activo });//cambio Form..
             return ""
         }
-        console.log(value);
         setForm({ ...form, [property]: value });//cambio Form..
     }
     const addArticulosActualizar = () => {
@@ -86,7 +86,6 @@ export default function ActualizarDatos() {
     const actualizar = async (e) => {
 
         const nombre = e.target.name
-        console.log(nombre);
         switch (nombre) {
             case "precioVenta":
                 for (const prod of articulosActualizar) {
@@ -95,6 +94,19 @@ export default function ActualizarDatos() {
                         nuevoPrecio: form.precioVenta
 
                     });
+                }
+
+                break;
+            case "precioVentaPorcentaje":
+                console.log("hola");
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizprecioPorcentaje", {
+                        id: prod.id,
+                        porcentajeAumento: form.precioVentaPorcentaje
+
+                    });
+                    console.log(form.precioVentaPorcentaje);
+                    console.log("---------------------");
                 }
 
                 break;
@@ -317,7 +329,7 @@ export default function ActualizarDatos() {
                     <input type="text" name='costoDolar' value={form.costoDolar} onChange={handleChange} />
                     <button name='costoDolar' onClick={actualizar}>actualizar</button>
 
-                    <span>Costo dolar%</span>
+                    <span>Costo dolar %</span>
                     <input type="text" name='costoDolarPorcentaje' value={form.costoDolarPorcentaje} onChange={handleChange} />
                     <button name='costoDolarPorcentaje' onClick={actualizar}>actualizar</button>
                 </div>
@@ -325,6 +337,10 @@ export default function ActualizarDatos() {
                     <span>Precio venta</span>
                     <input type="text" name='precioVenta' value={form.precioVenta} onChange={handleChange} />
                     <button name='precioVenta' onClick={actualizar}>actualizar</button>
+
+                    <span>Precio venta %</span>
+                    <input type="text" name='precioVentaPorcentaje' value={form.precioVentaPorcentaje} onChange={handleChange} />
+                    <button name='precioVentaPorcentaje' onClick={actualizar}>actualizar</button>
                 </div>
                 <div>
                     <span>iva</span>
