@@ -58,7 +58,7 @@ export default function Navbar() {
     const { id } = useParams()
 
     useEffect(() => {
-        compraRealizada(1)
+        setCompraRealizada(1)
         if (listProductos[id]) {
             setProductoProp(productos)
         }
