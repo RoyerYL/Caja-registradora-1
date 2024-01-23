@@ -226,7 +226,15 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
       // Itera sobre las filas y agrega registros a la base de datos
       for (const row of data.slice(1)) {
          console.log(row);
-
+         let name= row[1] // Ajusta según las columnas de tu archivo Excel
+         let stock= row[2] // Ajusta según las columnas de tu archivo Excel
+         if(!row[2])stock=0
+         let costoPeso= row[3] || 0 // Ajusta según las columnas de tu archivo Excel
+         let costoDolar= row[4] || 0 // Ajusta según las columnas de tu archivo Excel
+         let iva= row[5] || 0 // Ajusta según las columnas de tu archivo Excel
+         let ganancia= row[6] || 0 // Ajusta según las columnas de tu archivo Excel
+         let precioVenta= row[7] || 0 // Ajusta según las columnas de tu archivo Excel
+         let descripcion= row[8] || "" // Ajusta según las columnas de tu archivo Excel
 
          try {
 
@@ -269,7 +277,7 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
                   nombre: "default",
                },
             })
-            
+
 
          } catch (error) {
             console.log("error de cliente");
@@ -283,24 +291,29 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
                   vendedor: "Admin",
                },
             })
-            
+
 
          } catch (error) {
             console.log("error de cliente");
          }
 
 
-         await Articulo.create({
-            name: row[1], // Ajusta según las columnas de tu archivo Excel
-            id: row[0], // Ajusta según las columnas de tu archivo Excel
-            stock: row[2], // Ajusta según las columnas de tu archivo Excel
-            costoPeso: row[3], // Ajusta según las columnas de tu archivo Excel
-            costoDolar: row[4], // Ajusta según las columnas de tu archivo Excel
-            iva: row[5], // Ajusta según las columnas de tu archivo Excel
-            ganancia: row[6], // Ajusta según las columnas de tu archivo Excel
-            precioVenta: row[7], // Ajusta según las columnas de tu archivo Excel
-            CategoriaId: categoria.getDataValue('id'), // Corrige aquí
-            ProvedorId: provedor.getDataValue('id')
+         await Articulo.findOrCreate({
+            where: {
+               id: row[0], // Ajusta según las columnas de tu archivo Excel
+            },
+            defaults: {
+               name, // Ajusta según las columnas de tu archivo Excel
+               stock, // Ajusta según las columnas de tu archivo Excel
+               costoPeso, // Ajusta según las columnas de tu archivo Excel
+               costoDolar, // Ajusta según las columnas de tu archivo Excel
+               iva, // Ajusta según las columnas de tu archivo Excel
+               ganancia, // Ajusta según las columnas de tu archivo Excel
+               precioVenta, // Ajusta según las columnas de tu archivo Excel
+               descripcion, // Ajusta según las columnas de tu archivo Excel
+               CategoriaId: categoria.getDataValue('id'), // Corrige aquí
+               ProvedorId: provedor.getDataValue('id')
+            }
          });
       }
 
@@ -311,7 +324,7 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
 };
 
 // Ruta al archivo Excel
-const rutaExcel = path.join(__dirname, 'Articulos20231122_0932.csv');
+const rutaExcel = path.join(__dirname, 'Articulos20240123_1518.csv');
 
 // Sincroniza la base de datos y carga los datos desde el Excel
 sequelize.sync({ alter: false }).then(async () => {

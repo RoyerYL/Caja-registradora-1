@@ -9,9 +9,9 @@ export default function Reportes() {
     return (
         <div className="flex-1">
             <div className={style.reportesButtons}>
-                <Link to={"reportes/cantidadVentas"}>
+                {/* <Link to={"reportes/cantidadVentas"}>
                     <span>Cantidad ventas x producto</span>
-                </Link>
+                </Link> */}
                 <Link to={"reportes/masVendidos"}>
                     <span>Productos más vendidos</span>
                 </Link>
