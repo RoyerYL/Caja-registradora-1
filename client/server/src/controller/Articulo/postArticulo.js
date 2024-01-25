@@ -17,7 +17,8 @@ const postArticulo = async (req, res) => {
         descripcion,
         img,
         categoriaId,
-        provedorId
+        provedorId,
+        precioDolar
 
     } = req.body;
 
@@ -113,7 +114,8 @@ const postArticulo = async (req, res) => {
                 ganancia,
                 precioVenta,
                 ProvedorId: provedor.getDataValue('id'),
-                CategoriaId: categoria.getDataValue('id')
+                CategoriaId: categoria.getDataValue('id'),
+                precioDolar
             },
             defaults: {
                 stockMin: stockMin || 0.00,

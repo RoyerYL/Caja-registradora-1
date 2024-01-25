@@ -25,7 +25,7 @@ function AltaArticulo(props) {
         activo: true,
         CategoriaId: 0,
         ProvedorId: 1,
-        dolar: true
+        precioEnDolar: false
 
     })
 
@@ -62,7 +62,8 @@ function AltaArticulo(props) {
                             stock,
                             stockMin,
                             CategoriaId,
-                            ProvedorId
+                            ProvedorId,
+                            precioEnDolar
                         } = data
 
                         // console.log(data);
@@ -82,7 +83,8 @@ function AltaArticulo(props) {
                             stock,
                             stockMin,
                             CategoriaId,
-                            ProvedorId
+                            ProvedorId,
+                            precioEnDolar
                         })
                     }
                 })
@@ -93,8 +95,8 @@ function AltaArticulo(props) {
         const property = event.target.name;
         const value = event.target.value;
         console.log(value);
-        if (property === "dolar") {
-            setForm({ ...form, [property]: !form.dolar });//cambio Form..
+        if (property === "precioEnDolar") {
+            setForm({ ...form, [property]: !form.precioEnDolar });//cambio Form..
             return ""
         }
         setForm({ ...form, [property]: value });//cambio Form..
@@ -206,13 +208,13 @@ function AltaArticulo(props) {
                         {/* ****** */}
                         <div className='flex-1'>
                             <div>
-                                <input type="checkbox" name='dolar' checked={form.dolar} onChange={handleChange} />
+                                <input type="checkbox" name='precioEnDolar' checked={form.precioEnDolar} onChange={handleChange} />
                                 <label>
                                     Dolar
                                 </label>
                             </div>
                             <div>
-                                <input type="checkbox" name="dolar" checked={!form.dolar} onChange={handleChange} />
+                                <input type="checkbox" name="precioEnDolar" checked={!form.precioEnDolar} onChange={handleChange} />
                                 <label>
                                     Peso
                                 </label>

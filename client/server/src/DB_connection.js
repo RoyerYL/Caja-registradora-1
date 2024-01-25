@@ -38,10 +38,9 @@ MercaderiaFunction(dataBase)
 
 ValidadorFunction(dataBase)
 
+
 // Creación de tablas
 const { Articulo, Provedor , Categoria,Cliente,Ticket,Compra , Caja,Vendedor,Cotizacion,Mercaderia,Validador } = dataBase.models;
-
-
 
 Categoria.hasMany(Articulo, { foreignKey: 'CategoriaId' });
 Articulo.belongsTo(Categoria, { foreignKey: 'CategoriaId' });

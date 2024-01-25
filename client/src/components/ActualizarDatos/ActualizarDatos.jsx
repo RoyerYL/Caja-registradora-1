@@ -12,12 +12,12 @@ export default function ActualizarDatos() {
     const articulosActualizar = useSelector((state) => state.articulosActualizar)
     const [categoria, setCategoria] = useState([])
     const [provedor, setProvedor] = useState([])
-    
+
     const [articulosSeleccionados, setArticulosSeleccionados] = useState([]);
     const [seleccionando, setSeleccionando] = useState(false);
 
-    const [buscador,setBuscador]=useState("")
-    const [order,setOrder]=useState("A")
+    const [buscador, setBuscador] = useState("")
+    const [order, setOrder] = useState("A")
     const [form, setForm] = useState({
         name: "",
         id: "",
@@ -37,7 +37,8 @@ export default function ActualizarDatos() {
         img: "",
         activo: true,
         CategoriaId: 0,
-        ProvedorId: 1
+        ProvedorId: 1,
+        precioEnDolar: false
 
     })
 
@@ -69,6 +70,10 @@ export default function ActualizarDatos() {
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
+        if (property === "precioEnDolar") {
+            setForm({ ...form, [property]: !form.precioEnDolar });//cambio Form..
+            return ""
+        }
         if (property === "activo") {
             setForm({ ...form, [property]: !form.activo });//cambio Form..
             return ""
@@ -220,6 +225,16 @@ export default function ActualizarDatos() {
                 }
 
                 break;
+            case "precioEnDolar":
+                for (const prod of articulosActualizar) {
+                    await axios.post("http://localhost:3001/tienda/actualizarPrecioEnDolares", {
+                        articuloId: prod.id,
+                        precioEnDolar: form.precioEnDolar
+
+                    });
+                }
+
+                break;
 
             default:
                 break;
@@ -227,21 +242,21 @@ export default function ActualizarDatos() {
 
 
     }
-    const search=(e)=>{
-        const value=e.target.value
+    const search = (e) => {
+        const value = e.target.value
         setBuscador(value)
         dispatch(filterArtLike(e.target.value))
     }
-    const ordenar=()=>{
-        order?dispatch(order_articulos("A")):dispatch(order_articulos("D"))
+    const ordenar = () => {
+        order ? dispatch(order_articulos("A")) : dispatch(order_articulos("D"))
         setOrder(!order)
     }
     return (<>
         <div className={style.ActualizarDatos}>
             <div className={style.containerListArticulos}>
                 <div>
-                    <input type="text" name='buscador' placeholder='nombre' value={buscador} onChange={search}/>
-                    <button onClick={ordenar}>{order ?"asc":"desc"}</button>
+                    <input type="text" name='buscador' placeholder='nombre' value={buscador} onChange={search} />
+                    <button onClick={ordenar}>{order ? "asc" : "desc"}</button>
                 </div>
 
                 <p>Lista de Artículos</p>
@@ -270,7 +285,7 @@ export default function ActualizarDatos() {
                         <li
                             className={`${style.elemento} ${articulosSeleccionados.includes(articulo.id) ? style.seleccionado : ''}`}
                             key={articulo.id}
-                           
+
                         >
                             <p className={style.articulo}>{articulo.id} - {articulo.name}</p>
                             {/* Otros elementos de texto y formatos según tus necesidades */}
@@ -356,6 +371,21 @@ export default function ActualizarDatos() {
                     <span>activo</span>
                     <input type="checkbox" name='activo' checked={form.activo} onChange={handleChange} />
                     <button name='activo' onClick={actualizar}>actualizar</button>
+                </div>
+                <div className='flex-1'>
+                    <div>
+                        <input type="checkbox" name='precioEnDolar' checked={form.precioEnDolar} onChange={handleChange} />
+                        <label>
+                            Dolar
+                        </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="precioEnDolar" checked={!form.precioEnDolar} onChange={handleChange} />
+                        <label>
+                            Peso
+                        </label>
+                    </div>
+                    <button name='precioEnDolar' onClick={actualizar}>actualizar</button>
                 </div>
 
             </div>

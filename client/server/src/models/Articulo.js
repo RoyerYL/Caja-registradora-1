@@ -72,5 +72,10 @@ module.exports = (sequelize) => {
          type: DataTypes.INTEGER,
          allowNull: true, // Permite que la clave foránea sea nula
        },
+       precioEnDolar:{
+         type: DataTypes.BOOLEAN,
+         defaultValue:false,
+         allowNull:true
+       }
    }, { timestamps: false });
 };

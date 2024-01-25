@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import style from './Venta.module.css'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import redondearPrecio from '../../Utils/redondearPrecio';
 export default function Costo(props) {
     const [collapse, setCollapse] = useState("collapse")
     const producto = useSelector((state) => state.producto)
 
     const { costo, setCosto } = props
 
-
+    useEffect(()=>{
+        let i = redondearPrecio(costo.subTotal)
+        console.log(i);
+    },[costo])
     const { id } = useParams
     useEffect(() => {
         let total = 0
@@ -58,7 +62,7 @@ export default function Costo(props) {
                     <tr>
                         <th >Total</th>
                         <td></td>
-                        <td id='costoTotal' colSpan="2">{
+                        <td id='costoTotal' colSpan="2" onChange={()=>{console.log("hola");}}>{
                         Number.parseFloat(costo.subTotal*((100-costo.descuento)/100)).toFixed(2)
                          ||0}</td>
                     </tr>
