@@ -155,7 +155,7 @@ function AltaArticulo(props) {
 
     const calcular=()=>{
         const{costoDolar,costoPeso,ganancia,iva}=form
-        setForm({ ...form, precioVenta: Number.parseFloat(((100+iva)/100)*((100+ganancia)/100)).toFixed(2) });//cambio Form..
+        setForm({ ...form, precioVenta: Number.parseFloat(((100+iva)/100)*((100+ganancia)/100)*costoDolar).toFixed(2) });//cambio Form..
     }
 
     return (
