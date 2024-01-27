@@ -79,6 +79,9 @@ export default function Login(props) {
             fechaCierre: new Date()
         }).then(({ data }) => { setCajaAbierta(2),setCotizacion({...Cotizacion,apertura:false}) })
     }
+    const actualizarPrecios= ()=>{
+        axios.post("http://localhost:3001/tienda/calcularPrecioVentaPorDolar")
+    }
     return (
         <div className={style.login}>
             <div className={style.cajaApertura}>
@@ -139,7 +142,8 @@ export default function Login(props) {
 
                 <div >
 
-                    <button onClick={submitHandler}> Confirmar </button>
+                    <button onClick={submitHandler}> Confirmar </button> 
+                    <button onClick={actualizarPrecios}> Actualizar precios </button> 
                 </div>
             </div>
                     <Caja/>

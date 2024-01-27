@@ -17,7 +17,7 @@ const updateArticulo = async (req, res) => {
         img,
         CategoriaId,
         ProvedorId,
-        precioDolar
+        precioEnDolar
 
     } = req.body;
 
@@ -80,7 +80,7 @@ const updateArticulo = async (req, res) => {
             img,
             CategoriaId:categoria.id,
             ProvedorId:provedor.id,
-            precioDolar
+            precioEnDolar
         };
         if (!stockMin) {
             updateObject.stockMin = 0.00;

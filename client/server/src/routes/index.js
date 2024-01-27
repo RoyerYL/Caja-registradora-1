@@ -57,6 +57,7 @@ const { cancelarTicket } = require('../controller/Ticket/cancelarTicket');
 const { actualizprecioPorcentaje } = require('../controller/Articulo/actualizprecioPorcentaje');
 const { precioEnDolares } = require('../controller/Articulo/acutalizarPreciosEnDolares');
 const { addStock } = require('../controller/Articulo/addStock');
+const { calcularPrecioVentaPorDolar } = require('../controller/Articulo/calcularPrecioVentaPorDolar');
 
 
 router.get('/articulo', getAllArticulos)
@@ -87,6 +88,8 @@ router.post('/actualizarActivo', actualizarActivo)
 router.post('/actualizarPrecioEnDolares', precioEnDolares)
 
 router.post('/articuloVendido', articuloVendido)
+
+router.post('/calcularPrecioVentaPorDolar', calcularPrecioVentaPorDolar)
 
 
 
