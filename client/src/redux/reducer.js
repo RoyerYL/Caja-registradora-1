@@ -1,7 +1,8 @@
 import { ADD_ART, ADD_ARTLike, GET_ART, REMOVE_ART } from "./acionTypes"
 
 const initialState = {
-  listProductos: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],],
+  listProductos: [[]],
+  ventasRealizadas: [],
   producto: [],
   productoLike: [],
   allProductoLike: [],
@@ -16,9 +17,21 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case "CERRARVENTA":
+      if (state.ventasRealizadas.includes(payload)) {
+        return { ...state};
+      }
+      const newListVentas=[...state.ventasRealizadas,payload]
+      console.log(newListVentas);
+      return { ...state, ventasRealizadas: newListVentas };
+    case "ADD_VENTA":
+      const newList = [...state.listProductos]
+      newList.push([])
+
+      return { ...state, listProductos: newList };
+
     case ADD_ART:
       const { page, cantidad, producto } = payload
-
 
       const newProductos = [...state.listProductos]
       newProductos[page] = [...newProductos[page], { page, cantidad, producto }]
@@ -40,8 +53,8 @@ export default (state = initialState, { type, payload }) => {
       const newLista1 = state.producto.map((prod, index) => {
         if (index === payload.id) {
           const { page, producto, cantidad } = prod
-          let cantidadTotal=Number(cantidad) + payload.cant
-          if (cantidadTotal === 0) {cantidadTotal=cantidad}
+          let cantidadTotal = Number(cantidad) + payload.cant
+          if (cantidadTotal === 0) { cantidadTotal = cantidad }
           return {
             page,
             producto,

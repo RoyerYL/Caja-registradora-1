@@ -39,7 +39,7 @@ export default function Articulo(props) {
     const handleKeyDown = (event) => {
         // Verifica si la tecla presionada es 'Enter' (código 13)
         if (event.key === 'Enter') {
-            addHandler();
+            addHandler(Articulo);
         }
     };
 
@@ -60,7 +60,7 @@ export default function Articulo(props) {
 
             </div>
 
-            <button onClick={addFunction}>Agregar</button>
+            <button onKeyDown={handleKeyDown} onClick={addFunction}>Agregar</button>
         </div>
     )
 }

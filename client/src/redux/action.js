@@ -1,11 +1,14 @@
 import { ADD_ART, ADD_ARTLike, REMOVE_ART } from "./acionTypes"
 import axios from 'axios'
-
+export const addVenta=()=>{
+  return{
+    type:"ADD_VENTA"
+  }
+}
 
 export const add_art = (input) => {
   return async (dispatch) => {
     const { cantidad, codBarras, page } = input
-
     try {
       const { data } = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
 
@@ -80,6 +83,12 @@ export const getAll = () => {
 export const get_list = (input) => {
   return {
     type: "GET_LIST",
+    payload: input
+  }
+};
+export const cerrarVenta = (input) => {
+  return {
+    type: "CERRARVENTA",
     payload: input
   }
 };

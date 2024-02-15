@@ -3,7 +3,7 @@ import style from './Navbar.module.css'
 import { Link,useNavigate  } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
 import { useDispatch } from 'react-redux';
-import { get_list } from '../../redux/action';
+import { addVenta, cerrarVenta, get_list } from '../../redux/action';
 
 export default function Navbar(props) {
 
@@ -13,6 +13,7 @@ export default function Navbar(props) {
     const [button, setButton] = useState([])
     const navigate = useNavigate();
     const handleClick = () => {
+        dispatch(addVenta())
         if(Cotizacion.apertura){
 
             setButton([...button, { id: id_ }])
@@ -35,6 +36,9 @@ export default function Navbar(props) {
             alert('No puedes acceder a esta sección sin Cotización activa.');
         }
     };
+    const cerar=(id)=>{
+        dispatch(cerrarVenta(id))
+    }
     return (
         <div className={style.Navbar}>
 
@@ -92,7 +96,7 @@ export default function Navbar(props) {
             <nav className={style.pageArticulo}>
 
                 {button.map((prod, id) => (
-                    <PageArticulo key={id} id={prod.id} onClose={onClose} />
+                    <PageArticulo handleClick={cerar(id)} key={id} id={prod.id} onClose={onClose} />
                 ))}
             </nav>
         </div>

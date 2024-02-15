@@ -11,7 +11,6 @@ export default function Costo(props) {
 
     useEffect(()=>{
         let i = redondearPrecio(costo.subTotal)
-        console.log(i);
     },[costo])
     const { id } = useParams
     useEffect(() => {
