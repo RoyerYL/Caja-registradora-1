@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, MenuItem } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 const generateBarcode = require(path.join(app.getAppPath(), "src", "Utils", "generarCodBarras", 'generarCodBarras.js'));
@@ -52,6 +52,22 @@ const createWindow = () => {
   ]
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+
+  const contextMenu =new Menu()
+  contextMenu.append(new MenuItem({
+    label:"pegar",
+    role:'paste'
+  }
+  ))
+  contextMenu.append(new MenuItem({
+    label: "Copiar",
+    role: "copy"
+}));
+  mainWindow.webContents.on("context-menu",(event,params)=>
+  {
+    contextMenu.popup(mainWindow,params.x,params.y)
+  })
+
 };
 
 ipcMain.on("executeTicketCreate", (event, id) => {
