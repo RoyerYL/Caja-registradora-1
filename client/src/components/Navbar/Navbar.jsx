@@ -61,7 +61,9 @@ export default function Navbar(props) {
                     <Link to="/operaciones">
                         <button>Operaciones</button>
                     </Link>
+                    <Link to="/administracion">
                     <button>Administracón</button>
+                    </Link>
                 </div>
             </nav>
 

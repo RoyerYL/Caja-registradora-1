@@ -58,7 +58,8 @@ const { actualizprecioPorcentaje } = require('../controller/Articulo/actualizpre
 const { precioEnDolares } = require('../controller/Articulo/acutalizarPreciosEnDolares');
 const { addStock } = require('../controller/Articulo/addStock');
 const { calcularPrecioVentaPorDolar } = require('../controller/Articulo/calcularPrecioVentaPorDolar');
-
+const {postTicketData}=require("../controller/TicketData/postTicketData")
+const {getTicketData}=require("../controller/TicketData/getTicketData")
 
 router.get('/articulo', getAllArticulos)
 router.get('/articuloMasVendidos', getArticulosMasVendidos)
@@ -123,6 +124,9 @@ router.get('/cajaTicket/:id', getCajaTicket)
 router.get('/caja/:id', getCaja)
 router.post('/caja', postCaja)
 router.post('/cerrarCaja', cerrarCaja)
+
+router.get('/ticketData', getTicketData)
+router.post('/ticketData', postTicketData)
 
 router.get('/vendedor/:id', getVendedor)
 router.get('/vendedor', getAllVendedors)

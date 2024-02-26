@@ -14,13 +14,7 @@ export default function Login(props) {
 
     const [vendedores, setVendedores] = useState([])
 
-
-    useEffect(() => {
-
-        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
-            dispatch(add_vendedor(data[0].id))
-            setVendedores(data)
-        })
+    useEffect(()=>{
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
             if (data.length > 0) {
 
@@ -40,7 +34,16 @@ export default function Login(props) {
                 }));
             }
         })
-    }, [cajaAbierta_])
+    },[cajaAbierta_])
+    useEffect(() => {
+
+        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
+            dispatch(add_vendedor(data[0].id))
+            setVendedores(data)
+        })
+       
+
+    }, [])
 
     const submitHandler = (event) => {
         axios.post("http://localhost:3001/tienda/cotizacion", {
@@ -70,15 +73,22 @@ export default function Login(props) {
         axios.post("http://localhost:3001/tienda/caja", {
             precioInicial: Cotizacion.precioInicial,
             fechaApertura: new Date()
-        }).then(({ data }) => { setCajaAbierta(1) })
+        }).then(() => {
+            setCajaAbierta(1);
+        });
     }
+    
     const cierre = () => {
         axios.post("http://localhost:3001/tienda/cerrarCaja", {
             id: caja,
             precioFinal: Cotizacion.precioFinal,
             fechaCierre: new Date()
-        }).then(({ data }) => { setCajaAbierta(2),setCotizacion({...Cotizacion,apertura:false}) })
+        }).then(() => {
+            setCajaAbierta(2);
+            setCotizacion({ ...Cotizacion, apertura: false });
+        });
     }
+    
     const actualizarPrecios= ()=>{
         axios.post("http://localhost:3001/tienda/calcularPrecioVentaPorDolar")
     }
@@ -146,7 +156,7 @@ export default function Login(props) {
                     <button onClick={actualizarPrecios}> Actualizar precios </button> 
                 </div>
             </div>
-                    <Caja/>
+                    <Caja cajaAbierta={cajaAbierta_}/>
         </div>
     )
 

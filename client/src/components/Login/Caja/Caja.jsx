@@ -18,7 +18,7 @@ export default function Caja(props) {
            setCaja(data)
         })
 
-    }, [])
+    }, [props.cajaAbierta])
 
 
     return (

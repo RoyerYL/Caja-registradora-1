@@ -19,11 +19,14 @@ import Vendedor from './components/Window/Vendedor/Vendedor';
 import Operaciones from './components/Window/Operaciones/Operaciones';
 import IngresoMercaderia from './components/InrgesoMercaderia/IngresoMercaderia';
 import axios from 'axios';
+import LandingPage from './components/LandingPage/LandingPage';
+import Administracion from './components/Administracion/Administracion';
 
 
 
 function App() {
-   const navigate = useLocation();
+   const navigate = useNavigate();
+   const {pathname}=useLocation()
    /************ SEGURIDAD ************/
 
    const [access,setAccess] = useState(false)
@@ -37,17 +40,24 @@ function App() {
       cotizacionMep: Number.parseFloat(0).toFixed(2),
 
   })
-   // useEffect(() => {
-   //       !access && navigate("/");
-   //    }, [access]);
+   useEffect(() => {
+         navigate("/");
+      }, []);
 
 
 
    return (
       <div className="App">
+         {
+            pathname!=="/" &&
          <Navbar Cotizacion={Cotizacion}/>
+         }
          <Routes>
+            
             <Route path='/' element={
+               <LandingPage/>
+            } />
+            <Route path='/HomePage' element={
                <Login Cotizacion={Cotizacion}  setCotizacion={setCotizacion}/>
             } />
             <Route path='/ventana/:id' element={
@@ -79,6 +89,10 @@ function App() {
             } />
             <Route path='/mercaderia' element={
                <IngresoMercaderia />
+            } />
+            
+            <Route path='/administracion' element={
+               <Administracion />
             } />
 
          </Routes>

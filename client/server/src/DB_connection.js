@@ -4,6 +4,7 @@ const CategoriaFunction=require('./models/Categoria')
 const ProvedorFunction=require('./models/Provedor')
 const ClienteFunction = require('./models/Cliente');
 const TicketFunction=require('./models/Ticket');
+const TicketDataFunction=require('./models/TicketData');
 const CompraFunction=require('./models/Compra');
 
 const CajaFunction=require('./models/Caja');
@@ -38,9 +39,10 @@ MercaderiaFunction(dataBase)
 
 ValidadorFunction(dataBase)
 
+TicketDataFunction(dataBase)
 
 // Creación de tablas
-const { Articulo, Provedor , Categoria,Cliente,Ticket,Compra , Caja,Vendedor,Cotizacion,Mercaderia,Validador } = dataBase.models;
+const { Articulo, Provedor , Categoria,Cliente,Ticket,Compra , Caja,Vendedor,Cotizacion,Mercaderia,TicketData } = dataBase.models;
 
 Categoria.hasMany(Articulo, { foreignKey: 'CategoriaId' });
 Articulo.belongsTo(Categoria, { foreignKey: 'CategoriaId' });
@@ -81,5 +83,6 @@ module.exports = {
   Cliente,
   Vendedor,
   Caja,
-  Cotizacion
+  Cotizacion,
+  TicketData
 };
