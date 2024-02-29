@@ -12,6 +12,7 @@
 }
 .cajaApertura{
     display: flex;
+    gap: 25px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -21,8 +22,18 @@
     box-shadow: 10px 10px 5px black;
     
 }
+.cajaApertura span{
+    background-color: rgba(120, 248, 120, 0.26);
+    padding: 3px 5px 3px 5px;
+    border: 1px solid black;
+    text-transform: uppercase;
+    font-size: 35px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
 .Cotizacion{
     display: flex;
+    gap: 25px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -31,8 +42,10 @@
     border: 1px solid;
     box-shadow: 10px 10px 5px black;
 }
-.precioInical{
+.precioInicial{
     cursor: none;
+    border: 1px solid black;
+    padding: 3px;
 }
 
 /****CAJA***/
@@ -53,4 +66,17 @@
 .containerCaja p{
     padding: 5px;
     border: 1px solid;
+}
+.botonCotizacion{
+    display: flex;
+    gap: 5px;
+}
+.login button{
+    padding: 5px;
+    border-radius: 9px;
+    background-color: white;
+}
+.login button:hover{
+    cursor: pointer;
+    background-color: grey;
 }

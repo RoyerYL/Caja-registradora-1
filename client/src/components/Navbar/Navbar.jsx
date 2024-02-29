@@ -70,7 +70,7 @@ export default function Navbar(props) {
 
             <nav className="navbar">
                 <div >
-                    <Link to="./">
+                    <Link to="./HomePage">
                         <button >Caja</button>
                     </Link>
                     <Link onClick={() => handleLinkClick(`/ventana/${id_}`)}>

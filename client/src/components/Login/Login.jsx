@@ -6,7 +6,7 @@ import { add_cotizacion, add_vendedor, cajaAbierta } from '../../redux/action';
 import axios from 'axios';
 import Caja from './Caja/Caja';
 export default function Login(props) {
-    const {Cotizacion,setCotizacion}=props
+    const { Cotizacion, setCotizacion } = props
     const dispatch = useDispatch()
     const Vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
@@ -14,13 +14,13 @@ export default function Login(props) {
 
     const [vendedores, setVendedores] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
             if (data.length > 0) {
 
                 if (data[0].apertura) {
                     dispatch(cajaAbierta(data[0].id))
-                    setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial ,apertura:data[0].apertura}));
+                    setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial, apertura: data[0].apertura }));
                 }
             }
         })
@@ -34,14 +34,14 @@ export default function Login(props) {
                 }));
             }
         })
-    },[cajaAbierta_])
+    }, [cajaAbierta_])
     useEffect(() => {
 
         axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
             dispatch(add_vendedor(data[0].id))
             setVendedores(data)
         })
-       
+
 
     }, [])
 
@@ -77,7 +77,7 @@ export default function Login(props) {
             setCajaAbierta(1);
         });
     }
-    
+
     const cierre = () => {
         axios.post("http://localhost:3001/tienda/cerrarCaja", {
             id: caja,
@@ -88,8 +88,8 @@ export default function Login(props) {
             setCotizacion({ ...Cotizacion, apertura: false });
         });
     }
-    
-    const actualizarPrecios= ()=>{
+
+    const actualizarPrecios = () => {
         axios.post("http://localhost:3001/tienda/calcularPrecioVentaPorDolar")
     }
     return (
@@ -97,22 +97,22 @@ export default function Login(props) {
             <div className={style.cajaApertura}>
 
                 {
-                    Cotizacion.apertura?
+                    Cotizacion.apertura ?
                         (<>
                             <span>Caja abierta</span>
-                            <div>
+                            <div className={style.precioInicial}>
 
-                                <label>Precio Inicial</label>
-                                <input name='precioInicial' value={Cotizacion.precioInicial} readOnly />
+                                <label>Precio Inicial: </label>
+                                <label >{Cotizacion.precioInicial} </label>
                             </div>
                             <div>
 
-                                <label>Precio Final</label>
+                                <label>Precio Final: </label>
                                 <input name='precioFinal' value={Cotizacion.precioFinal} onChange={handleChange} />
                             </div>
                             <div >
 
-                                <button type='submit' onClick={cierre}> Cierre </button>
+                                <button type='submit' onClick={cierre}> Cerrar caja </button>
                             </div>
 
                         </>)
@@ -129,34 +129,33 @@ export default function Login(props) {
             </div>
             <div className={style.Cotizacion}>
 
+                <div>
 
-                <select id='vendedor' value={Vendedor} name='vendedor' onChange={handleChange}>
-                    {
-                        vendedores.map((vendedor) => {
-                            return (
-                                <option key={vendedor.id} value={vendedor.id}>{vendedor.vendedor}</option>
-                            )
-                        })
-                    }
-                </select>
+                    <label htmlFor="">Vendedor: </label>
+                    <select id='vendedor' value={Vendedor} name='vendedor' onChange={handleChange}>
+                        {
+                            vendedores.map((vendedor) => {
+                                return (
+                                    <option key={vendedor.id} value={vendedor.id}>{vendedor.vendedor}</option>
+                                )
+                            })
+                        }
+                    </select>
 
+                </div>
 
                 <div>
-                    <label>Cotizacion dolar MEP : </label>
+                    <label>Cotizacion dolar: </label>
                     <input name='cotizacionMep' value={Cotizacion.cotizacionMep} onChange={handleChange} />
                 </div>
-                <div>
-                    <label >Cotizacion dolar BLUE : </label>
-                    <input name='cotizacionBlue' value={Cotizacion.cotizacionBlue} onChange={handleChange} />
-                </div>
 
-                <div >
+                <div className={style.botonCotizacion}>
 
-                    <button onClick={submitHandler}> Confirmar </button> 
-                    <button onClick={actualizarPrecios}> Actualizar precios </button> 
+                    <button onClick={submitHandler}> Confirmar </button>
+                    <button onClick={actualizarPrecios}> Actualizar precios </button>
                 </div>
             </div>
-                    <Caja cajaAbierta={cajaAbierta_}/>
+            <Caja cajaAbierta={cajaAbierta_} />
         </div>
     )
 
