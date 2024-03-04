@@ -1,5 +1,15 @@
 .container{
     position: relative;
+    width: 60px;
+    height: 69px;
+    border: 1px solid black;
+}
+.container:hover{
+    background-color: white;
+}
+.nuevo{
+    width: 100%;
+    height: 100%;
 }
 .close{
     position: absolute;

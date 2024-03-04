@@ -51,7 +51,7 @@ export default function Login(props) {
             cotizacionMep: Cotizacion.cotizacionMep
         })
 
-
+        actualizarPrecios()
         event.preventDefault()//evitamos que submit recargue la pagina
     }
 
@@ -104,11 +104,13 @@ export default function Login(props) {
 
                                 <label>Precio Inicial: </label>
                                 <label >{Cotizacion.precioInicial} </label>
+                                <label> $</label>
                             </div>
                             <div>
 
                                 <label>Precio Final: </label>
                                 <input name='precioFinal' value={Cotizacion.precioFinal} onChange={handleChange} />
+                                <label> $</label>
                             </div>
                             <div >
 
@@ -147,12 +149,12 @@ export default function Login(props) {
                 <div>
                     <label>Cotizacion dolar: </label>
                     <input name='cotizacionMep' value={Cotizacion.cotizacionMep} onChange={handleChange} />
+                    <label> $</label>
                 </div>
 
                 <div className={style.botonCotizacion}>
 
-                    <button onClick={submitHandler}> Confirmar </button>
-                    <button onClick={actualizarPrecios}> Actualizar precios </button>
+                    <button onClick={submitHandler}> Actualizar precios </button>
                 </div>
             </div>
             <Caja cajaAbierta={cajaAbierta_} />

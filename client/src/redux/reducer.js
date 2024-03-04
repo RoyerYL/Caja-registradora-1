@@ -22,7 +22,6 @@ export default (state = initialState, { type, payload }) => {
         return { ...state};
       }
       const newListVentas=[...state.ventasRealizadas,payload]
-      console.log(newListVentas);
       return { ...state, ventasRealizadas: newListVentas };
     case "ADD_VENTA":
       const newList = [...state.listProductos]
