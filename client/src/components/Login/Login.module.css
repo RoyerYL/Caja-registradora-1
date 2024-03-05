@@ -50,13 +50,19 @@
 /****CAJA***/
 .containerCaja{
     display: flex;
+    position: relative;
     flex-direction: column;
     box-shadow: 10px 10px 5px black;
     border: 1px solid;
-    height: 250px;
+    height: 255px;
     width: 519px;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+.index{
+    display: flex;
+    position: fixed;
+    background-color: antiquewhite;
 }
 .cajaId{
     width: 50px;
@@ -70,6 +76,11 @@
 .cajas{
     display: flex;
     height: 100%;
+}
+.cajaList{
+    display: flex;
+    flex-direction: column;
+    padding-top: 42px;
 }
 /* .cajas:hover{
     background-color: azure;

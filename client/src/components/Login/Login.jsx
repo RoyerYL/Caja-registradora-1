@@ -157,6 +157,7 @@ export default function Login(props) {
                     <button onClick={submitHandler}> Actualizar precios </button>
                 </div>
             </div>
+            
             <Caja cajaAbierta={cajaAbierta_} />
         </div>
     )

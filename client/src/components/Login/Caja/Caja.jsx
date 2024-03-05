@@ -14,31 +14,42 @@ export default function Caja(props) {
 
     useEffect(() => {
 
-       
+
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
-           setCaja(data)
+            setCaja(data)
         })
 
     }, [props.cajaAbierta])
 
-    
+
     return (
         <div className={style.containerCaja}>
-           {
-            caja.map((c)=>{
-                return(
-                    <div key={c.id} className={`${style.cajas} ${!c.apertura ? style.abierto:style.cerrado}`}>
-                        <p className={style.cajaId}>{c.id}</p>
-                        <p className={style.cajaFechaApertura}>{moment(c.fechaApertura).format('DD/MM/YYYY HH:mm')}</p>
-                        <p className={style.cajaFechaCierre}>{ c.fechaCierre ? moment(c.fechaCierre).format('DD/MM/YYYY HH:mm') : "Abierto"}</p>
-                        <p className={style.cajaPrecioInicial}>{formatoPrecio(c.precioInicial)} $</p>
-                        <p className={style.cajaPrecioFinalCaja}> {c.precioFinalCaja>=0 ? formatoPrecio(c.precioFinalCaja) :"Abierto"}</p>
-                        <p className={style.cajaPrecio}>{c.precioFinal>=0 ?formatoPrecio(c.precioFinal): "Abierto.."}</p>
+            <div className={style.index}>
+                <p className={style.cajaId}>id</p>
+                <p className={style.cajaFechaApertura}>Fecha de apertura</p>
+                <p className={style.cajaFechaCierre}>Fecha de cierre</p>
+                <p className={style.cajaPrecioInicial}>Precio inicial</p>
+                <p className={style.cajaPrecioFinalCaja}>Precio final en caja</p>
+                <p className={style.cajaPrecio}>Precio final</p>
+            </div>
+            <div className={style.cajaList}>
 
-                    </div>
-                )
-            })
-           }
+                {
+                    caja.map((c) => {
+                        return (
+                            <div key={c.id} className={`${style.cajas} ${!c.apertura ? style.abierto : style.cerrado}`}>
+                                <p className={style.cajaId}>{c.id}</p>
+                                <p className={style.cajaFechaApertura}>{moment(c.fechaApertura).format('DD/MM/YYYY HH:mm')}</p>
+                                <p className={style.cajaFechaCierre}>{c.fechaCierre ? moment(c.fechaCierre).format('DD/MM/YYYY HH:mm') : "Abierto"}</p>
+                                <p className={style.cajaPrecioInicial}>{formatoPrecio(c.precioInicial)} $</p>
+                                <p className={style.cajaPrecioFinalCaja}> {c.precioFinalCaja >= 0 ? formatoPrecio(c.precioFinalCaja) : "Abierto"}</p>
+                                <p className={style.cajaPrecio}>{c.precioFinal >= 0 ? formatoPrecio(c.precioFinal) : "Abierto.."}</p>
+
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 

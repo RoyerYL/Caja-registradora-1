@@ -4,6 +4,7 @@ import style from './Comprobante.module.css'
 import Cliente from '../Cliente/Cliente';
 import { Link, Route, Routes } from 'react-router-dom';
 import DetailComprobante from './DetailComprobante';
+import moment from 'moment';
 // const { remote } = window.require('electron');
 // const { BrowserWindow } = remote;
 
@@ -30,7 +31,7 @@ function Comprobante() {
                                     <div className='flex-1'>
 
                                         <span># {comprobante.id}</span>
-                                        <span>fecha: {comprobante.fecha}</span>
+                                        <span>Fecha: {moment(comprobante.fecha).format('DD/MM/YYYY HH:mm')}</span>
                                     </div>
                                     <div className='flex-1'>
 
