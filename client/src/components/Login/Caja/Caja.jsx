@@ -31,6 +31,7 @@ export default function Caja(props) {
                 <p className={style.cajaPrecioInicial}>Precio inicial</p>
                 <p className={style.cajaPrecioFinalCaja}>Precio final en caja</p>
                 <p className={style.cajaPrecio}>Precio final</p>
+                <p className={style.cajaPrecio}>Diferencia de precios</p>
             </div>
             <div className={style.cajaList}>
 
@@ -44,6 +45,7 @@ export default function Caja(props) {
                                 <p className={style.cajaPrecioInicial}>{formatoPrecio(c.precioInicial)} $</p>
                                 <p className={style.cajaPrecioFinalCaja}> {c.precioFinalCaja >= 0 ? formatoPrecio(c.precioFinalCaja) : "Abierto"}</p>
                                 <p className={style.cajaPrecio}>{c.precioFinal >= 0 ? formatoPrecio(c.precioFinal) : "Abierto.."}</p>
+                                <p className={style.cajaPrecio}>{c.precioFinal >= 0 ? formatoPrecio(Number(c.precioFinal)-Number(c.precioFinalCaja)) : "Abierto.."}</p>
 
                             </div>
                         )

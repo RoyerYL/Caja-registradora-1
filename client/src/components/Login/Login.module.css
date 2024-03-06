@@ -55,7 +55,7 @@
     box-shadow: 10px 10px 5px black;
     border: 1px solid;
     height: 255px;
-    width: 519px;
+    width: 641px;
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -71,7 +71,7 @@
     width: 100px;
 }
 .cajaPrecioInicial, .cajaPrecio , .cajaPrecioFinalCaja{
-    width: 80px;
+    width: 90px;
 }
 .cajas{
     display: flex;
@@ -80,13 +80,14 @@
 .cajaList{
     display: flex;
     flex-direction: column;
-    padding-top: 42px;
+    padding-top: 31px;
 }
 /* .cajas:hover{
     background-color: azure;
 } */
 .containerCaja p{
     border: 1px solid;
+    font-size: 12px;
 }
 .botonCotizacion{
     display: flex;

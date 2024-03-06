@@ -5,7 +5,7 @@ const getAllCaja = async (req, res) => {
     try {
         const allCaja=await Caja.findAll({
             order:[["fechaApertura","DESC"]],
-            limit:10
+            limit:25
         })
 
         return res.status(201).json(allCaja);
