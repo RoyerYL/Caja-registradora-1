@@ -104,13 +104,13 @@ export default function Login(props) {
                             <div className={style.precioInicial}>
 
                                 <label>Precio Inicial: </label>
-                                <label >{Cotizacion.precioInicial} </label>
+                                <label >{Number.parseFloat(Cotizacion.precioInicial).toFixed(2) } </label>
                                 <label> $</label>
                             </div>
                             <div>
 
                                 <label>Precio Final: </label>
-                                <input name='precioFinal' value={Cotizacion.precioFinal} onChange={handleChange} />
+                                <input name='precioFinal' value={Number.parseFloat(Cotizacion.precioFinal).toFixed(2)} onChange={handleChange} />
                                 <label> $</label>
                             </div>
                             <div >
@@ -121,7 +121,7 @@ export default function Login(props) {
                         </>)
                         : (<>
                             <label>Precio Inicial</label>
-                            <input name='precioInicial' value={Cotizacion.precioInicial} onChange={handleChange} />
+                            <input name='precioInicial' value={Number.parseFloat(Cotizacion.precioInicial).toFixed(2)} onChange={handleChange} />
                             <div >
 
                                 <button type='submit' onClick={apertura}> Apertura </button>
@@ -149,7 +149,7 @@ export default function Login(props) {
 
                 <div>
                     <label>Cotizacion dolar: </label>
-                    <input name='cotizacionMep' value={Cotizacion.cotizacionMep} onChange={handleChange} />
+                    <input name='cotizacionMep' value={Cotizacion.cotizacionMep} onClick={(event) => { event.target.value = "" }} onChange={handleChange} />
                     <label> $</label>
                 </div>
 
