@@ -13,10 +13,6 @@ const postCompra = async (req, res) => {
     // }
 
     try {
-        console.log("----------------");
-        console.log(req.body.articuloId);
-        console.log(req.body);
-        console.log("----------------");
         const newCompra = await Compra.create({
                 cantidad,
                 fecha,

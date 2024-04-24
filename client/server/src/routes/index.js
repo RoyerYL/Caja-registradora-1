@@ -60,9 +60,11 @@ const { addStock } = require('../controller/Articulo/addStock');
 const { calcularPrecioVentaPorDolar } = require('../controller/Articulo/calcularPrecioVentaPorDolar');
 const { postTicketData } = require('../controller/TicketData/postTicketData');
 const { getTicketData } = require('../controller/TicketData/getTicketData');
+const { getArticuloByCategoria } = require('../controller/Articulo/getArticuloByCategoria');
 
 
 router.get('/articulo', getAllArticulos)
+router.get('/articuloCategoria', getArticuloByCategoria)
 router.get('/articuloMasVendidos', getArticulosMasVendidos)
 router.get('/articulo/:id', getArticulo)
 router.get('/articuloLike/:id', getArticuloLike)

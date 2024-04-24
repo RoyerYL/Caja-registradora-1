@@ -1,9 +1,16 @@
-const { Articulo } = require("../../DB_connection")
+const { Articulo, Categoria } = require("../../DB_connection")
 
 const getAllArticulos = async (req, res) => {
 
     try {
-        const allArticulos=await Articulo.findAll()
+        const allArticulos=await Articulo.findAll({
+            include: [
+                {
+                    model: Categoria,
+
+                }
+            ]
+        })
 
         return res.status(201).json(allArticulos);
 
