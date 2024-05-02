@@ -257,6 +257,13 @@ export default function ActualizarDatos() {
                 <div>
                     <input type="text" name='buscador' placeholder='nombre' value={buscador} onChange={search} />
                     <button onClick={ordenar}>{order ? "asc" : "desc"}</button>
+                    <select name="" id="">
+                        {
+                            categoria.map((c,index)=>{
+                                return <option value={c.nameCategoria} onChange={()=>{}}>{c.nameCategoria}</option>
+                            })
+                        }
+                    </select>
                 </div>
 
                 <p>Lista de Artículos</p>
