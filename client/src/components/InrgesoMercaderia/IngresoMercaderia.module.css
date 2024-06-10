@@ -1,76 +1,141 @@
-.search {
-    display: flex;
-    gap: 3px;
-    padding: 3px;
-}
-
-.listaArticulos2 {
-    border: 1px solid;
-    width: 850px;
-    height: 480px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: white;
-}
-.listaArticulos2 p{
-    user-select: none;
-}
-.listaArticulos {
-    border: 1px solid;
-    width: 350px;
-    height: 680px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: white;
-}
-.listaArticulos p{
-    user-select: none;
-}
-.articulos {
-    display: flex;
-    padding: 3px;
-    border: 1px solid;
-    justify-content: space-between;
-}
-
-.articulos:hover {
-    background-color: aliceblue;
-}
-
-.articulos p {
-    font-size: 0.7em;
-    font-weight: bold;
-}
+/* IngresoMercaderia.module.css */
 
 .container {
     display: flex;
-    justify-content: space-around;
-    margin: 5px;
+    justify-content: space-between;
+    margin: 20px;
 }
 
-.total {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.leftContainer {
+    width: 45%;
+    overflow-y: auto;
 }
-.containerTotal{
-    border: 1px solid;
+
+.rightContainer {
+    width: 45%;
+    overflow-y: auto;
+}
+
+.searchContainer {
+    margin-bottom: 20px;
+}
+
+.productList,
+.selectedList {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    max-height: 300px; /* Altura máxima de la lista */
+    overflow-y: auto; /* Agrega scroll vertical si se necesita */
+    }
+    .productList{
+        max-height: 600px;
+    }
+    
+.productItem {
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.productItem:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination {
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
+}
+
+.selectedItem {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+.quantityControls {
+    display: flex;
     align-items: center;
 }
-.total>div {
+
+.form {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form input,
+.form textarea,
+.form select {
+    width: calc(100% - 22px); /* Considerando el padding */
     padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
 }
-.containerCantPrecio{
-    border-left: 1px solid;
-    padding-left: 2px ;
+
+.button {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
-.cantidad{
-    width: 75px;
-    background-color: rgba(139, 139, 139, 0.479);
+.buttonDes {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: #63adfc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
-.listMercaderia{
-    border: 1px solid;
+
+.button:hover {
+    background-color: #0056b3;
+}
+/* IngresoMercaderia.module.css */
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa; /* Color de fondo */
+    border: 1px solid #ced4da; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.searchContainer input[type="text"] {
+    flex: 1; /* Que el input ocupe el espacio restante */
+    border: none; /* Sin borde */
+    padding: 5px; /* Espaciado interno */
+    margin-right: 5px; /* Espaciado derecho */
+    border-radius: 3px; /* Bordes redondeados */
+}
+
+.searchContainer button {
+    padding: 5px 10px; /* Espaciado interno */
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color de texto */
+    border: none; /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de puntero */
+}
+
+.searchContainer button:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+.header{
+    display: flex;
+    justify-content: space-between;
 }

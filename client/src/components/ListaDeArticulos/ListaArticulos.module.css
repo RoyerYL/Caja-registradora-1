@@ -1,74 +1,102 @@
-.listaArticulos{
-    margin: 15px;
-}
+/* ListaArticulos.module.css */
 
-
-.listArticulo {
-    height: 450px;
+.container {
+    margin: 20px;
     background-color: white;
-    overflow: overlay;
-    border: 3px solid black;
-    /* box-shadow: 10 10 10 10 black; */
 }
-.listArticulo table{
-width: 100%;
+.container input {
+    background-color: white;
+    color: black;
 }
-.listArticulo thead th{
-    border: 1px solid;
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
-.listArticulo button{
-    height: 2em !important;
-    width: 1.5em !important;
-    padding: 1px;
-    outline: none;
+
+.searchContainer input {
+    flex: 1;
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
-.nomFilas button {
-    font-size: 1em;
+
+.searchContainer .button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    padding: 0px;
-}
-
-.nomFilas button:hover {
-    transform: scale(1.2);
-}
-.listArticuloEncontrados{
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    z-index: 999;
-    overflow: overlay;
-    margin: 0px;
-    
-
-}
-
-
-.listArticuloEncontrados p{
-    text-align: center;
-    margin: 0px;
-    height: 100%;
-}
-.articulos{
+    border-radius: 3px;
     cursor: pointer;
+}
+
+.searchContainer .button:hover {
+    background-color: #0056b3;
+}
+
+.header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border: 1px solid black;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
-.codBarras{
-    width: 110px !important;
-    border-right: 1px solid;
-    font-size: 12px;
+
+.header p {
+    margin: 0;
+    flex: 1;
+    text-align: center;
 }
-.precio{
-    font-size: 12px;
-    border-left: 1px solid;
-    width: 90px;
+
+.productList {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    height: 650px;
+    max-height: 650px; /* Altura máxima de la lista */
+    overflow-y: auto; /* Agrega scroll vertical si se necesita */
 }
-.nombre{
-    font-size: 13px;
-width: 150px;
+
+.productItem {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: black;
 }
-.articulos:hover{
-    background-color: aqua;
+
+.productItem:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Para ajustar los botones de paginación si hay muchos */
+}
+
+.pagination button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.pagination .activePage {
+    background-color: #007bff;
+    color: white;
+}
+.id{
+    width: 250px;
+}
+.name{
+    width: 575px;
+}
+.stock{
+    width: 150px;
 }

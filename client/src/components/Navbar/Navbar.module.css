@@ -1,29 +1,55 @@
-.Navbar{
-    position: relative;
-    padding: 0px 5px 0px 5px;
+/* Navbar.module.css */
+
+.container {
+    background-color: #f8f9fa; /* Color de fondo */
+    padding: 10px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.navbar {
     display: flex;
-    flex-direction: column;
-    gap: 3px;
-    z-index: 9999;
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center; /* Alinear elementos verticalmente */
+    margin-bottom: 10px; /* Margen inferior */
 }
-.Navbar button{
-    font-size: 13px;
-    background-color: transparent;
-    border: none;
-    padding: 0px 5px 0px 5px;
-    border: 1px solid transparent;
+
+.navbar a {
+    text-decoration: none; /* Eliminar subrayado de enlaces */
 }
-.Navbar button:hover{
-    background-color: white;
-    border: 1px solid black;
+
+.navbar button {
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    margin-right: 10px; /* Margen derecho */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de mano al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
 }
-.pageArticulo{
+
+.navbar button:hover {
+    background-color: #0056b3; /* Color de fondo al pasar por encima */
+}
+
+.navbar button:disabled {
+    background-color: #d6d6d6; /* Color de fondo para botones deshabilitados */
+    cursor: not-allowed; /* Cursor de no permitido */
+}
+
+.navbar-secondary {
     display: flex;
-    /* flex-direction: row-reverse; */
-    width: 100%;
-    overflow-y: hidden;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    /* justify-content: flex-end; */
-    gap: 3px;
+    justify-content: flex-start; /* Alinear elementos a la izquierda */
+    align-items: center; /* Alinear elementos verticalmente */
+    margin-bottom: 10px; /* Margen inferior */
+}
+
+.buttonContainer {
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los botones se envuelvan */
+    gap: 10px; /* Espacio entre botones */
+}
+.navbarThird{
+    display: flex;
+    overflow-y: auto;
 }

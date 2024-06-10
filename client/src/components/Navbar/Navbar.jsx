@@ -1,106 +1,90 @@
 import React, { useState } from 'react';
-import style from './Navbar.module.css'
-import { Link,useNavigate  } from 'react-router-dom';
+import style from './Navbar.module.css';
+import { Link, useNavigate } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
 import { useDispatch } from 'react-redux';
 import { addVenta, cerrarVenta, get_list } from '../../redux/action';
 
 export default function Navbar(props) {
-
-    const {Cotizacion}=props
-    const [id_, setID] = useState(0)
-    const dispatch = useDispatch()
-    const [button, setButton] = useState([])
+    const { Cotizacion } = props;
+    const [id_, setID] = useState(0);
+    const dispatch = useDispatch();
+    const [button, setButton] = useState([]);
     const navigate = useNavigate();
-    const handleClick = () => {
-        dispatch(addVenta())
-        if(Cotizacion.apertura){
 
-            setButton([...button, { id: id_ }])
-            setID(id_ + 1)
-            dispatch(get_list(id_))
+    const handleClick = () => {
+        dispatch(addVenta());
+        if (Cotizacion.apertura) {
+            setButton([...button, { id: id_ }]);
+            setID(id_ + 1);
+            dispatch(get_list(id_));
         }
-            
-    }
+    };
+
     const onClose = (idFilter) => {
-        const newButtons = button.filter((b) => b.id !== idFilter)
-        setButton(newButtons)
-    }
+        const newButtons = button.filter((b) => b.id !== idFilter);
+        setButton(newButtons);
+    };
 
     const handleLinkClick = (to) => {
         if (Cotizacion.apertura) {
-            // Si Cotizacion es true, navega al Link
             navigate(to);
         } else {
-            // Si Cotizacion es false, muestra un mensaje de aviso
             alert('No puedes acceder a esta sección sin Cotización activa.');
         }
     };
-    const cerar=(id)=>{
-        dispatch(cerrarVenta(id))
-    }
+
+    const cerar = (id) => {
+        dispatch(cerrarVenta(id));
+    };
+
     return (
-        <div className={style.Navbar}>
-
-
-            <nav >
-                <div >
-                <Link to="/comprobantes">
-                        <button >Ventas</button>
+        <div className={style.container}>
+            <nav className={style.navbar}>
+                <div className={style.buttonContainer}>
+                    <Link to="/comprobantes">
+                        <button>Ventas</button>
                     </Link>
                     <Link to="/reportes">
-                        <button >Reportes</button>
+                        <button>Reportes</button>
                     </Link>
-                    {/* <Link to="/provedor">
-                        <button >Articulos</button>
-                    </Link> */}
                     <Link to="/mercaderia">
-                        <button >Ingreso Mercaderia</button>
+                        <button>Ingreso Mercaderia</button>
                     </Link>
-
                     <Link to="/operaciones">
                         <button>Operaciones</button>
                     </Link>
                     <Link to="/administracion">
-                    <button>Administracón</button>
+                        <button>Administración</button>
                     </Link>
                 </div>
             </nav>
 
-
-            <nav className="navbar">
-                <div >
+            <nav className={style.navbarSecondary}>
+                <div className={style.buttonContainer}>
                     <Link to="./HomePage">
-                        <button >Caja</button>
+                        <button>Caja</button>
                     </Link>
                     <Link onClick={() => handleLinkClick(`/ventana/${id_}`)}>
                         <button onClick={handleClick}>Nuevo</button>
                     </Link>
-
-
-
                     <Link to="/altaArticulo">
-                        <button >Alta de articulo</button>
+                        <button>Alta de artículo</button>
                     </Link>
-                    {/* <Link to="/ventana">
-                        <button >Comprobantes</button>
-                    </Link> */}
                     <Link to="/listaArticulos">
-                        <button >Lista de articulos</button>
+                        <button>Lista de artículos</button>
                     </Link>
                     <Link to="/actualizarArticulo">
-                        <button >Actualizar datos</button>
+                        <button>Actualizar datos</button>
                     </Link>
-
                 </div>
-
             </nav>
-            <nav className={style.pageArticulo}>
 
+            <nav className={style.navbarThird}>
                 {button.map((prod, id) => (
-                    <PageArticulo handleClick={cerar(id)} key={id} id={prod.id} onClose={onClose} />
+                    <PageArticulo handleClick={() => cerar(prod.id)} key={prod.id} id={prod.id} onClose={onClose} />
                 ))}
             </nav>
         </div>
-    )
+    );
 }
