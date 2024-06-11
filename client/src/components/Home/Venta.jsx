@@ -174,39 +174,23 @@ export default function Navbar() {
 
                     <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
-                    <div className={style.cliente}>
+                    <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
 
-                        <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
-                    </div>
+                    <Condicion contado={clienteForm.contado} handleChange={handleChange}/>
 
                 </div>
                 <div className={style.ListArticulo}>
                     <div>
+
                         <ListaArticulos productos={productoProp} />
-                        <div className={style.info}>
 
-
-                            <Condicion />
-
-                            <div className={style.contado}>
-                                <div>
-
-                                    <p>Contado</p>
-                                    <input type="checkbox" name='contado' checked={clienteForm.contado} onChange={handleChange} />
-                                </div>
-                                <div>
-
-                                    <p>Cuenta Corriente</p>
-                                    <input type="checkbox" name='contado' checked={!clienteForm.contado} onChange={handleChange} />
-                                </div>
-                            </div>
+                        <div className={style.info}>        
                             <Costo costo={costo} setCosto={setCosto} />
-
                         </div>
 
                     </div>
                     <button onClick={generarRecibo}>Generar recibo</button>
-                    
+
                     <button onClick={imprimirRecibo}>Imprimir recibo</button>
                 </div>
 

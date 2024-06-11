@@ -4,6 +4,7 @@
     margin: 15px;
     padding: 5px;
     border: 1px solid;
+    height: 850px;
 }
 .registrarCompra {
     position: relative;
@@ -28,14 +29,6 @@
     flex-direction: column;
     width: 100%;
     margin: 10px;
-}
-
-
-
-.cliente {
-    border: 1px solid black;
-    padding: 15px;
-
 }
 
 .Costo {
@@ -85,3 +78,36 @@
     margin: 5px;
 }
 
+/* Estilos para Observaciones */
+
+.observacionesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.observacionesLabel {
+    font-weight: bold;
+    color: #333;
+}
+
+.observacionesTextarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    resize: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.observacionesTextarea:focus {
+    border-color: #007bff;
+    outline: none;
+}

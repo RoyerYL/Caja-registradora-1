@@ -30,7 +30,7 @@
 .nomFilas button:hover {
     transform: scale(1.2);
 }
-
+/* 
 .listArticuloEncontrados {
     position: fixed;
     top: 50%;
@@ -45,7 +45,6 @@
 
 .orders {
     display: flex;
-    /* justify-content: space-between; */
     padding: 3px;
 }
 
@@ -106,7 +105,7 @@
 
 .articulos:hover {
     background-color: aqua;
-}
+} */
 
 /* articulosEncontradosC{
     display: flex;
@@ -114,3 +113,77 @@
     gap: 15px;
     background-color: black;
 } */
+
+/* ListaArticulos.module.css */
+
+.listaArticulos {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1200px;
+    max-height: 1200px;
+    background-color: #4b4b4b8a;
+    color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.header label {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.closeButton {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ff5c5c;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 450px;
+    overflow: auto;
+
+}
+
+.productItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.productItem:hover {
+    background-color: #c8f5d0;
+}
+
+.productItem p {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.productItem:last-child {
+    border-bottom: none;
+}

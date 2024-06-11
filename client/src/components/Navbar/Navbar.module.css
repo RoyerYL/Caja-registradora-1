@@ -1,55 +1,35 @@
 /* Navbar.module.css */
 
-.container {
-    background-color: #f8f9fa; /* Color de fondo */
-    padding: 10px; /* Espaciado interno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
-}
-
-.navbar {
+.navContainer {
     display: flex;
-    justify-content: space-between; /* Espacio entre los elementos */
-    align-items: center; /* Alinear elementos verticalmente */
-    margin-bottom: 10px; /* Margen inferior */
+    flex-direction: column;
+    background-color: #444;
+    color: #fff;
 }
 
-.navbar a {
-    text-decoration: none; /* Eliminar subrayado de enlaces */
-}
-
-.navbar button {
-    background-color: #007bff; /* Color de fondo del botón */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interno */
-    margin-right: 10px; /* Margen derecho */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor de mano al pasar por encima */
-    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
-}
-
-.navbar button:hover {
-    background-color: #0056b3; /* Color de fondo al pasar por encima */
-}
-
-.navbar button:disabled {
-    background-color: #d6d6d6; /* Color de fondo para botones deshabilitados */
-    cursor: not-allowed; /* Cursor de no permitido */
-}
-
-.navbar-secondary {
+.navSection {
     display: flex;
-    justify-content: flex-start; /* Alinear elementos a la izquierda */
-    align-items: center; /* Alinear elementos verticalmente */
-    margin-bottom: 10px; /* Margen inferior */
 }
 
-.buttonContainer {
-    display: flex;
-    flex-wrap: wrap; /* Permitir que los botones se envuelvan */
-    gap: 10px; /* Espacio entre botones */
+.navSection a {
+    text-decoration: none;
 }
-.navbarThird{
-    display: flex;
-    overflow-y: auto;
+
+.navSection p {
+    margin: 0;
+    padding: 10px 15px;
+    background-color: #444;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #fff; /* Ensure text color is white */
+}
+
+.navSection p:hover {
+    background-color: #ffffff;
+    color: black;
+}
+
+.navSection p:active {
+    background-color: #8b8b8b;
+    color: black;
 }

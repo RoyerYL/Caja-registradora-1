@@ -1,66 +1,71 @@
 import React, { useEffect, useState } from 'react';
-import style from './Articulo.module.css'
-import { useDispatch } from 'react-redux';
+import style from './Articulo.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { add_art, getAll, get_artLike } from '../../../../redux/action';
-import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 export default function Articulo(props) {
-    const productos = useSelector((state) => state.producto)
-    const { addHandler, collapseClick } = props
-    const { id } = useParams()
+    const productos = useSelector((state) => state.producto);
+    const { addHandler, collapseClick } = props;
+    const { id } = useParams();
     const [Articulo, setArticulo] = useState({
         codBarras: "",
         cantidad: 1,
         page: 0
-    })
+    });
 
-    //reinicia la entrada de datos
+    // Reinicia la entrada de datos
     useEffect(() => {
         setArticulo({
             page: id,
             codBarras: "",
             cantidad: 1
-        })
-    }, [id,productos])
+        });
+    }, [id, productos]);
 
     const addFunction = () => {
-        props.addHandler(Articulo)
-
-    }
+        props.addHandler(Articulo);
+    };
 
     const handleChangue = (event) => {
-        const property = event.target.name
-        const value = event.target.value
-
-        setArticulo({ ...Articulo, [property]: value })
-    }
+        const property = event.target.name;
+        const value = event.target.value;
+        setArticulo({ ...Articulo, [property]: value });
+    };
 
     const handleKeyDown = (event) => {
-        // Verifica si la tecla presionada es 'Enter' (código 13)
         if (event.key === 'Enter') {
             addHandler(Articulo);
         }
     };
 
     return (
-        <div className={style.containerIngresar}>  
+        <div className={style.containerIngresar}>
             <p>Ingrese un articulo</p>
-            <div>
-                <div className="coolinput">
-                    <label htmlFor="input" className="text">Cod Barras:</label>
-                    <input type="text" name="codBarras" onChange={handleChangue} onKeyDown={handleKeyDown} className="input" value={Articulo.codBarras} />
-                </div>
+            <div className={style.coolinput}>
+                <label htmlFor="codBarras" className={style.text}>Cod Barras:</label>
+                <input
+                    type="text"
+                    name="codBarras"
+                    onChange={handleChangue}
+                    onKeyDown={handleKeyDown}
+                    className={style.input}
+                    value={Articulo.codBarras}
+                />
             </div>
-            <div >
-                <div className="coolinput">
-                    <label htmlFor="input" className="text">Cantidad:</label>
-                    <input id='cantidad' onClick={(event) => { event.target.value = "" }} type="text" name='cantidad' onChange={handleChangue} onKeyDown={handleKeyDown} className="input" value={Articulo.cantidad} />
-                </div>
-
+            <div className={style.coolinput}>
+                <label htmlFor="cantidad" className={style.text}>Cantidad:</label>
+                <input
+                    id="cantidad"
+                    type="text"
+                    name="cantidad"
+                    onChange={handleChangue}
+                    onKeyDown={handleKeyDown}
+                    className={style.input}
+                    value={Articulo.cantidad}
+                />
             </div>
-
             <button onKeyDown={handleKeyDown} onClick={addFunction}>Agregar</button>
         </div>
-    )
+    );
 }

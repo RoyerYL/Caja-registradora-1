@@ -68,7 +68,7 @@ export const getAll = () => {
       const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
       dispatch({
         type: 'GET_ALL',
-        payload: data
+        payload: data.items
       })
       
     } catch (error) {

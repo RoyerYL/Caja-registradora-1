@@ -1,62 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import style from './ListaArticulos.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import ArticuloEncontrados from './ArticuloEncontrados';
+import React from 'react';
+import style from './ListaArticulos.module.css';
+import { useDispatch } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import { add_art, order_articulos, resetArtLike } from '../../../../redux/action';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-export default function ListaArticulosEncontrados(props) {
 
-    const { productos, onClose } = props
-    const dispatch = useDispatch()
-    const { pathname } = useLocation();
-    const { id } = useParams()
+export default function ListaArticulosEncontrados(props) {
+    const { productos } = props;
+    const dispatch = useDispatch();
+    const { id } = useParams();
+
     const handleSort = (input) => {
-        dispatch(order_articulos(input))
+        dispatch(order_articulos(input));
     }
+
     const handleClick = (id_) => {
-        dispatch(resetArtLike())
+        dispatch(resetArtLike());
         dispatch(add_art({
             cantidad: document.getElementById('cantidad').value,
             codBarras: id_,
             page: id
-        }))
-
+        }));
     }
+
     const resetEncontrados = () => {
-        dispatch(resetArtLike())
+        dispatch(resetArtLike());
     }
-
 
     return (
-        <div className={style.listArticuloEncontrados}>
-            <div className={style.container}>
-                <div className={style.articulos}>
-                    <label className={style.codBarras} htmlFor="">codBarras</label>
-                    <label className={style.nombre} htmlFor="">nombre</label>
-                    <label className={style.precio} htmlFor="">precio</label>
-                </div>
-                <button className={style.cerrarButton} onClick={resetEncontrados}>X</button>
-                <div className={style.containerLista}>
-
-                    {productos.map((prod, index) => (
-                        <div onClick={() => { handleClick(prod.id) }} className={style.articulos} key={prod.id}>
-                            <p className={style.codBarras}>{prod.id}</p>
-
-                            <p className={style.nombre}>
-                                {prod.name}
-                            </p>
-                            <p className={style.precio}>${prod.precioVenta}
-
-                            </p>
-
-                        </div>
-
-                    ))}
-
-                </div>
+        <div className={style.listaArticulos}>
+            <div className={style.header}>
+                <label>codBarras</label>
+                <label>nombre</label>
+                <label>precio</label>
+                <button onClick={resetEncontrados} className={style.closeButton}>X</button>
+            </div>
+            <div className={style.productList}>
+                {productos.map((prod) => (
+                    <div 
+                        className={style.productItem}
+                        onClick={() => handleClick(prod.id)} 
+                        key={prod.id}
+                    >
+                        <p>{prod.id}</p>
+                        <p>{prod.name}</p>
+                        <p>${prod.precioVenta}</p>
+                    </div>
+                ))}
             </div>
         </div>
-    )
+    );
 }
