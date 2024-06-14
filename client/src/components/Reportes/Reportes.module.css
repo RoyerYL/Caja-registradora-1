@@ -1,73 +1,78 @@
-.reportesButtons {
+/* Reportes.module.css */
+
+.container {
     display: flex;
-    flex-direction: column;
-    gap: 25px;
-    margin: 25px;
-    padding: 25px;
-    border: 1px solid;
-}
-.reportesButtons span{
-    height: 3px;
-    padding: 3px;
-    border:1px solid;
-    box-shadow: 5px 5px 5px black;
-}
-.reportesButtons a{
-    color: black;
-    text-decoration: none;
-}
-.reportesButtons span:hover{
-    background-color: red;
+    height: 100vh;
 }
 
-/**Mas Vendidos**/
-.masVendidos{
-    height: 775px;
-    overflow: scroll;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border: 1px solid;
-    margin: 25px;
-    padding: 3px;
-}
-.masVendidos>div{
-    
-    display: flex;
-    justify-content: space-between;
-}
-.masVendidos>div p{
-    
-    color: black;
-    border: 1px solid;
-}
-.masVendidos> div:hover{
-    background-color: aqua;
-}
-.masVendidos a{
-    text-decoration: none;
-}
-.cantidad{
-    width: 50px;
-}
-/** Ventas x clientes **/
-.VentasXCliente{
-    margin: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.details summary{
-    border: 1px solid;
-    padding: 5px;
-    list-style: none;
-    cursor: pointer;
-}
-summary::before{
-    content: "";
-    
+.sidebar {
+    width: 20%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.details[open] summary{
-    background-color: rgb(153, 151, 151);
+.link {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: #e2e6ea;
+}
+
+.content {
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+}
+/* Reportes.module.css */
+
+.productList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.productCard {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.productCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.productLink {
+    text-decoration: none;
+    color: #333;
+}
+
+.productName {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.productQuantity {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.productPrice {
+    font-size: 16px;
+    color: #007bff;
 }

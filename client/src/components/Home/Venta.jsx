@@ -89,7 +89,7 @@ export default function Navbar() {
         try {
 
             // Buscar el cliente por nombre
-            const responseCliente = await axios(`http://localhost:3001/tienda/clienteLike/${clienteForm.nombre}`);
+            const responseCliente = await axios(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
             const cliente = responseCliente.data[0];
             console.log(costo.descuento);
             // Crear un nuevo ticket
@@ -120,7 +120,7 @@ export default function Navbar() {
                         subTotal: prod.producto.precioVenta * prod.cantidad,
                     });
 
-                    await axios.post("http://localhost:3001/tienda/articuloVendido", {
+                    await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
                         id: prod.producto.id,
                         cantVendidos: prod.cantidad
                     });

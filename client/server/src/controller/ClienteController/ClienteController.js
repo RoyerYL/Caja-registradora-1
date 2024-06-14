@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Cliente } = require("../../DB_connection")
+const { Cliente , Ticket} = require("../../DB_connection")
 
 
 const getClienteLike = async (req, res) => {
@@ -56,32 +56,45 @@ const getCliente = async (req, res) => {
     }
 }
 const getVentasCliente = async (req, res) => {
-    const { id } = req.params
-    try {
+    const { id } = req.params;
+    const { page = 1, limit = 10, order = 'fecha', orderDirection = 'DESC' } = req.query; // obtener página, límite, orden y dirección de la query string
 
-        const cliente = await Cliente.findByPk(id)
-        let allTickets = []
+    try {
+        const cliente = await Cliente.findByPk(id);
+        let allTickets = [];
+        const offset = (page - 1) * limit;
+
         if (Number(id) !== 0) {
             allTickets = await Ticket.findAll({
-                where: { ClienteId: id }
-            })
-
+                where: { ClienteId: id },
+                order: [[order, orderDirection.toUpperCase()]], // ordenar por columna y dirección especificada
+                limit: Number(limit),
+                offset: Number(offset)
+            });
         } else {
             allTickets = await Ticket.findAll({
-                where: { ClienteId: null }
-            })
+                where: { ClienteId: null },
+                order: [[order, orderDirection.toUpperCase()]], // ordenar por columna y dirección especificada
+                limit: Number(limit),
+                offset: Number(offset)
+            });
         }
+
+        const totalTickets = await Ticket.count({ where: { ClienteId: id || null } });
 
         return res.status(201).json({
             cliente: cliente,
-            tickets: allTickets
+            tickets: allTickets,
+            currentPage: Number(page),
+            totalPages: Math.ceil(totalTickets / limit),
+            totalTickets: totalTickets,
         });
 
     } catch (error) {
-        return res.status(500).json({ error: error.message })
-
+        return res.status(500).json({ error: error.message });
     }
-}
+};
+
 
 const postCliente = async (req, res) => {
     const {

@@ -1,4 +1,5 @@
-const { Ticket ,Cliente ,Caja} = require("../../DB_connection")
+const { fn, col } = require("sequelize");
+const {Articulo, Ticket ,Cliente,Categoria ,Vendedor} = require("../../DB_connection")
 
 
 const getTicket = async (req, res) => {
@@ -63,6 +64,63 @@ const getAllTicketsByClient = async (req, res) => {
 
     }
 }
+const getVentasPorCategoria = async (req, res) => {
+    try {
+        const ventas = await Articulo.findAll({
+            attributes: [
+                'CategoriaId',
+                [fn('SUM', col('cantVendidos')), 'totalVentas']
+            ],
+            include: [
+                {
+                    model: Categoria,
+                    attributes: ['nameCategoria'],
+                    as: 'Categorium',
+                }
+            ],
+            group: ['CategoriaId'],
+        });
+
+        return res.status(200).json(ventas);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+const getAllTicketsByVendedor = async (req, res) => {
+    const { id } = req.params;
+    const { page = 1, limit = 10, order = "fecha", orderDirection = "DESC" } = req.query;
+
+    try {
+        const offset = (page - 1) * limit;
+        
+        const allTickets = await Ticket.findAndCountAll({
+            where: { VendedorId: id },
+            order: [[order, orderDirection]],
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+            include: [
+                {
+                    model: Vendedor,
+                    as: 'Vendedor',
+                },
+                {
+                    model: Cliente,
+                    as: 'Cliente',
+                },
+            ],
+        });
+
+        return res.status(201).json({
+            totalTickets: allTickets.count,
+            totalPages: Math.ceil(allTickets.count / limit),
+            currentPage: parseInt(page),
+            tickets: allTickets.rows,
+        });
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
 
 const getAllTickets = async (req, res) => {
 
@@ -110,4 +168,4 @@ const cancelarTicket = async (req, res) => {
 
     }
 }
-module.exports = {cancelarTicket,getAllTickets,getAllTicketsByClient,postTicket,getTicket};
+module.exports = {getVentasPorCategoria,getAllTicketsByVendedor,cancelarTicket,getAllTickets,getAllTicketsByClient,postTicket,getTicket};

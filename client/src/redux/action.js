@@ -22,7 +22,7 @@ export const add_art = (input) => {
       })
     } catch (error) {
       try {
-        const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
+        const {data} = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
       return  dispatch({
           type: ADD_ARTLike,
           payload: data
@@ -45,7 +45,7 @@ export const get_artLike = (input) => {
     try {
       const {  codBarras } = input
 
-      const {data} = await axios.get(`http://localhost:3001/tienda/articuloLike/${codBarras}`)
+      const {data} = await axios.get(`http://localhost:3001/tienda/articulo/articuloLike/${codBarras}`)
       dispatch({
         type: ADD_ARTLike,
         payload: data

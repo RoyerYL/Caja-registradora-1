@@ -1,4 +1,4 @@
-const { where, fn ,Op} = require("sequelize");
+const { where, fn ,Op, col} = require("sequelize");
 const { Articulo, Categoria, Provedor, Cliente, Vendedor } = require("../../DB_connection");
 
 const actualizprecioPorcentaje = async (req, res) => {
