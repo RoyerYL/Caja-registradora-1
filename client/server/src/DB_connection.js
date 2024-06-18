@@ -59,8 +59,8 @@ Ticket.belongsTo(Vendedor,{ foreignKey: 'VendedorId' })
 Ticket.hasMany(Compra)
 Compra.belongsTo(Ticket)
 
-Articulo.hasMany(Compra,{foreignKey:"ArticuloId"})
-Compra.belongsTo(Articulo,{foreignKey:"ArticuloId"})
+// Articulo.hasMany(Compra,{foreignKey:"ArticuloId"})
+// Compra.belongsTo(Articulo,{foreignKey:"ArticuloId"})
 
 Caja.hasMany(Ticket)
 Ticket.belongsTo(Caja)

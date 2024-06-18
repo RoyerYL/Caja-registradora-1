@@ -1,39 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
-import style from './Comprobante.module.css'
-import Cliente from '../Cliente/Cliente';
+import axios from 'axios';
+import style from './Comprobante.module.css';
 import { Link, useLocation, useParams } from 'react-router-dom';
-// const { remote } = window.require('electron');
-// const { BrowserWindow } = remote;
 
 export default function DetailComprobante(props) {
-    const{actualizar,setActualizar}=props
-    const [compras, setAllCompras] = useState([])
-    const { id, desc } = useParams()
-    let location = useLocation
- 
+    const { actualizar, setActualizar } = props;
+    const [compras, setAllCompras] = useState();
+    const { id, desc } = useParams();
+    let location = useLocation();
 
-    let total = 0
+    const [total,setTotal]=useState(5);
     useEffect(() => {
         axios(`http://localhost:3001/tienda/compra/${id}`).then(({ data }) => {
-            setAllCompras(data)
+            console.log(data[0]);
+            setAllCompras(data[0]);
+            const calculateTotal = (compras) => {
+                // if (!compras.articles) return 0;
+                console.log(compras.articles);
+                return compras.articles.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
+            };
+            
+            setTotal(calculateTotal(data[0]))
+        });
+    }, [id, actualizar]);
 
-        })
-    }, [id,actualizar])
+    const cancelarTicket = async () => {
+        await axios.post(`http://localhost:3001/tienda/ticket/cancelarTicket/${id}`);
+        setActualizar(actualizar + 1);
+    };
 
-    const cancelarTicket = async() => {
-        await axios.post(`http://localhost:3001/tienda/cancelarTicket/${id}`)
-        setActualizar(actualizar+1)
-    }
     const imprimirRecibo = () => {
-        window.electronAPI.executeTicketCreate(id)
+        window.electronAPI.executeTicketCreate(id);
+    };
 
-    }
+
     return (
         <>
             <div className={style.DetailComprobante}>
                 <div className={style.header}>
-
                     <p className={style.id}>N°{String(id).padStart(12, '0')}</p>
                     <div>
                         <button onClick={imprimirRecibo}>Imprimir ticket</button>
@@ -43,49 +47,33 @@ export default function DetailComprobante(props) {
                 <div className={style.indice}>
                     <p>Cod Barras</p>
                     <p className={style.nameIndice}>Nombre</p>
-                    <p>subTotal</p>
+                    <p>SubTotal</p>
                     <p>Cantidad</p>
                     <p className={style.totalIndice}>Total</p>
-
                 </div>
                 <div className={style.listaArticulos}>
-                    {
-                        compras.map((prod, index) => {
-                            total += prod.subTotal
-                            return (
-
-                                <Link key={prod.id} to={`/detail/${prod.Articulo.id}`}>
-                                    <div className={`${style.articulos} `} key={prod.id}>
-
-                                        <p className={style.codBarras}>{prod.Articulo.id}</p>
-
-                                        <p className={style.nombre}>{prod.Articulo.name}</p>
-
-                                        <p className={style.precio}>${prod.subTotal / prod.cantidad}</p>
-                                        <p className={style.cantidad}>x{prod.cantidad}</p>
-
-                                        <p className={style.precio}>${prod.subTotal}</p>
-
-                                    </div>
-                                </Link>
-                            )
-                        }
-                        )
-                    }
+                    {compras?.articles && compras.articles.map((prod) => (
+                        <Link key={prod.id} to={`/detail/${prod.producto.id}`}>
+                            <div className={style.articulos} key={prod.id}>
+                                <p className={style.codBarras}>{prod.producto.id}</p>
+                                <p className={style.nombre}>{prod.producto.name}</p>
+                                <p className={style.precio}>${prod.producto.precioVenta}</p>
+                                <p className={style.cantidad}>x{prod.cantidad}</p>
+                                <p className={style.precio}>${prod.cantidad * prod.producto.precioVenta}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
                 <div className={style.total}>
                     <span>SubTotal: ${Number.parseFloat(total).toFixed(2)}</span>
-                    {
-                        desc === 0 ?
-                            <span className={style.descuento}>{`Descuento: ${desc} `}</span>
-                            : <span className={style.descuento}>{`Descuento: ${desc}%`}</span>
-                    }
-                    <span>Total: ${Number.parseFloat(total * ((100 - desc) / 100)).toFixed(2)
-                        || 0}</span>
+                    {desc === 0 ? (
+                        <span className={style.descuento}>{`Descuento: ${desc} `}</span>
+                    ) : (
+                        <span className={style.descuento}>{`Descuento: ${desc}%`}</span>
+                    )}
+                    <span>Total: ${Number.parseFloat(total * ((100 - 0) / 100)).toFixed(2) || 0}</span>
                 </div>
             </div>
         </>
     );
-
 }
-

@@ -110,16 +110,15 @@ export default function Navbar() {
             const ticketId = responseTicket.data.id;
             setTicket(ticketId)
             // Crear compras para cada producto en la lista
+            await axios.post("http://localhost:3001/tienda/compra", {
+                ticketId: ticketId,
+                fecha: new Date(),
+                // cantidad: prod.cantidad,
+                // subTotal: prod.producto.precioVenta * prod.cantidad,
+                articles: productos
+            });
             for (const prod of productos) {
                 try {
-                    await axios.post("http://localhost:3001/tienda/compra", {
-                        ticketId: ticketId,
-                        fecha: new Date(),
-                        cantidad: prod.cantidad,
-                        articuloId: prod.producto.id,
-                        subTotal: prod.producto.precioVenta * prod.cantidad,
-                        articulos: productos
-                    });
 
                     await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
                         id: prod.producto.id,

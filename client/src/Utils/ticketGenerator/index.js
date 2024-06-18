@@ -26,17 +26,19 @@ async function ticketCreate(id) {
     const item = async (codBarras) => {
 
     }
+    const calculateTotal = (compras) => {
+        return compras.articles.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
+    };
     await axios(`http://localhost:3001/tienda/compra/${id}`).then(async ({ data }) => {
-
-        items = await Promise.all(data.map(async (compra) => {
-            const { data } = await axios(`http://localhost:3001/tienda/articulo/${compra.ArticuloId}`)
-            const total = compra.cantidad * data.precioVenta
+        const total = calculateTotal(data[0])            
+        items = await Promise.all(data[0]?.articles.map(async (data) => {
+            
             // return { text: `${data.name} \t ${compra.cantidad} \t 10$`, fontSize: 9, margin: [0, 0, 0, 5] }
             return {
                 
                 stack: [
-                    { text: data.name, fontSize: 8 },
-                    { text: `${compra.cantidad} X ${data.precioVenta}   ${total}`, fontSize: 9 },
+                    { text: data.producto.name, fontSize: 8 },
+                    { text: `${data.cantidad} X ${data.producto.precioVenta}   ${total}`, fontSize: 9 },
                     ],
                 margin: [0, 0, 0, 5],
             };

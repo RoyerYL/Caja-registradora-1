@@ -5,13 +5,13 @@ const getAllCompras = async (req, res) => {
 
     try {
         const allCompras = await Compra.findAll({
-            include: [
-                {
-                    model: Articulo,
-                    attributes: ["id", "name", "stock", "stockMin", "costoPeso", "costoDolar", "iva", "ganancia", "CategoriaId", "ProvedorId", "precioVenta"],
-                    as: "Articulo"
-                }
-            ]
+            // include: [
+            //     {
+            //         model: Articulo,
+            //         attributes: ["id", "name", "stock", "stockMin", "costoPeso", "costoDolar", "iva", "ganancia", "CategoriaId", "ProvedorId", "precioVenta"],
+            //         as: "Articulo"
+            //     }
+            // ]
         })
 
         return res.status(201).json(allCompras);
@@ -43,14 +43,14 @@ const getCompras = async (req, res) => {
                     [Op.eq]: id
                 }
             },
-            include: [
-                {
-                    model: Articulo,
-                    attributes: ["id", "name", "stock", "stockMin", "costoPeso", "costoDolar", "iva", "ganancia", "CategoriaId", "ProvedorId", "precioVenta"],
-                    as: "Articulo"
-                },
+            // include: [
+            //     {
+            //         model: Articulo,
+            //         attributes: ["id", "name", "stock", "stockMin", "costoPeso", "costoDolar", "iva", "ganancia", "CategoriaId", "ProvedorId", "precioVenta"],
+            //         as: "Articulo"
+            //     },
 
-            ]
+            // ]
         })
 
         return res.status(201).json(cliente);
@@ -67,7 +67,8 @@ const postCompra = async (req, res) => {
         fecha,
         ticketId,
         articuloId,
-        subTotal
+        subTotal,
+        articles
     } = req.body;
 
     // if (!cantida || !fecha || !ticketId || !articuloId) {
@@ -76,11 +77,9 @@ const postCompra = async (req, res) => {
 
     try {
         const newCompra = await Compra.create({
-            cantidad,
             fecha,
-            subTotal,
+            articles,
             TicketId: ticketId,
-            ArticuloId: articuloId
 
         })
 

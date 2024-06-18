@@ -1,0 +1,58 @@
+.ticketContainer {
+    width: 226.8px;
+    padding: 10px;
+    border: 1px solid #000;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header, .storeInfo, .itemsHeader, .item, .summary, .footer {
+    margin-bottom: 10px;
+  }
+  
+  .title {
+    font-size: 9px;
+    text-align: left;
+  }
+  
+  .ticketId {
+    font-size: 7px;
+    text-align: left;
+  }
+  
+  .date {
+    font-size: 7px;
+    text-align: left;
+  }
+  
+  .storeInfo p, .itemsHeader p, .item p, .summary p, .footer p {
+    font-size: 8px;
+    margin: 0;
+  }
+  
+  .itemsHeader {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .summary {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+  }
+  
+  .total {
+    font-size: 10px;
+    font-weight: bold;
+  }
+  
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  

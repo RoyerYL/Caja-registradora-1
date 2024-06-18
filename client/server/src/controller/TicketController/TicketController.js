@@ -1,17 +1,24 @@
 const { fn, col } = require("sequelize");
-const {Articulo, Ticket ,Cliente,Categoria ,Vendedor} = require("../../DB_connection")
+const {Articulo,Compra, Ticket ,Cliente,Categoria ,Vendedor} = require("../../DB_connection")
 
 
 const getTicket = async (req, res) => {
-    const {id}=req.params
+    const { id } = req.params;
     try {
-        const ticket=await Ticket.findByPk(id)
+        const ticket = await Ticket.findByPk(id, {
+            include: {
+                model: Compra,
+                as: 'Compras', // Asegúrate de que el alias coincida con el que has definido en tus asociaciones
+            },
+        });
 
-        return res.status(201).json(ticket);
+        if (!ticket) {
+            return res.status(404).json({ error: 'Ticket not found' });
+        }
 
+        return res.status(200).json(ticket);
     } catch (error) {
-        return res.status(500).json({ error: error.message })
-
+        return res.status(500).json({ error: error.message });
     }
 }
 
