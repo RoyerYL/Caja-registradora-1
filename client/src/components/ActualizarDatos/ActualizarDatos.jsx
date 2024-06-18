@@ -5,19 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { articuloActualizar, filterArtLike, getAll, order_articulos } from '../../redux/action';
 
-
 export default function ActualizarDatos() {
-    const dispatch = useDispatch()
-    const articulos = useSelector((state) => state.productoLike)
-    const articulosActualizar = useSelector((state) => state.articulosActualizar)
-    const [categoria, setCategoria] = useState([])
-    const [provedor, setProvedor] = useState([])
-
+    const dispatch = useDispatch();
+    const articulos = useSelector((state) => state.productoLike);
+    const articulosActualizar = useSelector((state) => state.articulosActualizar);
+    const [categoria, setCategoria] = useState([]);
+    const [provedor, setProvedor] = useState([]);
     const [articulosSeleccionados, setArticulosSeleccionados] = useState([]);
-    const [seleccionando, setSeleccionando] = useState(false);
-
-    const [buscador, setBuscador] = useState("")
-    const [order, setOrder] = useState("A")
+    const [buscador, setBuscador] = useState("");
+    const [order, setOrder] = useState("A");
     const [form, setForm] = useState({
         name: "",
         id: "",
@@ -39,233 +35,142 @@ export default function ActualizarDatos() {
         CategoriaId: 0,
         ProvedorId: 1,
         precioEnDolar: false
+    });
 
-    })
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data: provedores } = await axios("http://localhost:3001/tienda/provedor");
+            setProvedor(provedores);
+
+            const { data: categorias } = await axios("http://localhost:3001/tienda/categoria");
+            setCategoria(categorias);
+        };
+
+        fetchData();
+        dispatch(getAll());
+    }, [dispatch]);
 
     const handleToggleSeleccion = (articulo) => {
-        // Verificar si el artículo ya está seleccionado
-        const estaSeleccionado = articulosSeleccionados.includes(articulo);
+        const estaSeleccionado = articulosSeleccionados.some(item => item.id === articulo.id);
         if (estaSeleccionado) {
-            // Si está seleccionado, quitarlo de la lista
             setArticulosSeleccionados(articulosSeleccionados.filter(item => item.id !== articulo.id));
         } else {
-            // Si no está seleccionado, agregarlo a la lista
             setArticulosSeleccionados([...articulosSeleccionados, articulo]);
         }
     };
 
-    useEffect(() => {
-        axios("http://localhost:3001/tienda/provedor").then(({ data }) => {
-
-            setProvedor(data)
-        }
-        )
-        axios("http://localhost:3001/tienda/categoria").then(({ data }) => {
-
-            setCategoria(data)
-        })
-        dispatch(getAll())
-    }, [])
-
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
-        if (property === "precioEnDolar") {
-            setForm({ ...form, [property]: !form.precioEnDolar });//cambio Form..
-            return ""
+
+        if (property === "precioEnDolar" || property === "activo") {
+            setForm({ ...form, [property]: event.target.checked });
+            return;
         }
-        if (property === "activo") {
-            setForm({ ...form, [property]: !form.activo });//cambio Form..
-            return ""
-        }
-        setForm({ ...form, [property]: value });//cambio Form..
-    }
+
+        setForm({ ...form, [property]: value });
+    };
+
     const addArticulosActualizar = () => {
-        dispatch(articuloActualizar(articulosSeleccionados))
-        setArticulosSeleccionados([])
-    }
+        dispatch(articuloActualizar(articulosSeleccionados));
+        setArticulosSeleccionados([]);
+    };
+
     const addArticulosAll = () => {
-        dispatch(articuloActualizar(articulos))
-    }
+        dispatch(articuloActualizar(articulos));
+    };
 
     const actualizar = async (e) => {
+        const nombre = e.target.name;
 
-        const nombre = e.target.name
-        switch (nombre) {
-            case "precioVenta":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizprecio", {
-                        articuloId: prod.id,
-                        nuevoPrecio: form.precioVenta
-
-                    });
-                }
-
-                break;
-            case "precioVentaPorcentaje":
-                console.log("hola");
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizprecioPorcentaje", {
-                        id: prod.id,
-                        porcentajeAumento: form.precioVentaPorcentaje
-
-                    });
-                    console.log(form.precioVentaPorcentaje);
-                    console.log("---------------------");
-                }
-
-                break;
-            case "categoria":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarCategoria", {
-                        articuloId: prod.id,
-                        categoriaId: form.CategoriaId
-
-                    });
-                }
-
-                break;
-            case "provedor":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarProvedor", {
-                        articuloId: prod.id,
-                        provedorId: form.ProvedorId
-
-                    });
-                }
-
-                break;
-            case "costoDolar":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarCostoDolar", {
-                        articuloId: prod.id,
-                        costoDolar: form.costoDolar
-
-                    });
-                }
-
-                break;
-            case "costoDolarPorcentaje":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarPorcentajeDolar", {
-                        id: prod.id,
-                        porcentajeAumento: form.costoDolarPorcentaje
-
-                    });
-                }
-
-                break;
-            case "costoPeso":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarCostoPeso", {
-                        articuloId: prod.id,
-                        costoPeso: form.costoPeso
-
-                    });
-                }
-
-                break;
-            case "costoPesoPorcentaje":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarPorcentajePeso", {
-                        id: prod.id,
-                        porcentajeAumento: form.costoPesoPorcentaje
-
-                    });
-                }
-
-                break;
-            case "ganancia":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarGanancia", {
-                        articuloId: prod.id,
-                        ganancia: form.ganancia
-
-                    });
-                }
-
-                break;
-            case "iva":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarIva", {
-                        articuloId: prod.id,
-                        iva: form.iva
-
-                    });
-                }
-
-                break;
-            case "stock":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarStock", {
-                        articuloId: prod.id,
-                        stock: form.stock
-
-                    });
-                }
-
-                break;
-            case "stockMin":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarStockMin", {
-                        articuloId: prod.id,
-                        stockMin: form.stockMin
-
-                    });
-                }
-
-                break;
-            case "activo":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarActivo", {
-                        articuloId: prod.id,
-                        activo: form.activo
-
-                    });
-                }
-
-                break;
-            case "precioEnDolar":
-                for (const prod of articulosActualizar) {
-                    await axios.post("http://localhost:3001/tienda/actualizarPrecioEnDolares", {
-                        articuloId: prod.id,
-                        precioEnDolar: form.precioEnDolar
-
-                    });
-                }
-
-                break;
-
-            default:
-                break;
+        for (const prod of articulosActualizar) {
+            let payload;
+            switch (nombre) {
+                case "precioVenta":
+                    payload = { articuloId: prod.id, nuevoPrecio: form.precioVenta };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizprecio", payload);
+                    break;
+                case "precioVentaPorcentaje":
+                    payload = { id: prod.id, porcentajeAumento: form.precioVentaPorcentaje };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizprecioPorcentaje", payload);
+                    break;
+                case "categoria":
+                    payload = { articuloId: prod.id, categoriaId: form.CategoriaId };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarCategoria", payload);
+                    break;
+                case "provedor":
+                    payload = { articuloId: prod.id, provedorId: form.ProvedorId };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarProvedor", payload);
+                    break;
+                case "costoDolar":
+                    payload = { articuloId: prod.id, costoDolar: form.costoDolar };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarCostoDolar", payload);
+                    break;
+                case "costoDolarPorcentaje":
+                    payload = { id: prod.id, porcentajeAumento: form.costoDolarPorcentaje };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarPorcentajeDolar", payload);
+                    break;
+                case "costoPeso":
+                    payload = { articuloId: prod.id, costoPeso: form.costoPeso };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarCostoPeso", payload);
+                    break;
+                case "costoPesoPorcentaje":
+                    payload = { id: prod.id, porcentajeAumento: form.costoPesoPorcentaje };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarPorcentajePeso", payload);
+                    break;
+                case "ganancia":
+                    payload = { articuloId: prod.id, ganancia: form.ganancia };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarGanancia", payload);
+                    break;
+                case "iva":
+                    payload = { articuloId: prod.id, iva: form.iva };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarIva", payload);
+                    break;
+                case "stock":
+                    payload = { articuloId: prod.id, stock: form.stock };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarStock", payload);
+                    break;
+                case "stockMin":
+                    payload = { articuloId: prod.id, stockMin: form.stockMin };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarStockMin", payload);
+                    break;
+                case "activo":
+                    payload = { articuloId: prod.id, activo: form.activo };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarActivo", payload);
+                    break;
+                case "precioEnDolar":
+                    payload = { articuloId: prod.id, precioEnDolar: form.precioEnDolar };
+                    await axios.post("http://localhost:3001/tienda/articulo/actualizarPrecioEnDolares", payload);
+                    break;
+                default:
+                    break;
+            }
         }
+    };
 
-
-    }
     const search = (e) => {
-        const value = e.target.value
-        setBuscador(value)
-        dispatch(filterArtLike(e.target.value))
-    }
+        const value = e.target.value;
+        setBuscador(value);
+        dispatch(filterArtLike(value));
+    };
+
     const ordenar = () => {
-        order ? dispatch(order_articulos("A")) : dispatch(order_articulos("D"))
-        setOrder(!order)
-    }
-    return (<>
+        dispatch(order_articulos(order ? "A" : "D"));
+        setOrder(!order);
+    };
+
+    return (
         <div className={style.ActualizarDatos}>
             <div className={style.containerListArticulos}>
                 <div>
-                    <input type="text" name='buscador' placeholder='nombre' value={buscador} onChange={search} />
+                    <input type="text" name="buscador" placeholder="nombre" value={buscador} onChange={search} />
                     <button onClick={ordenar}>{order ? "asc" : "desc"}</button>
-                    <select name="" id="">
-                        {
-                            categoria.map((c,index)=>{
-                                return <option value={c.nameCategoria} onChange={()=>{}}>{c.nameCategoria}</option>
-                            })
-                        }
+                    <select name="categoria" onChange={handleChange}>
+                        {categoria.map((c) => (
+                            <option key={c.id} value={c.id}>{c.nameCategoria}</option>
+                        ))}
                     </select>
                 </div>
-
                 <p>Lista de Artículos</p>
                 <ul>
                     {articulos.map((articulo) => (
@@ -275,133 +180,107 @@ export default function ActualizarDatos() {
                             onClick={() => handleToggleSeleccion(articulo)}
                         >
                             <p className={style.articulo}>{articulo.id} - {articulo.name}</p>
-                            {/* Otros elementos de texto y formatos según tus necesidades */}
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className='flex-2'>
+            <div>
                 <button onClick={addArticulosActualizar}>{`->`}</button>
                 <button onClick={addArticulosAll}>{`Todos`}</button>
             </div>
             <div className={style.containerListArticulos}>
-
                 <p>Lista de Artículos</p>
                 <ul>
                     {articulosActualizar.map((articulo) => (
                         <li
-                            className={`${style.elemento} ${articulosSeleccionados.includes(articulo.id) ? style.seleccionado : ''}`}
+                            className={`${style.elemento} ${articulosSeleccionados.includes(articulo) ? style.seleccionado : ''}`}
                             key={articulo.id}
-
                         >
                             <p className={style.articulo}>{articulo.id} - {articulo.name}</p>
-                            {/* Otros elementos de texto y formatos según tus necesidades */}
                         </li>
                     ))}
                 </ul>
             </div>
             <div className={style.containerForm}>
                 <div>
-                    <span>Provedor:</span>
-                    <select value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
-                        {
-                            provedor.map((prov) => {
-                                return (
-                                    <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
-                                )
-                            })
-                        }
+                    <span>Precio Venta</span>
+                    <input type="text" name="precioVenta" onChange={handleChange} />
+                    <button name="precioVenta" onClick={actualizar}>Actualizar Precio</button>
+                </div>
+                <div>
+                    <span>Precio Venta %</span>
+                    <input type="text" name="precioVentaPorcentaje" onChange={handleChange} />
+                    <button name="precioVentaPorcentaje" onClick={actualizar}>Actualizar</button>
+                </div>
+                <div>
+                    <span>Costo Dolar</span>
+                    <input type="text" name="costoDolar" onChange={handleChange} />
+                    <button name="costoDolar" onClick={actualizar}>Actualizar Costo Dolar</button>
+                </div>
+                <div>
+                    <span>Costo Dolar %</span>
+                    <input type="text" name="costoDolarPorcentaje" onChange={handleChange} />
+                    <button name="costoDolarPorcentaje" onClick={actualizar}>Actualizar Costo Dolar</button>
+                </div>
+                <div>
+                    <span>Costo Peso</span>
+                    <input type="text" name="costoPeso" onChange={handleChange} />
+                    <button name="costoPeso" onClick={actualizar}>Actualizar Costo Peso</button>
+                </div>
+                <div>
+                    <span>Costo Peso %</span>
+                    <input type="text" name="costoPesoPorcentaje" onChange={handleChange} />
+                    <button name="costoPesoPorcentaje" onClick={actualizar}>Actualizar Costo Peso</button>
+                </div>
+                <div>
+                    <span>Stock</span>
+                    <input type="text" name="stock" onChange={handleChange} />
+                    <button name="stock" onClick={actualizar}>Actualizar Stock</button>
+                </div>
+                <div>
+                    <span>Stock Min</span>
+                    <input type="text" name="stockMin" onChange={handleChange} />
+                    <button name="stockMin" onClick={actualizar}>Actualizar Stock Min</button>
+                </div>
+                <div>
+                    <span>Ganancia</span>
+                    <input type="text" name="ganancia" onChange={handleChange} />
+                    <button name="ganancia" onClick={actualizar}>Actualizar Ganancia</button>
+                </div>
+                <div>
+                    <span>Categoria</span>
+                    <select name="CategoriaId" onChange={handleChange}>
+                        {categoria.map((c) => (
+                            <option key={c.id} value={c.id}>{c.nameCategoria}</option>
+                        ))}
                     </select>
-                    <button name='provedor' onClick={actualizar}>actualizar</button>
+                    <button name="categoria" onClick={actualizar}>Actualizar Categoria</button>
                 </div>
                 <div>
-                    <span>Categoria:</span>
-                    <select value={form.CategoriaId} name='CategoriaId' onChange={handleChange}>
-                        {
-                            categoria.map((cate) => {
-                                return (
-                                    <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
-                                )
-                            })
-                        }
+                    <span>Provedor</span>
+                    <select name="ProvedorId" onChange={handleChange}>
+                        {provedor.map((p) => (
+                            <option key={p.id} value={p.id}>{p.nameProvedor}</option>
+                        ))}
                     </select>
-                    <button name='categoria' onClick={actualizar}>actualizar</button>
+                    <button name="provedor" onClick={actualizar}>Actualizar Provedor</button>
                 </div>
                 <div>
-                    <span>stock</span>
-                    <input type="text" name='stock' value={form.stock} onChange={handleChange} />
-                    <button name='stock' onClick={actualizar}>actualizar</button>
+                    <span>Iva</span>
+                    <input type="text" name="iva" onChange={handleChange} />
+                    <button name="iva" onClick={actualizar}>Actualizar Iva</button>
                 </div>
                 <div>
-                    <span>stock min</span>
-                    <input type="text" name='stockMin' value={form.stockMin} onChange={handleChange} />
-                    <button name='stockMin' onClick={actualizar}>actualizar</button>
+                    <span>Activo</span>
+                    <input type="checkbox" name="activo" checked={form.activo} onChange={handleChange} />
+                    <button name="activo" onClick={actualizar}>Actualizar Activo</button>
                 </div>
                 <div>
-                    <span>Cost peso</span>
-                    <input type="text" name='costoPeso' value={form.costoPeso} onChange={handleChange} />
-                    <button name='costoPeso' onClick={actualizar}>actualizar</button>
-
-                    <span>Cost peso %</span>
-                    <input type="text" name='costoPesoPorcentaje' value={form.costoPesoPorcentaje} onChange={handleChange} />
-                    <button name='costoPesoPorcentaje' onClick={actualizar}>actualizar</button>
+                    <span>Precio en Dolar</span>
+                    <input type="checkbox" name="precioEnDolar" checked={form.precioEnDolar} onChange={handleChange} />
+                    <button name="precioEnDolar" onClick={actualizar}>Actualizar Precio en Dolar</button>
                 </div>
-                <div>
-                    <span>Costo dolar</span>
-                    <input type="text" name='costoDolar' value={form.costoDolar} onChange={handleChange} />
-                    <button name='costoDolar' onClick={actualizar}>actualizar</button>
-
-                    <span>Costo dolar %</span>
-                    <input type="text" name='costoDolarPorcentaje' value={form.costoDolarPorcentaje} onChange={handleChange} />
-                    <button name='costoDolarPorcentaje' onClick={actualizar}>actualizar</button>
-                </div>
-                <div>
-                    <span>Precio venta</span>
-                    <input type="text" name='precioVenta' value={form.precioVenta} onChange={handleChange} />
-                    <button name='precioVenta' onClick={actualizar}>actualizar</button>
-
-                    <span>Precio venta %</span>
-                    <input type="text" name='precioVentaPorcentaje' value={form.precioVentaPorcentaje} onChange={handleChange} />
-                    <button name='precioVentaPorcentaje' onClick={actualizar}>actualizar</button>
-                </div>
-                <div>
-                    <span>iva</span>
-                    <input type="text" name='iva' value={form.iva} onChange={handleChange} />
-                    <button name='iva' onClick={actualizar}>actualizar</button>
-                </div>
-                <div>
-                    <span>ganancia</span>
-                    <input type="text" name='ganancia' value={form.ganancia} onChange={handleChange} />
-                    <button name='ganancia' onClick={actualizar}>actualizar</button>
-                </div>
-                <div>
-                    <span>activo</span>
-                    <input type="checkbox" name='activo' checked={form.activo} onChange={handleChange} />
-                    <button name='activo' onClick={actualizar}>actualizar</button>
-                </div>
-                <div className='flex-1'>
-                    <div>
-                        <input type="checkbox" name='precioEnDolar' checked={form.precioEnDolar} onChange={handleChange} />
-                        <label>
-                            Dolar
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="precioEnDolar" checked={!form.precioEnDolar} onChange={handleChange} />
-                        <label>
-                            Peso
-                        </label>
-                    </div>
-                    <button name='precioEnDolar' onClick={actualizar}>actualizar</button>
-                </div>
-
             </div>
-
-            <div>
-
-            </div>
-
         </div>
-    </>
-    )
+    );
 }

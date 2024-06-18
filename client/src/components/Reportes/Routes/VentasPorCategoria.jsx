@@ -20,7 +20,7 @@ export default function VentasPorCategoria() {
             <ul>
                 {ventasPorCategoria.map((categoria) => (
                     <li key={categoria.CategoriaId}>
-                        {categoria.Categorium.nameCategoria
+                        {categoria.Categorium?.nameCategoria
                         }: {categoria.totalVentas} unidades vendidas
                     </li>
                 ))}

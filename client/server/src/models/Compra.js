@@ -18,6 +18,12 @@ module.exports = (sequelize) => {
          type:DataTypes.DATE,
          allowNull:false
       },
+      TicketId:{
+         type:DataTypes.INTEGER
+      }, 
+      articles:{
+         type:DataTypes.JSON
+      },
       ArticuloId:{
          type:DataTypes.STRING,
       },

@@ -118,6 +118,7 @@ export default function Navbar() {
                         cantidad: prod.cantidad,
                         articuloId: prod.producto.id,
                         subTotal: prod.producto.precioVenta * prod.cantidad,
+                        articulos: productos
                     });
 
                     await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {

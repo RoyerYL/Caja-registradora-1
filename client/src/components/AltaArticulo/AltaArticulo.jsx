@@ -133,7 +133,7 @@ function AltaArticulo(props) {
             "CategoriaId": form.CategoriaId || 0,
             "ProvedorId": Number(form.ProvedorId) || 1
         }
-        axios.post("http://localhost:3001/tienda/actualizararticulo", body)
+        axios.post("http://localhost:3001/tienda/articulo/actualizararticulo", body)
             .then((res) => {
                 console.log(res);
             })

@@ -1,43 +1,135 @@
-.ActualizarDatos{
+.ActualizarDatos {
     display: flex;
-    gap: 5px;
-    justify-content: center;
-    margin: 15px;
-    border: 1px solid;
-    box-shadow: 10px 10px 10px black;
-    padding: 5px;
-}
-.containerListArticulos{
-    border: 1px solid black;
-    width: 350px;
-    height: 750px;
-    overflow: overlay;
-}
-.elemento{
-    border:  1px solid black;
-    height: 2em;
-}
-ul{
-    list-style: none;
-    padding: 0px !important;
-}
-.seleccionado{
-    background-color: aqua !important;
-}
-.articulo{
-    font-weight: lighter;
-    font-size: 0.7em;
-    margin: 0px !important;
-    text-align: left !important;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
 }
 
-.containerForm{
+.containerListArticulos {
+    overflow-y: auto;
+    width: 500px;
+    height: 799px;
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.containerListArticulos p {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.containerListArticulos ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.containerListArticulos li {
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.containerListArticulos li:hover {
+    background-color: #f0f0f0;
+}
+
+.elemento {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.seleccionado {
+    background-color: #e0f7fa;
+}
+
+.articulo {
+    flex: 1;
+    text-align: left;
+}
+
+.containerForm {
+    flex: 2;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.containerForm > div {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    margin: 13px;
-    padding-top: 25px;
-}.containerForm div{
-    display: flex;
-    gap: 5px;
+    width: calc(33.333% - 20px);
+    margin-bottom: 10px;
+}
+
+.containerForm > div > span {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.containerForm > div > input[type="text"],
+.containerForm > div > select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.containerForm > div > input[type="checkbox"] {
+    margin-top: 5px;
+}
+
+.containerForm > div > button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.containerForm > div > button:hover {
+    background-color: #0056b3;
+}
+
+.containerListArticulos input[type="text"],
+.containerListArticulos select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.containerListArticulos button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.containerListArticulos button:hover {
+    background-color: #0056b3;
 }
