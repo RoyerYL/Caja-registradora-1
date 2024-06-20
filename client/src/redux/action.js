@@ -1,32 +1,36 @@
+import buildQueryParams from "../Utils/QueryFilterPath";
 import { ADD_ART, ADD_ARTLike, REMOVE_ART } from "./acionTypes"
 import axios from 'axios'
-export const addVenta=()=>{
-  return{
-    type:"ADD_VENTA"
+export const addVenta = () => {
+  return {
+    type: "ADD_VENTA"
   }
 }
 
 export const add_art = (input) => {
   return async (dispatch) => {
-    const { cantidad, codBarras, page } = input
+    const { cantidad, filter, page } = input
     try {
-      const { data } = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
-
-      return dispatch({
-        type: ADD_ART,
-        payload: {
-          cantidad,
-          producto:data,
-          page
-        }
-      })
+      const { data } = await axios.get(`http://localhost:3001/tienda/articulo${buildQueryParams(filter)}`)
+      if (data.totalItems === 0) { console.error("Articulo no encontrado"); }
+      if (data.totalItems > 1) {
+        dispatch({
+          type: 'GET_ALL',
+          payload: data.items
+        })
+      } else {
+        return dispatch({
+          type: ADD_ART,
+          payload: {cantidad ,producto:data.items[0] , page}
+        })
+      }
     } catch (error) {
       try {
-        const {data} = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
-      return  dispatch({
-          type: ADD_ARTLike,
-          payload: data
-        })
+        //   const {data} = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
+        // return  dispatch({
+        //     type: ADD_ARTLike,
+        //     payload: data
+        //   })
 
       } catch (error) {
         // const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
@@ -43,9 +47,9 @@ export const add_art = (input) => {
 export const get_artLike = (input) => {
   return async (dispatch) => {
     try {
-      const {  codBarras } = input
+      const { codBarras } = input
 
-      const {data} = await axios.get(`http://localhost:3001/tienda/articulo/articuloLike/${codBarras}`)
+      const { data } = await axios.get(`http://localhost:3001/tienda/articulo/articuloLike/${codBarras}`)
       dispatch({
         type: ADD_ARTLike,
         payload: data
@@ -57,22 +61,22 @@ export const get_artLike = (input) => {
   }
 
 };
-export const resetArtLike=()=>{
-  return{
-    type:"RESET_ARTLIKE"
+export const resetArtLike = () => {
+  return {
+    type: "RESET_ARTLIKE"
   }
 }
 export const getAll = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
+      const { data } = await axios.get(`http://localhost:3001/tienda/articulo`)
       dispatch({
         type: 'GET_ALL',
         payload: data.items
       })
-      
+
     } catch (error) {
-      
+
     }
 
   }
@@ -130,21 +134,21 @@ export const filterArtLike = (input) => {
 };
 
 export const order_articulos = (order) => {
-  return{
-    type:"ORDER",
-    payload:order
+  return {
+    type: "ORDER",
+    payload: order
   }
 }
 
-export const articuloActualizar=(data)=>{
-  return{
-    type:"ART_ACTUALIZAR",
-    payload:data
+export const articuloActualizar = (data) => {
+  return {
+    type: "ART_ACTUALIZAR",
+    payload: data
   }
 }
-export const articuloActualizarReset=(data)=>{
-  return{
-    type:"ART_ACTUALIZAR_RESET",
-    payload:data
+export const articuloActualizarReset = (data) => {
+  return {
+    type: "ART_ACTUALIZAR_RESET",
+    payload: data
   }
 }

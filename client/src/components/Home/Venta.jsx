@@ -25,181 +25,177 @@ export default function Navbar() {
     const caja = useSelector((state) => state.caja)
     const [ticket, setTicket] = useState()
     const [compraRealizada, setCompraRealizada] = useState(0)
-
-    const [costo, setCosto] = useState({
-        descuento: 0,
-        subTotal: 0.00
-    })
-    useEffect(() => {
-        const cerrar = () => {
-            setCollapse("collapse")
-        }
-
-        document.addEventListener('click', cerrar)
-        return () => {
-            document.removeEventListener('click', cerrar)
-
-        }
-    }, [])
-    const collapseClick = (e) => {
-        e.stopPropagation()
-        collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
-        // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+    const [filters, setFilter] = useState({
+        name: "",
+        id: "",
+        page : 1,
+        pageSize : 50,
+        orderBy : 'id',
+        orderDirection : ''
+})
+const [costo, setCosto] = useState({
+    descuento: 0,
+    subTotal: 0.00
+})
+useEffect(() => {
+    const cerrar = () => {
+        setCollapse("collapse")
     }
 
-    const [clienteForm, setClienteForm] = useState({
-        nombre: "default",
-        contado: true
-    })
-
-    const [productoProp, setProductoProp] = useState([])
-    const [productoLikeProp, setproductoLikeProp] = useState([])
-
-    const { id } = useParams()
-
-    useEffect(() => {
-        setCompraRealizada(1)
-        if (listProductos[id]) {
-            setProductoProp(productos)
-        }
-
-        if (productoLike.data) {
-
-
-            return setproductoLikeProp(productoLike.data)
-        } setproductoLikeProp(productoLike)
-    }, [id, productos, listProductos, productoLike])
-
-    const addHandler = (Articulo) => {
-        const { cantidad, codBarras, page } = Articulo
-        if (!codBarras) {
-            dispatch(getAll())
-            return
-        }
-        dispatch(add_art({
-            cantidad,
-            codBarras,
-            page
-        }))
-
+    document.addEventListener('click', cerrar)
+    return () => {
+        document.removeEventListener('click', cerrar)
 
     }
-    const generarRecibo = async () => {
-        setCompraRealizada(1)
-        try {
+}, [])
+const collapseClick = (e) => {
+    e.stopPropagation()
+    collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+    // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
+}
 
-            // Buscar el cliente por nombre
-            const responseCliente = await axios(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
-            const cliente = responseCliente.data[0];
-            console.log(costo.descuento);
-            // Crear un nuevo ticket
-            const body = {
-                clienteId: cliente.id,
-                valorTotal: costo.subTotal,
-                fecha: new Date(),
-                vendedorId: vendedor,
-                descuento: costo.descuento,
-                cajaId: Number(caja)
-            }
-            console.log(body);
-            if (!clienteForm.contado) {
-                body.cajaId = null
-            }
-            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", body);
+const [clienteForm, setClienteForm] = useState({
+    nombre: "default",
+    contado: true
+})
 
-            const ticketId = responseTicket.data.id;
-            setTicket(ticketId)
-            // Crear compras para cada producto en la lista
-            await axios.post("http://localhost:3001/tienda/compra", {
-                ticketId: ticketId,
-                fecha: new Date(),
-                // cantidad: prod.cantidad,
-                // subTotal: prod.producto.precioVenta * prod.cantidad,
-                articles: productos
-            });
-            for (const prod of productos) {
-                try {
+const [productoProp, setProductoProp] = useState([])
+const [productoLikeProp, setproductoLikeProp] = useState([])
 
-                    await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
-                        id: prod.producto.id,
-                        cantVendidos: prod.cantidad
-                    });
-                } catch (error) {
-                    console.error("Error en el bucle:", error);
-                }
-            }
+const { id } = useParams()
 
-            alert("Compra realizada")
-        } catch (error) {
-            console.error("Error al generar el recibo:", error.message);
-        }
-    };
-
-    const imprimirRecibo = () => {
-        window.electronAPI.executeTicketCreate(ticket)
-
+useEffect(() => {
+    setCompraRealizada(1)
+    if (listProductos[id]) {
+        setProductoProp(productos)
     }
 
-    const openNewWindow = () => {
-        window.electron.openNewWindow({
-            width: 800,
-            height: 600,
-            // Otras configuraciones si es necesario
+    if (productoLike) {
+
+
+        return setproductoLikeProp(productoLike)
+    } setproductoLikeProp(productoLike)
+}, [id, productos, listProductos, productoLike])
+
+const addHandler = (Articulo) => {
+    const { cantidad, codBarras, page } = Articulo
+    // if (!codBarras) {
+    //     dispatch(getAll(filter))
+    //     return
+    // }
+    const filter = {
+        ...filters,
+        id:codBarras
+    }    
+    dispatch(add_art({
+        cantidad,
+        filter,
+        page
+    }))
+
+
+}
+const generarRecibo = async () => {
+    setCompraRealizada(1)
+    try {
+
+        // Buscar el cliente por nombre
+        const responseCliente = await axios(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
+        const cliente = responseCliente.data[0];
+        console.log(costo.descuento);
+        // Crear un nuevo ticket
+        const body = {
+            clienteId: cliente.id,
+            valorTotal: costo.subTotal,
+            fecha: new Date(),
+            vendedorId: vendedor,
+            descuento: costo.descuento,
+            cajaId: Number(caja)
+        }
+        console.log(body);
+        if (!clienteForm.contado) {
+            body.cajaId = null
+        }
+        const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", body);
+
+        const ticketId = responseTicket.data.id;
+        setTicket(ticketId)
+        // Crear compras para cada producto en la lista
+        await axios.post("http://localhost:3001/tienda/compra", {
+            ticketId: ticketId,
+            fecha: new Date(),
+            // cantidad: prod.cantidad,
+            // subTotal: prod.producto.precioVenta * prod.cantidad,
+            articles: productos
         });
-    };
+        for (const prod of productos) {
+            try {
 
-    const closeNewWindow = () => {
-        const openWindows = window.electron.getOpenWindows(); // Asumiendo que hay una función getOpenWindows en el preload.js
-        if (openWindows.length > 0) {
-            window.electron.closeWindow(openWindows[0]); // Cerrar la primera ventana abierta
+                await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
+                    id: prod.producto.id,
+                    cantVendidos: prod.cantidad
+                });
+            } catch (error) {
+                console.error("Error en el bucle:", error);
+            }
         }
-    };
 
-    const handleChange = (event) => {
-        const value = event.target.value
-        const name = event.target.name
-
-        if (name === "contado") {
-            setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
-            return ""
-        }
-        setClienteForm({ ...clienteForm, [name]: value })
+        alert("Compra realizada")
+    } catch (error) {
+        console.error("Error al generar el recibo:", error.message);
     }
+};
 
-    return (
-        <div className={style.Home}>
-            <span>{fecha}</span>
-            <div className={style.registrarCompra}>
-                <div className={style.addArticulo}>
+const imprimirRecibo = () => {
+    window.electronAPI.executeTicketCreate(ticket)
 
-                    <Articulo addHandler={addHandler} collapseClick={collapseClick} />
+}
 
-                    <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
+const handleChange = (event) => {
+    const value = event.target.value
+    const name = event.target.name
 
-                    <Condicion contado={clienteForm.contado} handleChange={handleChange}/>
+    if (name === "contado") {
+        setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
+        return ""
+    }
+    setClienteForm({ ...clienteForm, [name]: value })
+}
 
-                </div>
-                <div className={style.ListArticulo}>
-                    <div>
+return (
+    <div className={style.Home}>
+        <span>{fecha}</span>
+        <div className={style.registrarCompra}>
+            <div className={style.addArticulo}>
 
-                        <ListaArticulos productos={productoProp} />
+                <Articulo addHandler={addHandler} collapseClick={collapseClick} />
 
-                        <div className={style.info}>        
-                            <Costo costo={costo} setCosto={setCosto} />
-                        </div>
+                <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
 
+                <Condicion contado={clienteForm.contado} handleChange={handleChange} />
+
+            </div>
+            <div className={style.ListArticulo}>
+                <div>
+
+                    <ListaArticulos productos={productoProp} />
+
+                    <div className={style.info}>
+                        <Costo costo={costo} setCosto={setCosto} />
                     </div>
-                    <button onClick={generarRecibo}>Generar recibo</button>
 
-                    <button onClick={imprimirRecibo}>Imprimir recibo</button>
                 </div>
+                <button onClick={generarRecibo}>Generar recibo</button>
 
-                {productoLikeProp.length > 0 &&
-                    <ListaArticulosEncontrados productos={productoLikeProp} />}
+                <button onClick={imprimirRecibo}>Imprimir recibo</button>
             </div>
-            <div >
 
-            </div>
+            {productoLikeProp.length > 0 &&
+                <ListaArticulosEncontrados productos={productoLikeProp} handleClick={addHandler} />}
         </div>
-    )
+        <div >
+
+        </div>
+    </div>
+)
 }

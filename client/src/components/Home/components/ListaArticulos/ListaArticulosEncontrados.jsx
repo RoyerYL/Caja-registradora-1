@@ -5,7 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { add_art, order_articulos, resetArtLike } from '../../../../redux/action';
 
 export default function ListaArticulosEncontrados(props) {
-    const { productos } = props;
+    const { productos ,handleClick } = props;
     const dispatch = useDispatch();
     const { id } = useParams();
 
@@ -13,14 +13,14 @@ export default function ListaArticulosEncontrados(props) {
         dispatch(order_articulos(input));
     }
 
-    const handleClick = (id_) => {
-        dispatch(resetArtLike());
-        dispatch(add_art({
-            cantidad: document.getElementById('cantidad').value,
-            codBarras: id_,
-            page: id
-        }));
-    }
+    // const handleClick = (id_) => {
+    //     dispatch(resetArtLike());
+    //     dispatch(add_art({
+    //         cantidad: document.getElementById('cantidad').value,
+    //         codBarras: id_,
+    //         page: id
+    //     }));
+    // }
 
     const resetEncontrados = () => {
         dispatch(resetArtLike());
@@ -38,7 +38,15 @@ export default function ListaArticulosEncontrados(props) {
                 {productos.map((prod) => (
                     <div 
                         className={style.productItem}
-                        onClick={() => handleClick(prod.id)} 
+                        onClick={() => {
+                            dispatch(resetArtLike());   
+                            handleClick({
+                            cantidad:document.getElementById('cantidad').value,
+                            codBarras:prod.id,
+                            page: id
+                        })
+                    
+                    }} 
                         key={prod.id}
                     >
                         <p>{prod.id}</p>

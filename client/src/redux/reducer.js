@@ -31,7 +31,6 @@ export default (state = initialState, { type, payload }) => {
 
     case ADD_ART:
       const { page, cantidad, producto } = payload
-
       const newProductos = [...state.listProductos]
       newProductos[page] = [...newProductos[page], { page, cantidad, producto }]
       return { ...state, listProductos: newProductos, producto: newProductos[page] };
