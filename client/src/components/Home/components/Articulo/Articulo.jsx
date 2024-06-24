@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 
 export default function Articulo(props) {
     const productos = useSelector((state) => state.producto);
-    const { addHandler, collapseClick } = props;
+    const { addHandler } = props;
     const { id } = useParams();
     const [Articulo, setArticulo] = useState({
         codBarras: "",

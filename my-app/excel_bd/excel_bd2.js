@@ -324,7 +324,7 @@ const cargarDatosDesdeExcel = async (rutaExcel) => {
 };
 
 // Ruta al archivo Excel
-const rutaExcel = path.join(__dirname, 'Articulos20240123_1518 - copia.csv');
+const rutaExcel = path.join(__dirname, 'Articulos20240123_1518.csv');
 
 // Sincroniza la base de datos y carga los datos desde el Excel
 sequelize.sync({ alter: false }).then(async () => {

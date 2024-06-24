@@ -14,15 +14,19 @@ import axios from 'axios';
 import getFecha from '../../Utils/getFecha/getFecha';
 
 export default function Navbar() {
-    const [collapse, setCollapse] = useState("collapse")
 
     const fecha = getFecha(new Date())
     const dispatch = useDispatch()
+    
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
     const vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
+    
+    const [productoProp, setProductoProp] = useState([])
+    const [productoLikeProp, setproductoLikeProp] = useState([])
+
     const [ticket, setTicket] = useState()
     const [compraRealizada, setCompraRealizada] = useState(0)
     const [filters, setFilter] = useState({
@@ -37,30 +41,13 @@ const [costo, setCosto] = useState({
     descuento: 0,
     subTotal: 0.00
 })
-useEffect(() => {
-    const cerrar = () => {
-        setCollapse("collapse")
-    }
 
-    document.addEventListener('click', cerrar)
-    return () => {
-        document.removeEventListener('click', cerrar)
-
-    }
-}, [])
-const collapseClick = (e) => {
-    e.stopPropagation()
-    collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
-    // collapse === "collapse" ? setCollapse("collapse.show") : setCollapse("collapse")
-}
 
 const [clienteForm, setClienteForm] = useState({
     nombre: "default",
     contado: true
 })
 
-const [productoProp, setProductoProp] = useState([])
-const [productoLikeProp, setproductoLikeProp] = useState([])
 
 const { id } = useParams()
 
@@ -79,10 +66,6 @@ useEffect(() => {
 
 const addHandler = (Articulo) => {
     const { cantidad, codBarras, page } = Articulo
-    // if (!codBarras) {
-    //     dispatch(getAll(filter))
-    //     return
-    // }
     const filter = {
         ...filters,
         id:codBarras
@@ -164,11 +147,9 @@ const handleChange = (event) => {
 
 return (
     <div className={style.Home}>
-        <span>{fecha}</span>
-        <div className={style.registrarCompra}>
             <div className={style.addArticulo}>
 
-                <Articulo addHandler={addHandler} collapseClick={collapseClick} />
+                <Articulo addHandler={addHandler}/>
 
                 <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
 
@@ -177,6 +158,7 @@ return (
             </div>
             <div className={style.ListArticulo}>
                 <div>
+                <span>{fecha}</span>
 
                     <ListaArticulos productos={productoProp} />
 
@@ -192,10 +174,6 @@ return (
 
             {productoLikeProp.length > 0 &&
                 <ListaArticulosEncontrados productos={productoLikeProp} handleClick={addHandler} />}
-        </div>
-        <div >
-
-        </div>
     </div>
 )
 }
