@@ -14,7 +14,7 @@ const getCotizacion = async (req, res) => {
 }
 const postCotizacion = async (req, res) => {
     const {
-        cotizacionMep,
+        cotizacionMep=0,
         cotizacionBlue
     } = req.body;
 
@@ -36,9 +36,9 @@ const postCotizacion = async (req, res) => {
             return res.status(201).json(newCotizacion);
         }
 
-        const allCategorias = await Cotizacion.findAll()
+        const cotizacion = await Cotizacion.findAll()
 
-        return res.status(201).json(allCategorias);
+        return res.status(201).json(cotizacion);
 
     } catch (error) {
         return res.status(500).json({ error: error.message })

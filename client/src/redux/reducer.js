@@ -7,10 +7,7 @@ const initialState = {
   productoLike: [],
   allProductoLike: [],
   Vendedor: 0,
-  cotizacionDolar: {
-    cotizacionMep: 0.00,
-    cotizacionBlue: 0.00
-  },
+  cotizacionDolar: 0.00,
   articulosActualizar: [],
   caja: 0
 }
@@ -77,6 +74,9 @@ export default (state = initialState, { type, payload }) => {
 
     case "ADD_VENDEDOR":
       return { ...state, Vendedor: payload }
+    case "SET_COTIZACION":
+      console.log(payload);
+      return { ...state, cotizacionDolar: payload }
 
     case "ADD_COTIZACION":
       return { ...state, cotizacionDolar: payload }

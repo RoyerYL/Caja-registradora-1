@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import style from './AltaArticulo.module.css'
+import style from './AltaArticulo.module.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
 function AltaArticulo(props) {
-    const { infoArticulo } = props
-
-    const { id } = useParams()
-    const [categoria, setCategoria] = useState([])
-    const [provedor, setProvedor] = useState([])
+    const { infoArticulo } = props;
+    const { id } = useParams();
+    const cotizacion=useSelector((state) => state.cotizacionDolar)
+    console.log(cotizacion);
+    const [categoria, setCategoria] = useState([]);
+    const [provedor, setProvedor] = useState([]);
     const [form, setForm] = useState({
         name: "",
         id: "",
@@ -26,198 +29,201 @@ function AltaArticulo(props) {
         CategoriaId: 0,
         ProvedorId: 1,
         precioEnDolar: false
-
-    })
-
+    });
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/provedores").then(({ data }) => {
+        const fetchData = async () => {
+            try {
+                const provedorResponse = await axios("http://localhost:3001/tienda/provedores");
+                setProvedor(provedorResponse.data);
+                const categoriaResponse = await axios("http://localhost:3001/tienda/categoria");
+                setCategoria(categoriaResponse.data);
 
-            setProvedor(data)
-        }
-        )
-        axios("http://localhost:3001/tienda/categoria").then(({ data }) => {
-
-            setCategoria(data)
-        }
-        )
-        if (id) {
-
-            axios(`http://localhost:3001/tienda/articulo/${id}`)
-                .then(({ data }) => {
-                    if (data.name) {
+                if (id) {
+                    const articuloResponse = await axios(`http://localhost:3001/tienda/articulo/${id}`);
+                    if (articuloResponse.data.name) {
                         const {
-                            activo,
-                            costoDolar,
-                            costoPeso,
-                            descripcion,
-                            ganancia,
-                            ganancia_2,
-                            id,
-                            img,
-                            iva,
-                            name,
-                            precioVenta,
-                            precioVenta_2,
-                            stock,
-                            stockMin,
-                            CategoriaId,
-                            ProvedorId,
-                            precioEnDolar
-                        } = data
+                            activo, costoDolar, costoPeso, descripcion, ganancia, ganancia_2, id,
+                            img, iva, name, precioVenta, precioVenta_2, stock, stockMin,
+                            CategoriaId, ProvedorId, precioEnDolar
+                        } = articuloResponse.data;
 
-                        // console.log(data);
                         setForm({
-                            activo,
-                            costoDolar: Number.parseFloat(costoDolar).toFixed(2),
-                            costoPeso: Number.parseFloat(costoPeso).toFixed(2),
-                            descripcion: descripcion || "",
-                            ganancia,
-                            ganancia_2: ganancia_2 || 0,
-                            id,
-                            img,
-                            iva,
-                            name,
+                            activo, costoDolar: Number.parseFloat(costoDolar).toFixed(2),
+                            costoPeso: Number.parseFloat(costoPeso).toFixed(2), descripcion: descripcion || "",
+                            ganancia, ganancia_2: ganancia_2 || 0, id, img, iva, name,
                             precioVenta: Number.parseFloat(precioVenta).toFixed(2),
                             precioVenta_2: Number.parseFloat(precioVenta_2).toFixed(2),
-                            stock,
-                            stockMin,
-                            CategoriaId,
-                            ProvedorId,
-                            precioEnDolar
-                        })
+                            stock, stockMin, CategoriaId, ProvedorId, precioEnDolar
+                        });
                     }
-                })
-        }
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
     }, [id]);
 
     const handleChange = (event) => {
         const property = event.target.name;
         const value = event.target.value;
-        console.log(value);
-        if (property === "precioEnDolar") {
-            setForm({ ...form, [property]: !form.precioEnDolar });//cambio Form..
-            return ""
-        }
-        setForm({ ...form, [property]: value });//cambio Form..
-    }
+        setForm(prevForm => ({
+            ...prevForm,
+            [property]: property === "precioEnDolar" ? !prevForm.precioEnDolar : value
+        }));
+    };
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (!(form.id === "" || form.name === "")) {
-            axios.post("http://localhost:3001/tienda/articulo", form)
+            try {
+                await axios.post("http://localhost:3001/tienda/articulo", form);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Artículo creado',
+                    text: 'El artículo ha sido creado exitosamente'
+                });
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al crear el artículo'
+                });
+                console.error('Error creating article:', error);
+            }
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, completa todos los campos requeridos'
+            });
         }
-    }
+    };
 
     const [loading, setLoading] = useState(false);
 
-    const actualizarDato = () => {
-        setLoading(true);
-        const body = {
-            "activo": form.activo,
-            "costoDolar": Number.parseFloat(form.costoDolar),
-            "costoPeso": Number.parseFloat(form.costoPeso),
-            "descripcion": form.descripcion,
-            "ganancia": form.ganancia,
-            "ganancia_2": form.ganancia_2,
+    const actualizarDato = async () => {
+        const confirmResult = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción actualizará los datos del artículo.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, actualizar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'my-popup-class',
+                title: 'my-title-class',
+                icon: 'my-icon-class'
+            }
+        });
 
-            "id": form.id,
-            "img": "",
-            "iva": 21,
-            "name": form.name,
-            "stock": form.stock,
-            "stockMin": form.stockMin,
-
-            "precioVenta": form.precioVenta,
-            "precioVenta_2": form.precioVenta_2,
-
-            "CategoriaId": form.CategoriaId || 0,
-            "ProvedorId": Number(form.ProvedorId) || 1
-        }
-        axios.post("http://localhost:3001/tienda/articulo/actualizararticulo", body)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((error) => {
-                console.error('Error al actualizar el artículo:', error);
-                // Aquí puedes agregar lógica para mostrar un mensaje de error al usuario
-            })
-            .finally(() => {
+        if (confirmResult.isConfirmed) {
+            setLoading(true);
+            const body = {
+                "activo": form.activo,
+                "costoDolar": Number.parseFloat(form.costoDolar),
+                "costoPeso": Number.parseFloat(form.costoPeso),
+                "descripcion": form.descripcion,
+                "ganancia": form.ganancia,
+                "ganancia_2": form.ganancia_2,
+                "id": form.id,
+                "img": "",
+                "iva": 21,
+                "name": form.name,
+                "stock": form.stock,
+                "stockMin": form.stockMin,
+                "precioVenta": form.precioVenta,
+                "precioVenta_2": form.precioVenta_2,
+                "CategoriaId": form.CategoriaId || 0,
+                "ProvedorId": Number(form.ProvedorId) || 1
+            };
+            try {
+                await axios.post("http://localhost:3001/tienda/articulo/actualizararticulo", body);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Artículo actualizado',
+                    text: 'El artículo ha sido actualizado exitosamente',
+                    showConfirmButton: true,
+                    timer: 2000,
+                    customClass: {
+                        popup: 'my-popup-class',
+                        title: 'my-title-class',
+                        icon: 'my-icon-class'
+                    }
+                });
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al actualizar el artículo',
+                    showConfirmButton: true,
+                    timer: 2000,
+                    customClass: {
+                        popup: 'my-popup-class',
+                        title: 'my-title-class',
+                        icon: 'my-icon-class'
+                    }
+                });
+                console.error('Error updating article:', error);
+            } finally {
                 setLoading(false);
-            });
+            }
+        }
     };
 
+    const generarCodBarras = () => {
+        window.electronAPI.executeGeneratorCodBarras(form.id);
+    };
 
-
-    const imprimirRecibo = () => {
-        window.electronAPI.executeGeneratorCodBarras(form.id)
-    }
-
-
-    const calcular=()=>{
-        const{costoDolar,costoPeso,ganancia,iva}=form
-        setForm({ ...form, precioVenta: Number.parseFloat(((100+iva)/100)*((100+ganancia)/100)*costoDolar).toFixed(2) });//cambio Form..
-    }
+    const calcular = () => {
+        const { costoDolar, costoPeso, ganancia, iva } = form;
+        setForm(prevForm => ({
+            ...prevForm,
+            precioVenta: Number.parseFloat((((100 + iva) / 100) * ((100 + ganancia) / 100) * costoDolar)*cotizacion).toFixed(2)
+        }));
+    };
 
     return (
         <div className={style.AltaArticulo}>
             <h2>Alta Articulos</h2>
             <div>
                 <div className={style.containerNombreStock}>
-
                     <div className={style.containerDatos}>
                         <div className={style.containerNombre}>
                             <div>
-
                                 <label>Nombre articulo:</label>
                                 <input value={form.name} name='name' onChange={handleChange} />
                             </div>
                             <div>
-
                                 <label>Codigo de barras (o codigo de articulo):</label>
                                 <input name='id' value={form.id} onChange={handleChange} />
-                                <button onClick={imprimirRecibo}>generar cod. Barras</button>
+                                <button onClick={generarCodBarras}>Generar cod. Barras</button>
                             </div>
-
-                            {/* ****** */}
-                            <div >
+                            <div>
                                 <label>Categoria:</label>
                                 <select value={form.CategoriaId} name='CategoriaId' onChange={handleChange}>
-                                    {
-                                        categoria.map((cate) => {
-                                            return (
-                                                <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
-                                            )
-                                        })
-                                    }
+                                    {categoria.map((cate) => (
+                                        <option key={cate.id} value={cate.id}>{cate.nameCategoria}</option>
+                                    ))}
                                 </select>
                             </div>
-
                             <div>
                                 <label>Fabricante:</label>
                                 <select value={form.ProvedorId} name='ProvedorId' onChange={handleChange}>
-                                    {
-                                        provedor.map((prov) => {
-                                            return (
-                                                <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
-                                            )
-                                        })
-                                    }
+                                    {provedor.map((prov) => (
+                                        <option key={prov.id} value={prov.id}>{prov.razonSocial}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
-                        {/* ****** */}
                         <div className='flex-1'>
                             <div>
                                 <input type="checkbox" name='precioEnDolar' checked={form.precioEnDolar} onChange={handleChange} />
-                                <label>
-                                    Dolar
-                                </label>
+                                <label>Dolar</label>
                             </div>
                             <div>
                                 <input type="checkbox" name="precioEnDolar" checked={!form.precioEnDolar} onChange={handleChange} />
-                                <label>
-                                    Peso
-                                </label>
+                                <label>Peso</label>
                             </div>
                         </div>
                         <div className={style.costo}>
@@ -225,95 +231,47 @@ function AltaArticulo(props) {
                             <div>
                                 <div>
                                     <label>Costo Peso: AR$</label>
-                                    <input name='costoPeso' value={`${form.costoPeso}`} onChange={handleChange} />
+                                    <input name='costoPeso' value={form.costoPeso} onChange={handleChange} />
                                 </div>
                                 <div>
                                     <label>Costo Dolar: US$</label>
-                                    <input name='costoDolar' value={`${form.costoDolar}`} onChange={handleChange} />
+                                    <input name='costoDolar' value={form.costoDolar} onChange={handleChange} />
                                 </div>
                             </div>
                             <div>
-                                <div>
-                                    <label>Iva %</label>
-                                    <input name='iva' value={`${form.iva}`} onChange={handleChange} />
-                                </div>
-                                <div>
-                                    <label>Ganancias %</label>
-                                    <input name='ganancia' value={`${form.ganancia}`} onChange={handleChange} />
-                                </div>
+                                <label>Ganancia %</label>
+                                <input name='ganancia' value={form.ganancia} onChange={handleChange} />
                             </div>
                             <div>
-                                <label>Precio Venta $</label>
-                                <input name='precioVenta' value={`${form.precioVenta}`} onChange={handleChange} />
-                            </div>
-                            <button onClick={calcular}>calcular</button>
-                        </div>
-                        <div className={style.costo}>
-                            <h3>Lista de precios 2</h3>
-                            <div>
-                                <div>
-                                    <label >Costo Peso: AR$</label>
-                                    <input name='costoPeso' value={`${form.costoPeso}`} onChange={handleChange} />
-                                </div>
-                                <div>
-                                    <label >Costo Dolar: US$</label>
-                                    <input name='costoDolar' value={`${form.costoDolar}`} onChange={handleChange} />
-                                </div>
+                                <label>IVA %</label>
+                                <input name='iva' value={form.iva} onChange={handleChange} />
                             </div>
                             <div>
-                                <div>
-                                    <label>Iva %</label>
-                                    <input name='iva' value={` ${form.iva}`} onChange={handleChange} />
-                                </div>
-                                <div>
-                                    <label>Ganancias %</label>
-                                    <input name='ganancia_2' value={` ${form.ganancia_2}`} onChange={handleChange} />
-                                </div>
+                                <label>Precio de venta AR$</label>
+                                <input value={form.precioVenta}  onChange={handleChange} />
+                                <button onClick={calcular}>Calcular</button>
                             </div>
-                            <div className="form-floating mb-3">
-                                <label>Precio Venta $</label>
-                                <input name='precioVenta_2' value={`${form.precioVenta_2}`} onChange={handleChange} />
-                            </div>
-                            <button>calcular</button>
-                        </div>
-                    </div>
-
-                    <div className={style.containerStock}>
-                        <div className={style.stock}>
-                            <div>
-
-                                <div >
-                                    <label>Stock</label>
-                                    <input name='stock' value={`${form.stock}`} onChange={handleChange} />
-                                </div>
-                                <div >
-                                    <label >Stock mínimo</label>
-                                    <input name='stockMin' value={`${form.stockMin}`} onChange={handleChange} />
-                                </div>
-
-                            </div>
-
-
-
-                        </div>
-                        <div className={style.coments}>
-                            <label>Comments</label>
-                            <textarea name='descripcion' value={form.descripcion} onChange={handleChange}></textarea>
                         </div>
                     </div>
                 </div>
-
-
+                <div>
+                    <label>Descripcion:</label>
+                    <textarea name='descripcion' value={form.descripcion} onChange={handleChange} />
+                </div>
             </div>
-
-            <div className={style.botones}>
-
-                <button onClick={actualizarDato}>Actualizar</button>
-                <button onClick={handleClick}>Nuevo</button>
+            <div className={style.containerButton}>
+                <button className='secondary' onClick={() => window.history.back()}>Regresar</button>
+                {id && (
+                    <button className='primary' onClick={actualizarDato} disabled={loading}>
+                        {loading ? 'Actualizando...' : 'Actualizar'}
+                    </button>
+                )}
+                <button className='primary' onClick={handleClick} disabled={loading}>
+                    {loading ? 'Guardando...' : 'Guardar'}
+                </button>
             </div>
         </div>
     );
-
 }
 
 export default AltaArticulo;

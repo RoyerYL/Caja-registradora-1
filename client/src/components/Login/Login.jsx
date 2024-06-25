@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from "./Login.module.css"
 
 import { useDispatch, useSelector } from 'react-redux';
-import { add_cotizacion, add_vendedor, cajaAbierta } from '../../redux/action';
+import { add_cotizacion, add_vendedor, cajaAbierta, postCotizacionGlobal, setCotizacionGlobal } from '../../redux/action';
 import axios from 'axios';
 import Caja from './Caja/Caja';
 export default function Login(props) {
@@ -26,6 +26,10 @@ export default function Login(props) {
         })
         axios("http://localhost:3001/tienda/cotizacion").then(({ data }) => {
             if (data.length > 0) {
+                const {cotizacionBlue}=data[0]
+                console.log(cotizacionBlue);
+
+                setCotizacionGlobal(cotizacionBlue)
 
                 setCotizacion(prevCotizacion => ({
                     ...prevCotizacion,
@@ -46,13 +50,14 @@ export default function Login(props) {
 
     }, [])
 
-    const submitHandler = (event) => {
-        axios.post("http://localhost:3001/tienda/cotizacion", {
-            cotizacionBlue: Cotizacion.cotizacionBlue,
-            cotizacionMep: Cotizacion.cotizacionMep
-        })
+    const submitHandler = async (event) => {
+        // postCotizacionGlobal(Cotizacion.cotizacionBlue)
+        const { data } = await axios.post(`http://localhost:3001/tienda/cotizacion`, { cotizacionBlue: Cotizacion.cotizacionBlue });
+        console.log("Respuesta del servidor:", data);
+        const {cotizacionBlue}=data[0]
 
-        actualizarPrecios()
+        setCotizacionGlobal(cotizacionBlue)
+        // actualizarPrecios()
         event.preventDefault()//evitamos que submit recargue la pagina
     }
 
@@ -80,7 +85,7 @@ export default function Login(props) {
     }
 
     const cierre = () => {
-        axios.post("http://localhost:3001/tienda/cerrarCaja", {
+        axios.post("http://localhost:3001/tienda/caja/cerrarCaja", {
             id: caja,
             precioFinal: Cotizacion.precioFinal,
             fechaCierre: new Date()
@@ -91,7 +96,7 @@ export default function Login(props) {
     }
 
     const actualizarPrecios = () => {
-        axios.post("http://localhost:3001/tienda/calcularPrecioVentaPorDolar")
+        axios.post("http://localhost:3001/tienda/articulo/calcularPrecioVentaPorDolar")
     }
     return (
         <div className={style.login}>
@@ -149,7 +154,7 @@ export default function Login(props) {
 
                 <div>
                     <label>Cotizacion dolar: </label>
-                    <input name='cotizacionMep' value={Cotizacion.cotizacionMep} onClick={(event) => { event.target.value = "" }} onChange={handleChange} />
+                    <input name='cotizacionBlue' value={Cotizacion.cotizacionBlue} onClick={(event) => { event.target.value = "" }} onChange={handleChange} />
                     <label> $</label>
                 </div>
 
