@@ -1,17 +1,16 @@
-const { Compra, Articulo } = require("../../DB_connection")
+const { Compra, Ticket } = require("../../DB_connection")
 const { Op } = require("sequelize");
 
 const getAllCompras = async (req, res) => {
 
     try {
         const allCompras = await Compra.findAll({
-            // include: [
-            //     {
-            //         model: Articulo,
-            //         attributes: ["id", "name", "stock", "stockMin", "costoPeso", "costoDolar", "iva", "ganancia", "CategoriaId", "ProvedorId", "precioVenta"],
-            //         as: "Articulo"
-            //     }
-            // ]
+            include: [
+                {
+                    model: Ticket,
+                    as: "Ticket"
+                }
+            ]
         })
 
         return res.status(201).json(allCompras);
@@ -43,6 +42,12 @@ const getCompras = async (req, res) => {
                     [Op.eq]: id
                 }
             },
+            include: [
+                {
+                    model: Ticket,
+                    as: "Ticket"
+                }
+            ]
             // include: [
             //     {
             //         model: Articulo,

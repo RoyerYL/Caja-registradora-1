@@ -32,7 +32,7 @@ export default function Articulo(props) {
 
     return (
         <tr >
-            <th >{id}</th>
+            <th >{id+1}</th>
             <td className={style.containerProducto}>
                 <Link to={`/detail/${producto.id}`}>
                     {producto.id}
@@ -49,10 +49,10 @@ export default function Articulo(props) {
                     {cantidad}
 
                 </div>
-                <div>
+                <div className={style.buttonsAdd}>
 
-                    <button  onClick={handleClick}>+</button>
-                    <button onClick={handleClickMenos }>-</button>
+                    <p  onClick={handleClick}>▲</p>
+                    <p onClick={handleClickMenos }>▼</p>
                 </div>
 
             </td>
@@ -60,7 +60,7 @@ export default function Articulo(props) {
             <td>$ {producto.precioVenta * cantidad}</td>
             <td >
 
-                <button className={style.cros} onClick={onClose}>X</button>
+                <p className={style.cros} onClick={onClose}>🗑️</p>
 
             </td>
         </tr>

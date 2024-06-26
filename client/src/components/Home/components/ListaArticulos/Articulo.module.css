@@ -1,6 +1,7 @@
 .cantidad {
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .containerProducto {}
@@ -10,7 +11,26 @@
     cursor: pointer;
 }
 .cros{
+    font-size: medium;
+    width: 15px;
 }
 .cros:hover {
-    background-color: red;
+    cursor: pointer;
+    font-size: larger;
+}
+.buttonsAdd{
+    display: flex;
+    flex-direction: column;
+    height: 30px;
+    width: 15px;
+    padding: 0px;
+}
+.buttonsAdd p{
+    padding: 0px;
+    font-size: small;
+    background-color: white;
+}
+.buttonsAdd p:hover{
+    font-size: medium;
+cursor: pointer;
 }

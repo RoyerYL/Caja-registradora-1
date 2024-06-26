@@ -9,7 +9,7 @@ export default function DetailComprobante(props) {
     const { id, desc } = useParams();
     let location = useLocation();
 
-    const [total,setTotal]=useState(5);
+    const [total, setTotal] = useState(5);
     useEffect(() => {
         axios(`http://localhost:3001/tienda/compra/${id}`).then(({ data }) => {
             console.log(data[0]);
@@ -19,7 +19,7 @@ export default function DetailComprobante(props) {
                 console.log(compras.articles);
                 return compras.articles.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
             };
-            
+
             setTotal(calculateTotal(data[0]))
         });
     }, [id, actualizar]);
@@ -52,9 +52,9 @@ export default function DetailComprobante(props) {
                     <p className={style.totalIndice}>Total</p>
                 </div>
                 <div className={style.listaArticulos}>
-                    {compras?.articles && compras.articles.map((prod) => (
-                        <Link key={prod.id} to={`/detail/${prod.producto.id}`}>
-                            <div className={style.articulos} key={prod.id}>
+                    {compras?.articles && compras.articles.map((prod, index) => (
+                        <Link key={index} to={`/detail/${prod.producto.id}`}>
+                            <div className={style.articulos} key={index}>
                                 <p className={style.codBarras}>{prod.producto.id}</p>
                                 <p className={style.nombre}>{prod.producto.name}</p>
                                 <p className={style.precio}>${prod.producto.precioVenta}</p>
@@ -66,11 +66,9 @@ export default function DetailComprobante(props) {
                 </div>
                 <div className={style.total}>
                     <span>SubTotal: ${Number.parseFloat(total).toFixed(2)}</span>
-                    {desc === 0 ? (
-                        <span className={style.descuento}>{`Descuento: ${desc} `}</span>
-                    ) : (
-                        <span className={style.descuento}>{`Descuento: ${desc}%`}</span>
-                    )}
+
+                    <span className={style.descuento}>{`Descuento: ${compras?.Ticket.descuento}%`}</span>
+
                     <span>Total: ${Number.parseFloat(total * ((100 - 0) / 100)).toFixed(2) || 0}</span>
                 </div>
             </div>
