@@ -28,8 +28,9 @@ export default (state = initialState, { type, payload }) => {
 
     case ADD_ART:
       const { page, cantidad, producto } = payload
+      console.log(payload);
       const newProductos = [...state.listProductos]
-      newProductos[page] = [...newProductos[page], { page, cantidad, producto }]
+      newProductos[page] = [...newProductos[page], payload]
       return { ...state, listProductos: newProductos, producto: newProductos[page] };
 
 

@@ -20,6 +20,7 @@ export default function Navbar() {
     
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
+    console.log(listProductos);
     const productoLike = useSelector((state) => state.productoLike)
     const vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
@@ -72,6 +73,7 @@ const addHandler = (Articulo) => {
     }    
     dispatch(add_art({
         cantidad,
+        descuento:costo.descuento,
         filter,
         page
     }))
@@ -173,7 +175,7 @@ return (
             </div>
 
             {productoLikeProp.length > 0 &&
-                <ListaArticulosEncontrados productos={productoLikeProp} handleClick={addHandler} />}
+                <ListaArticulosEncontrados costo={costo} setCosto={setCosto} productos={productoLikeProp} handleClick={addHandler} />}
     </div>
 )
 }

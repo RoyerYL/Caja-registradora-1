@@ -9,7 +9,7 @@ export const addVenta = () => {
 
 export const add_art = (input) => {
   return async (dispatch) => {
-    const { cantidad, filter, page } = input
+    const { cantidad, filter, page,descuento } = input
     try {
       const { data } = await axios.get(`http://localhost:3001/tienda/articulo${buildQueryParams(filter)}`)
       if (data.totalItems === 0) { console.error("Articulo no encontrado"); }
@@ -21,7 +21,7 @@ export const add_art = (input) => {
       } else {
         return dispatch({
           type: ADD_ART,
-          payload: {cantidad ,producto:data.items[0] , page}
+          payload: {cantidad ,producto:data.items[0],descuento , page}
         })
       }
     } catch (error) {
