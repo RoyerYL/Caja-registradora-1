@@ -1,60 +1,64 @@
-/** Comprobante css*/
 .container {
-    position: relative;
     display: flex;
-    justify-content: center;
-    padding: 5px;
-    gap: 15px;
+    width: 100%;
 }
 
-.container a {
-    text-decoration: none;
-}
-
-.Comprobante {
-    background-color: white;
-    box-shadow: 5px 5px 5px black;
-    position: absolute;
-    left: 15px;
-    height: 713px;
+.listContainer {
     width: 25%;
-    border: 1px solid;
-    overflow-y: auto;
-    /* Utiliza 'auto' para permitir que aparezca solo cuando sea necesario */
-    overflow-x: hidden;
-    /* Deshabilita el desplazamiento vertical */
-    white-space: nowrap;
-    padding: 0px 5px 0px 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
 }
 
-.Comprobante span {
-    color: black;
-    font-weight: bold;
+.detailContainer {
+    width: 75%;
+    padding: 10px;
+    box-sizing: border-box;
 }
-
 
 .tickets {
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    width: 100%;
-    z-index: 9999;
-    margin: 5px 0px 5px 0px;
-}
-
-.tickets:hover {
-    transform: scale(1.1);
-}
-
-.cancel {
-    background-color: rgba(245, 65, 65, 0.26);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .success {
-    background-color: rgba(75, 230, 83, 0.24);
+    background-color: #d4edda;
 }
+
+.cancel {
+    background-color: #f8d7da;
+}
+
+.paginationControls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.paginationControls label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginationControls button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.paginationControls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 
 /** Detail Comprobante*/
 .DetailComprobante {

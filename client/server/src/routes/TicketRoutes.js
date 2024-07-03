@@ -9,7 +9,7 @@ const { postTicket,
         getTickets
      } = require('../controller/TicketController/TicketController');
 
-router.get('/:id', getTickets);
+router.get('/', getTickets);
 router.get('/ticketByCategory/', getVentasPorCategoria);
 router.get('/:id', getTicket);
 router.post('/', postTicket);

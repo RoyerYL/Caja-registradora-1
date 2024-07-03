@@ -2,8 +2,7 @@ const { fn, col } = require("sequelize");
 const { Articulo, Compra, Ticket, Cliente, Categoria, Vendedor } = require("../../DB_connection");
 
 const getTickets = async (req, res) => {
-    const {  id } = req.params;
-    const {type , page = 1, limit = 10, order = "fecha", orderDirection = "DESC" } = req.query;
+    const {id,type , page = 1, limit = 10, order = "fecha", orderDirection = "DESC" } = req.query;
 
     try {
         const offset = (page - 1) * limit;

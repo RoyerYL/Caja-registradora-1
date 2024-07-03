@@ -9,7 +9,7 @@ export default function VentasPorCategoria() {
         axios("http://localhost:3001/tienda/ticket/ticketByCategory")
             .then(({ data }) => {
                 console.log(data);
-                setVentasPorCategoria(data);
+                setVentasPorCategoria(data.ventas);
             })
             .catch((error) => console.error("Error fetching ventas por categoria:", error));
     }, []);

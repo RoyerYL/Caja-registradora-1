@@ -17,9 +17,9 @@ export default function Costo(props) {
 
     useEffect(() => {
         let total = 0;
-        producto.map((prod) => {
-            total += (prod.cantidad * prod.producto.precioVenta);
-        });
+        // producto.map((prod) => {
+        //     total += (prod.cantidad * prod.producto.precioVenta);
+        // });
 
         setCosto({ ...costo, subTotal: Number.parseFloat(total).toFixed(2) });
     }, [id, producto]);

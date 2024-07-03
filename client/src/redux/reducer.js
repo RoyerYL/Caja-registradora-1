@@ -1,9 +1,9 @@
 import { ADD_ART, ADD_ARTLike, GET_ART, REMOVE_ART } from "./acionTypes"
 
 const initialState = {
-  listProductos: [[]],
+  listProductos: [],
   ventasRealizadas: [],
-  producto: [],
+  producto: {},
   productoLike: [],
   allProductoLike: [],
   Vendedor: 0,
@@ -16,22 +16,35 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case "CERRARVENTA":
       if (state.ventasRealizadas.includes(payload)) {
-        return { ...state};
+        return { ...state };
       }
-      const newListVentas=[...state.ventasRealizadas,payload]
+      const newListVentas = [...state.ventasRealizadas, payload]
       return { ...state, ventasRealizadas: newListVentas };
-    case "ADD_VENTA":
-      const newList = [...state.listProductos]
-      newList.push([])
 
+    case "ADD_VENTA":
+
+      const newList = [...state.listProductos]
+      newList.push({ productos: [], descuento: 0 })
+      console.log(newList);
       return { ...state, listProductos: newList };
 
     case ADD_ART:
-      const { page, cantidad, producto } = payload
-      console.log(payload);
+
+      const { page, descuento, cantidad, producto } = payload
+      
       const newProductos = [...state.listProductos]
-      newProductos[page] = [...newProductos[page], payload]
-      return { ...state, listProductos: newProductos, producto: newProductos[page] };
+      const productoByPage = newProductos[page]
+      
+      productoByPage.productos.push({producto,cantidad})
+      productoByPage.descuento=descuento
+
+      const aux={...productoByPage}
+      // newProductos[page] = { ...newProductos[page], descuento, productos: listProductos }
+      // console.log(newProductos);
+      console.log(aux);
+      return { ...state,listProductos:newProduct,producto:aux
+        // , listProductos: newProductos, producto: newProductos[page]
+       };
 
 
     case ADD_ARTLike:

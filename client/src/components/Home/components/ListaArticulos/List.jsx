@@ -6,10 +6,10 @@ import Articulo from './Articulo';
 export default function ListaArticulos(props) {
 
     const { producto } = props
-
     return (
         <>
-            {producto.map((prod, id) => {
+        
+            {producto && producto.map((prod, id) => {
                 return (
                     <Articulo key={id} id={id} data={prod} />
                 )

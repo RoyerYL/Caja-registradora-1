@@ -20,7 +20,6 @@ export default function Navbar() {
     
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
-    console.log(listProductos);
     const productoLike = useSelector((state) => state.productoLike)
     const vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
@@ -54,9 +53,9 @@ const { id } = useParams()
 
 useEffect(() => {
     setCompraRealizada(1)
-    if (listProductos[id]) {
-        setProductoProp(productos)
-    }
+    // if (listProductos[id]) {
+    //     setProductoProp(productos.productos)
+    // }
 
     if (productoLike) {
 
@@ -162,7 +161,7 @@ return (
                 <div>
                 <span>{fecha}</span>
 
-                    <ListaArticulos productos={productoProp} />
+                    <ListaArticulos productos={productos.productos} />
 
                     <div className={style.info}>
                         <Costo costo={costo} setCosto={setCosto} />
