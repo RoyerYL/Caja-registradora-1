@@ -1,171 +1,206 @@
 import React, { useEffect, useState } from 'react';
-import style from "./Login.module.css"
-
+import style from "./Login.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { add_cotizacion, add_vendedor, cajaAbierta, postCotizacionGlobal, setCotizacionGlobal } from '../../redux/action';
+import { add_vendedor, cajaAbierta, setCotizacionGlobal } from '../../redux/action';
 import axios from 'axios';
 import Caja from './Caja/Caja';
-export default function Login(props) {
-    const { Cotizacion, setCotizacion } = props
-    const dispatch = useDispatch()
-    const Vendedor = useSelector((state) => state.Vendedor)
-    const caja = useSelector((state) => state.caja)
-    const [cajaAbierta_, setCajaAbierta] = useState(0)
 
-    const [vendedores, setVendedores] = useState([])
+export default function Login(props) {
+    const { Cotizacion, setCotizacion } = props;
+    const dispatch = useDispatch();
+    const Vendedor = useSelector((state) => state.Vendedor);
+    const caja = useSelector((state) => state.caja);
+    const [cajaAbierta_, setCajaAbierta] = useState(0);
+    const [vendedores, setVendedores] = useState([]);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/caja").then(({ data }) => {
-            if (data.length > 0) {
-
-                if (data[0].apertura) {
-                    dispatch(cajaAbierta(data[0].id))
+        const fetchCajaData = async () => {
+            try {
+                const { data } = await axios.get("http://localhost:3001/tienda/caja");
+                if (data.length > 0 && data[0].apertura) {
+                    dispatch(cajaAbierta(data[0].id));
                     setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial, apertura: data[0].apertura }));
                 }
+            } catch (error) {
+                console.error("Error fetching caja data:", error);
             }
-        })
-        axios("http://localhost:3001/tienda/cotizacion").then(({ data }) => {
-            if (data.length > 0) {
-                const {cotizacionBlue}=data[0]
-                console.log(cotizacionBlue);
+        };
 
-                setCotizacionGlobal(cotizacionBlue)
+        const fetchCotizacionData = async () => {
+            try {
+                const { data } = await axios.get("http://localhost:3001/tienda/cotizacion");
+                if (data.length > 0) {
+                    const { cotizacionBlue } = data[0];
+                    console.log(cotizacionBlue);
 
-                setCotizacion(prevCotizacion => ({
-                    ...prevCotizacion,
-                    cotizacionBlue: data[0].cotizacionBlue,
-                    cotizacionMep: data[0].cotizacionMep,
-                }));
+                    dispatch(setCotizacionGlobal(cotizacionBlue));
+
+                    setCotizacion(prevCotizacion => ({
+                        ...prevCotizacion,
+                        cotizacionBlue: data[0].cotizacionBlue,
+                        cotizacionMep: data[0].cotizacionMep,
+                    }));
+                }
+            } catch (error) {
+                console.error("Error fetching cotizacion data:", error);
             }
-        })
-    }, [cajaAbierta_])
+        };
+
+        fetchCajaData();
+        fetchCotizacionData();
+    }, [cajaAbierta_, dispatch, setCotizacion]);
+
     useEffect(() => {
+        const fetchVendedores = async () => {
+            try {
+                const { data } = await axios.get("http://localhost:3001/tienda/vendedor");
+                console.log(data);
+                dispatch(add_vendedor(data[0].id));
+                setVendedores(data);
+            } catch (error) {
+                console.error("Error fetching vendedores data:", error);
+            }
+        };
 
-        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
-            console.log(data);
-            dispatch(add_vendedor(data[0].id))
-            setVendedores(data)
-        })
+        fetchVendedores();
+    }, [dispatch]);
 
-
-    }, [])
+    const validateForm = () => {
+        const newErrors = {};
+        console.log(Cotizacion.apertura, "apertura");
+        if (!Cotizacion.apertura) {
+            if (!Cotizacion.precioInicial || isNaN(Cotizacion.precioInicial)) {
+                newErrors.precioInicial = 'Precio Inicial is required and must be a number.';
+            }
+        }
+        if (Cotizacion.apertura && (!Cotizacion.precioFinal || isNaN(Cotizacion.precioFinal))) {
+            newErrors.precioFinal = 'Precio Final is required and must be a number.';
+        }
+        if (!Cotizacion.cotizacionBlue || isNaN(Cotizacion.cotizacionBlue)) {
+            newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a number.';
+        }
+        setErrors(newErrors);
+        console.log(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const submitHandler = async (event) => {
-        // postCotizacionGlobal(Cotizacion.cotizacionBlue)
-        const { data } = await axios.post(`http://localhost:3001/tienda/cotizacion`, { cotizacionBlue: Cotizacion.cotizacionBlue });
-        console.log("Respuesta del servidor:", data);
-        const {cotizacionBlue}=data[0]
-
-        setCotizacionGlobal(cotizacionBlue)
-        // actualizarPrecios()
-        event.preventDefault()//evitamos que submit recargue la pagina
-    }
+        event.preventDefault(); // Prevent page reload
+        if (!validateForm()) {
+            return;
+        }
+        try {
+            const { data } = await axios.post("http://localhost:3001/tienda/cotizacion", { cotizacionBlue: Cotizacion.cotizacionBlue });
+            console.log("Server response:", data);
+            const { cotizacionBlue } = data[0];
+            dispatch(setCotizacionGlobal(cotizacionBlue));
+        } catch (error) {
+            console.error("Error updating cotizacion:", error);
+        }
+    };
 
     const handleChange = (event) => {
-
-
-
-        const value = event.target.value;
-        const property = event.target.name;
-        if (property === "vendedor") {
-            dispatch(add_vendedor(value))
-            return ""
+        const { name, value } = event.target;
+        if (name === "vendedor") {
+            dispatch(add_vendedor(value));
+        } else {
+            setCotizacion({ ...Cotizacion, [name]: value });
         }
+    };
 
-        setCotizacion({ ...Cotizacion, [property]: value })
-
-    }
-    const apertura = () => {
-        axios.post("http://localhost:3001/tienda/caja", {
-            precioInicial: Cotizacion.precioInicial,
-            fechaApertura: new Date()
-        }).then(() => {
+    const apertura = async () => {
+        if (!validateForm()) {
+            return;
+        }
+        try {
+            await axios.post("http://localhost:3001/tienda/caja", {
+                precioInicial: Cotizacion.precioInicial,
+                fechaApertura: new Date()
+            });
             setCajaAbierta(1);
-        });
-    }
+        } catch (error) {
+            console.error("Error opening caja:", error);
+        }
+    };
 
-    const cierre = () => {
-        axios.post("http://localhost:3001/tienda/caja/cerrarCaja", {
-            id: caja,
-            precioFinal: Cotizacion.precioFinal,
-            fechaCierre: new Date()
-        }).then(() => {
+    const cierre = async () => {
+        if (!validateForm()) {
+            return;
+        }
+        try {
+            await axios.put("http://localhost:3001/tienda/caja", {
+                id: caja,
+                precioFinal: Cotizacion.precioFinal,
+                fechaCierre: new Date()
+            });
             setCajaAbierta(2);
             setCotizacion({ ...Cotizacion, apertura: false });
-        });
-    }
+        } catch (error) {
+            console.error("Error closing caja:", error);
+        }
+    };
 
-    const actualizarPrecios = () => {
-        axios.post("http://localhost:3001/tienda/articulo/calcularPrecioVentaPorDolar")
-    }
+    const actualizarPrecios = async () => {
+        try {
+            await axios.post("http://localhost:3001/tienda/articulo/calcularPrecioVentaPorDolar");
+        } catch (error) {
+            console.error("Error updating precios:", error);
+        }
+    };
+
     return (
         <div className={style.login}>
             <div className={style.cajaApertura}>
-
-                {
-                    Cotizacion.apertura ?
-                        (<>
-                            <span>Caja abierta</span>
-                            <div className={style.precioInicial}>
-
-                                <label>Precio Inicial: </label>
-                                <label >{Number.parseFloat(Cotizacion.precioInicial).toFixed(2) } </label>
-                                <label> $</label>
-                            </div>
-                            <div>
-
-                                <label>Precio Final: </label>
-                                <input name='precioFinal' value={Number.parseFloat(Cotizacion.precioFinal).toFixed(2)} onChange={handleChange} />
-                                <label> $</label>
-                            </div>
-                            <div >
-
-                                <button type='submit' onClick={cierre}> Cerrar caja </button>
-                            </div>
-
-                        </>)
-                        : (<>
-                            <label>Precio Inicial</label>
-                            <input name='precioInicial' value={Number.parseFloat(Cotizacion.precioInicial).toFixed(2)} onChange={handleChange} />
-                            <div >
-
-                                <button type='submit' onClick={apertura}> Apertura </button>
-                            </div>
-
-                        </>)
-                }
+                {Cotizacion.apertura ? (
+                    <>
+                        <span>Caja abierta</span>
+                        <div className={style.precioInicial}>
+                            <label>Precio Inicial: </label>
+                            <label>{Cotizacion.precioInicial}</label>
+                            <label> $</label>
+                        </div>
+                        <div>
+                            <label>Precio Final: </label>
+                            <input name='precioFinal' value={Cotizacion.precioFinal} onChange={handleChange} />
+                            <label> $</label>
+                            {errors.precioFinal && <span className={style.error}>{errors.precioFinal}</span>}
+                        </div>
+                        <div>
+                            <button type='submit' onClick={cierre}>Cerrar caja</button>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <label>Precio Inicial</label>
+                        <input name='precioInicial' value={Cotizacion.precioInicial} onChange={handleChange} />
+                        <div>
+                            <button type='submit' onClick={apertura}>Apertura</button>
+                        </div>
+                        {errors.precioInicial && <span className={style.error}>{errors.precioInicial}</span>}
+                    </>
+                )}
             </div>
             <div className={style.Cotizacion}>
-
                 <div>
-
-                    <label htmlFor="">Vendedor: </label>
+                    <label htmlFor="vendedor">Vendedor: </label>
                     <select id='vendedor' value={Vendedor} name='vendedor' onChange={handleChange}>
-                        {
-                            vendedores.map((vendedor) => {
-                                return (
-                                    <option key={vendedor.id} value={vendedor.id}>{vendedor.vendedor}</option>
-                                )
-                            })
-                        }
+                        {vendedores.map((vendedor) => (
+                            <option key={vendedor.id} value={vendedor.id}>{vendedor.vendedor}</option>
+                        ))}
                     </select>
-
                 </div>
-
                 <div>
                     <label>Cotizacion dolar: </label>
                     <input name='cotizacionBlue' value={Cotizacion.cotizacionBlue} onClick={(event) => { event.target.value = "" }} onChange={handleChange} />
                     <label> $</label>
+                    {errors.cotizacionBlue && <span className={style.error}>{errors.cotizacionBlue}</span>}
                 </div>
-
                 <div className={style.botonCotizacion}>
-
-                    <button onClick={submitHandler}> Actualizar precios </button>
+                    <button onClick={submitHandler}>Actualizar precios</button>
                 </div>
             </div>
-            
             <Caja cajaAbierta={cajaAbierta_} />
         </div>
-    )
-
+    );
 }
