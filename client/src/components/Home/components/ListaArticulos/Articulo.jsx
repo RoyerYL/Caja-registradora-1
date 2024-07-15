@@ -6,7 +6,6 @@ import { modificar_cant, remove_art } from '../../../../redux/action';
 export default function Articulo(props) {
     const page = useParams()
     const { data, id } = props
-    console.log(props);
     const { cantidad, producto } = data
 
     const dispatch = useDispatch()

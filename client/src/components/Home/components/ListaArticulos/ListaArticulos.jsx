@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 
 export default function ListaArticulos(props) {
 
-    const{productos}=props
     
 
     return (
@@ -25,7 +24,7 @@ export default function ListaArticulos(props) {
                     </tr>
                 </thead>
                 <tbody>
-                     <List  producto={productos}/>
+                     <List />
                 </tbody>
 
             </table>

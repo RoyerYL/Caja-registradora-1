@@ -161,7 +161,7 @@ return (
                 <div>
                 <span>{fecha}</span>
 
-                    <ListaArticulos productos={productos.productos} />
+                    <ListaArticulos />
 
                     <div className={style.info}>
                         <Costo costo={costo} setCosto={setCosto} />

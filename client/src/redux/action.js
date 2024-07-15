@@ -25,20 +25,7 @@ export const add_art = (input) => {
         })
       }
     } catch (error) {
-      try {
-        //   const {data} = await axios.get(`http://localhost:3001/tienda/articulo/${codBarras}`)
-        // return  dispatch({
-        //     type: ADD_ARTLike,
-        //     payload: data
-        //   })
-
-      } catch (error) {
-        // const {data} = await axios.get(`http://localhost:3001/tienda/articulo`)
-        // return dispatch({
-        //   type: ADD_ARTLike,
-        //   payload: data
-        // })
-      }
+      
     }
 
   }

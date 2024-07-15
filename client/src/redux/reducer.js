@@ -29,55 +29,66 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, listProductos: newList };
 
     case ADD_ART:
-
       const { page, descuento, cantidad, producto } = payload
-      
-      const newProductos = [...state.listProductos]
-      const productoByPage = newProductos[page]
-      
-      productoByPage.productos.push({producto,cantidad})
-      productoByPage.descuento=descuento
 
-      const aux={...productoByPage}
-      // newProductos[page] = { ...newProductos[page], descuento, productos: listProductos }
-      // console.log(newProductos);
-      console.log(aux);
-      return { ...state,listProductos:newProduct,producto:aux
-        // , listProductos: newProductos, producto: newProductos[page]
-       };
+      // Clonar el array de productos
+      const newProductos = [...state.listProductos]
+
+      // Clonar el producto en la página específica
+      const productoByPage = { ...newProductos[page] }
+
+      // Actualizar el producto y el descuento
+      productoByPage.productos = [...productoByPage.productos, { producto, cantidad }]
+      productoByPage.descuento = descuento
+
+      // Asignar el producto actualizado de nuevo al array de productos
+      newProductos[page] = productoByPage
+
+      // Retornar el nuevo estado con listProductos actualizado y el producto actual
+      return {
+        ...state,
+        listProductos: newProductos,
+        producto: productoByPage
+      }
 
 
     case ADD_ARTLike:
-      return { ...state, allProductoLike: payload, productoLike: payload };
+      return { ...state, productoLike: payload };
 
     case 'GET_ALL':
-      return { ...state, allProductoLike: payload, productoLike: payload };
+      return { ...state, productoLike: payload };
 
     case 'GET_LIST':
       return { ...state, producto: state.listProductos[payload] };
 
     case "RESET_ARTLIKE":
       return { ...state, allProductoLike: [], productoLike: [] }
-    case "MODIFICAR_CANT":
-      const newLista1 = state.producto.map((prod, index) => {
-        if (index === payload.id) {
-          const { page, producto, cantidad } = prod
-          let cantidadTotal = Number(cantidad) + payload.cant
-          if (cantidadTotal === 0) { cantidadTotal = cantidad }
-          return {
-            page,
-            producto,
-            cantidad: cantidadTotal
+      case "MODIFICAR_CANT":
+        const updatedListProductos = [...state.listProductos]
+        const productoByPageMod = { ...updatedListProductos[payload.page.id] }
+        console.log(payload);
+        const updatedProductos = productoByPageMod.productos.map((prod, index) => {
+          if (index === payload.id) {
+            let cantidadTotal = Number(prod.cantidad) + payload.cant;
+            if (cantidadTotal <= 0) {
+              cantidadTotal = prod.cantidad;  // No permitir cantidades negativas
+            }
+            return {
+              ...prod,
+              cantidad: cantidadTotal
+            };
           }
-        }
-        return prod
-      })
-
-      const newProductos3 = [...state.listProductos]
-
-      newProductos3[payload.page.id] = [...newLista1]
-      return { ...state, listProductos: newProductos3, producto: newLista1 };
-
+          return prod;
+        });
+  
+        productoByPageMod.productos = updatedProductos;
+        updatedListProductos[payload.page] = productoByPageMod;
+  
+        return { 
+          ...state, 
+          listProductos: updatedListProductos, 
+          producto: productoByPageMod 
+        };
     case REMOVE_ART:
 
       const newLista = state.producto.filter((prod, index) => index !== payload.id)
