@@ -38,7 +38,7 @@ export default function IngresoMercaderia() {
     });
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/provedor").then(({ data }) => {
+        axios("http://localhost:3001/tienda/provedores").then(({ data }) => {
             setProvedor(data);
         });
         axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {

@@ -70,9 +70,7 @@ export const getAll = () => {
 };
 
 export const setCotizacionGlobal = (cotizacion) => {
-  console.log(cotizacion);
   return async (dispatch) => {
-    console.log("cotizacionGlobal", cotizacion);  
     try {
       dispatch({
         type: 'SET_COTIZACION',
@@ -89,7 +87,6 @@ export const postCotizacionGlobal = (cotizacion) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`http://localhost:3001/tienda/cotizacion`, { cotizacionBlue: cotizacion });
-      console.log("Respuesta del servidor:", data);
       dispatch({
         type: 'SET_COTIZACION',
         payload: data

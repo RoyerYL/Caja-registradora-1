@@ -15,24 +15,12 @@ export default function Login(props) {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        const fetchCajaData = async () => {
-            try {
-                const { data } = await axios.get("http://localhost:3001/tienda/caja");
-                if (data.length > 0 && data[0].apertura) {
-                    dispatch(cajaAbierta(data[0].id));
-                    setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial, apertura: data[0].apertura }));
-                }
-            } catch (error) {
-                console.error("Error fetching caja data:", error);
-            }
-        };
 
         const fetchCotizacionData = async () => {
             try {
                 const { data } = await axios.get("http://localhost:3001/tienda/cotizacion");
                 if (data.length > 0) {
                     const { cotizacionBlue } = data[0];
-                    console.log(cotizacionBlue);
 
                     dispatch(setCotizacionGlobal(cotizacionBlue));
 
@@ -47,7 +35,6 @@ export default function Login(props) {
             }
         };
 
-        fetchCajaData();
         fetchCotizacionData();
     }, [cajaAbierta_, dispatch, setCotizacion]);
 
@@ -55,7 +42,6 @@ export default function Login(props) {
         const fetchVendedores = async () => {
             try {
                 const { data } = await axios.get("http://localhost:3001/tienda/vendedor");
-                console.log(data);
                 dispatch(add_vendedor(data[0].id));
                 setVendedores(data);
             } catch (error) {
@@ -68,7 +54,6 @@ export default function Login(props) {
 
     const validateForm = () => {
         const newErrors = {};
-        console.log(Cotizacion.apertura, "apertura");
         if (!Cotizacion.apertura) {
             if (!Cotizacion.precioInicial || isNaN(Cotizacion.precioInicial)) {
                 newErrors.precioInicial = 'Precio Inicial is required and must be a number.';
@@ -81,7 +66,6 @@ export default function Login(props) {
             newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a number.';
         }
         setErrors(newErrors);
-        console.log(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
@@ -92,7 +76,6 @@ export default function Login(props) {
         }
         try {
             const { data } = await axios.post("http://localhost:3001/tienda/cotizacion", { cotizacionBlue: Cotizacion.cotizacionBlue });
-            console.log("Server response:", data);
             const { cotizacionBlue } = data[0];
             dispatch(setCotizacionGlobal(cotizacionBlue));
         } catch (error) {

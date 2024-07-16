@@ -63,44 +63,58 @@ export default (state = initialState, { type, payload }) => {
 
     case "RESET_ARTLIKE":
       return { ...state, allProductoLike: [], productoLike: [] }
-      case "MODIFICAR_CANT":
-        const updatedListProductos = [...state.listProductos]
-        const productoByPageMod = { ...updatedListProductos[payload.page.id] }
-        console.log(payload);
-        const updatedProductos = productoByPageMod.productos.map((prod, index) => {
-          if (index === payload.id) {
-            let cantidadTotal = Number(prod.cantidad) + payload.cant;
-            if (cantidadTotal <= 0) {
-              cantidadTotal = prod.cantidad;  // No permitir cantidades negativas
-            }
-            return {
-              ...prod,
-              cantidad: cantidadTotal
-            };
+
+    case "MODIFICAR_CANT":
+      const updatedListProductos = [...state.listProductos]
+      const productoByPageMod = { ...updatedListProductos[payload.page.id] }
+
+      const updatedProductos = productoByPageMod.productos.map((prod, index) => {
+        if (index === payload.id) {
+          let cantidadTotal = Number(prod.cantidad) + Number(payload.cant);
+          if (cantidadTotal <= 0) {
+            cantidadTotal = prod.cantidad;  // No permitir cantidades negativas
           }
-          return prod;
-        });
-  
-        productoByPageMod.productos = updatedProductos;
-        updatedListProductos[payload.page] = productoByPageMod;
-  
-        return { 
-          ...state, 
-          listProductos: updatedListProductos, 
-          producto: productoByPageMod 
-        };
+          return {
+            ...prod,
+            cantidad: cantidadTotal
+          };
+        }
+        return prod;
+      });
+
+      productoByPageMod.productos = updatedProductos;
+      updatedListProductos[payload.page.id] = productoByPageMod;
+
+      return {
+        ...state,
+        listProductos: updatedListProductos,
+        producto: { ...productoByPageMod }
+      };
     case REMOVE_ART:
+      // Clonar el array de productos
+      const updatedListProductosForRemove = [...state.listProductos];
 
-      const newLista = state.producto.filter((prod, index) => index !== payload.id)
+      // Clonar el producto en la página específica
+      const productoByPageForRemove = { ...updatedListProductosForRemove[payload.page] };
 
-      const newProductos2 = [...state.listProductos]
-      newProductos2[payload.page] = [...newLista]
-      return { ...state, listProductos: newProductos2, producto: newLista };
+      // Filtrar el producto específico
+      const updatedProductosForRemove = productoByPageForRemove.productos.filter((prod, index) => index !== payload.id);
+
+      // Actualizar la lista de productos de la página
+      productoByPageForRemove.productos = updatedProductosForRemove;
+
+      // Asignar el producto actualizado de nuevo al array de productos
+      updatedListProductosForRemove[payload.page] = productoByPageForRemove;
+
+      return {
+        ...state,
+        listProductos: updatedListProductosForRemove,
+        producto: productoByPageForRemove
+      };
 
     case "ADD_VENDEDOR":
       return { ...state, Vendedor: payload }
     case "SET_COTIZACION":
-      console.log(payload);
       return { ...state, cotizacionDolar: payload }
 
     case "ADD_COTIZACION":

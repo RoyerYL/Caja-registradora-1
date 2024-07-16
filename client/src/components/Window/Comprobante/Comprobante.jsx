@@ -22,6 +22,7 @@ function Comprobante() {
             const { data } = await axios.get(`http://localhost:3001/tienda/ticket`, {
                 params: { page, limit, order, orderDirection }
             });
+            console.log(data);
             setComprobantes(data.tickets);
         } catch (error) {
             console.error("Error fetching tickets:", error);

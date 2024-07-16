@@ -8,7 +8,6 @@ export default function ListaArticulos(props) {
     const productos = useSelector((state) => state.producto)
     const [prod,setProd]=useState([])
     useEffect(()=>{
-        console.log("actualizado");
         setProd(productos.productos)
     },[productos])
     return (

@@ -17,13 +17,13 @@ export default function Navbar() {
 
     const fecha = getFecha(new Date())
     const dispatch = useDispatch()
-    
+
     const productos = useSelector((state) => state.producto)
     const listProductos = useSelector((state) => state.listProductos)
     const productoLike = useSelector((state) => state.productoLike)
     const vendedor = useSelector((state) => state.Vendedor)
     const caja = useSelector((state) => state.caja)
-    
+
     const [productoProp, setProductoProp] = useState([])
     const [productoLikeProp, setproductoLikeProp] = useState([])
 
@@ -32,125 +32,125 @@ export default function Navbar() {
     const [filters, setFilter] = useState({
         name: "",
         id: "",
-        page : 1,
-        pageSize : 50,
-        orderBy : 'id',
-        orderDirection : ''
-})
-const [costo, setCosto] = useState({
-    descuento: 0,
-    subTotal: 0.00
-})
+        page: 1,
+        pageSize: 50,
+        orderBy: 'id',
+        orderDirection: ''
+    })
+    const [costo, setCosto] = useState({
+        descuento: 0,
+        subTotal: 0.00
+    })
 
 
-const [clienteForm, setClienteForm] = useState({
-    nombre: "default",
-    contado: true
-})
+    const [clienteForm, setClienteForm] = useState({
+        nombre: "default",
+        contado: true
+    })
 
 
-const { id } = useParams()
+    const { id } = useParams()
 
-useEffect(() => {
-    setCompraRealizada(1)
-    // if (listProductos[id]) {
-    //     setProductoProp(productos.productos)
-    // }
+    useEffect(() => {
+        setCompraRealizada(1)
+        // if (listProductos[id]) {
+        //     setProductoProp(productos.productos)
+        // }
 
-    if (productoLike) {
-
-
-        return setproductoLikeProp(productoLike)
-    } setproductoLikeProp(productoLike)
-}, [id, productos, listProductos, productoLike])
-
-const addHandler = (Articulo) => {
-    const { cantidad, codBarras, page } = Articulo
-    const filter = {
-        ...filters,
-        id:codBarras
-    }    
-    dispatch(add_art({
-        cantidad,
-        descuento:costo.descuento,
-        filter,
-        page
-    }))
+        if (productoLike) {
 
 
-}
-const generarRecibo = async () => {
-    setCompraRealizada(1)
-    try {
+            return setproductoLikeProp(productoLike)
+        } setproductoLikeProp(productoLike)
+    }, [id, productos, listProductos, productoLike])
 
-        // Buscar el cliente por nombre
-        const responseCliente = await axios(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
-        const cliente = responseCliente.data[0];
-        console.log(costo.descuento);
-        // Crear un nuevo ticket
-        const body = {
-            clienteId: cliente.id,
-            valorTotal: costo.subTotal,
-            fecha: new Date(),
-            vendedorId: vendedor,
+    const addHandler = (Articulo) => {
+        const { cantidad, codBarras, page } = Articulo
+        const filter = {
+            ...filters,
+            id: codBarras
+        }
+        dispatch(add_art({
+            cantidad,
             descuento: costo.descuento,
-            cajaId: Number(caja)
-        }
-        console.log(body);
-        if (!clienteForm.contado) {
-            body.cajaId = null
-        }
-        const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", body);
+            filter,
+            page
+        }))
 
-        const ticketId = responseTicket.data.id;
-        setTicket(ticketId)
-        // Crear compras para cada producto en la lista
-        await axios.post("http://localhost:3001/tienda/compra", {
-            ticketId: ticketId,
-            fecha: new Date(),
-            // cantidad: prod.cantidad,
-            // subTotal: prod.producto.precioVenta * prod.cantidad,
-            articles: productos
-        });
-        for (const prod of productos) {
-            try {
 
-                await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
-                    id: prod.producto.id,
-                    cantVendidos: prod.cantidad
-                });
-            } catch (error) {
-                console.error("Error en el bucle:", error);
+    }
+    const generarRecibo = async () => {
+        setCompraRealizada(1)
+        try {
+
+            // Buscar el cliente por nombre
+            const responseCliente = await axios(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
+            const cliente = responseCliente.data[0];
+            console.log(costo.descuento);
+            // Crear un nuevo ticket
+            const body = {
+                clienteId: cliente.id,
+                valorTotal: costo.subTotal,
+                fecha: new Date(),
+                vendedorId: vendedor,
+                descuento: costo.descuento,
+                cajaId: Number(caja)
             }
+            console.log(body);
+            if (!clienteForm.contado) {
+                body.cajaId = null
+            }
+            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", body);
+
+            const ticketId = responseTicket.data.id;
+            setTicket(ticketId)
+            // Crear compras para cada producto en la lista
+            await axios.post("http://localhost:3001/tienda/compra", {
+                ticketId: ticketId,
+                fecha: new Date(),
+                // cantidad: prod.cantidad,
+                // subTotal: prod.producto.precioVenta * prod.cantidad,
+                articles: productos
+            });
+            for (const prod of productos.productos) {
+                try {
+
+                    await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
+                        id: prod.producto.id,
+                        cantVendidos: prod.cantidad
+                    });
+                } catch (error) {
+                    console.error("Error en el bucle:", error);
+                }
+            }
+
+            alert("Compra realizada")
+        } catch (error) {
+            console.error("Error al generar el recibo:", error.message);
         }
+    };
 
-        alert("Compra realizada")
-    } catch (error) {
-        console.error("Error al generar el recibo:", error.message);
+    const imprimirRecibo = () => {
+        window.electronAPI.executeTicketCreate(ticket)
+
     }
-};
 
-const imprimirRecibo = () => {
-    window.electronAPI.executeTicketCreate(ticket)
+    const handleChange = (event) => {
+        const value = event.target.value
+        const name = event.target.name
 
-}
-
-const handleChange = (event) => {
-    const value = event.target.value
-    const name = event.target.name
-
-    if (name === "contado") {
-        setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
-        return ""
+        if (name === "contado") {
+            setClienteForm({ ...clienteForm, [name]: !clienteForm.contado });//cambio Form..
+            return ""
+        }
+        setClienteForm({ ...clienteForm, [name]: value })
     }
-    setClienteForm({ ...clienteForm, [name]: value })
-}
 
-return (
-    <div className={style.Home}>
+    return (
+        <div className={style.Home}>
             <div className={style.addArticulo}>
 
-                <Articulo addHandler={addHandler}/>
+                <Articulo addHandler={addHandler} />
 
                 <Cliente clienteForm={clienteForm} handleChange={handleChange} setClienteForm={setClienteForm} ClienteForm={clienteForm} />
 
@@ -159,7 +159,7 @@ return (
             </div>
             <div className={style.ListArticulo}>
                 <div>
-                <span>{fecha}</span>
+                    <span>{fecha}</span>
 
                     <ListaArticulos />
 
@@ -175,6 +175,6 @@ return (
 
             {productoLikeProp.length > 0 &&
                 <ListaArticulosEncontrados costo={costo} setCosto={setCosto} productos={productoLikeProp} handleClick={addHandler} />}
-    </div>
-)
+        </div>
+    )
 }

@@ -12,15 +12,14 @@ export default function DetailComprobante(props) {
     const [total, setTotal] = useState(5);
     useEffect(() => {
         axios(`http://localhost:3001/tienda/compra/${id}`).then(({ data }) => {
-            console.log(data[0]);
             setAllCompras(data[0]);
             const calculateTotal = (compras) => {
                 // if (!compras.articles) return 0;
-                console.log(compras.articles);
-                return compras.articles.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
+                return compras.articles.productos.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
             };
-
-            setTotal(calculateTotal(data[0]))
+            // console.log();
+            console.log( data[0].articles.descuento);
+            setTotal(calculateTotal(data[0])*((100 - data[0].articles.descuento) / 100))
         });
     }, [id, actualizar]);
 
@@ -52,7 +51,7 @@ export default function DetailComprobante(props) {
                     <p className={style.totalIndice}>Total</p>
                 </div>
                 <div className={style.listaArticulos}>
-                    {compras?.articles && compras.articles.map((prod, index) => (
+                    {compras?.articles && compras?.articles.productos.map((prod, index) => (
                         <Link key={index} to={`/detail/${prod.producto.id}`}>
                             <div className={style.articulos} key={index}>
                                 <p className={style.codBarras}>{prod.producto.id}</p>
