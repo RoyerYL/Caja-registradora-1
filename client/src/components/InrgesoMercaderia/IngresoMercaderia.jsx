@@ -46,25 +46,6 @@ export default function IngresoMercaderia() {
         });
     }, []);
 
-    const order = () => {
-        const newList = [...allProductosAux].sort((a, b) => a.id.toString().localeCompare(b.id.toString()));
-        setAllProductos(newList);
-    };
-
-    const order_1 = () => {
-        const newList = [...allProductosAux].sort((a, b) => a.name.toString().localeCompare(b.name.toString()));
-        setAllProductos(newList);
-    };
-
-    const order_2 = () => {
-        const newList = [...allProductosAux].sort((a, b) => a.precioVenta - b.precioVenta);
-        setAllProductos(newList);
-    };
-
-    const order_3 = () => {
-        const newList = [...allProductosAux].sort((a, b) => a.stock - b.stock);
-        setAllProductos(newList);
-    };
 
     const filter = (e) => {
         const value = e.target.value;
@@ -235,20 +216,15 @@ export default function IngresoMercaderia() {
             <div className={style.rightContainer}>
                 <div className={style.selectedList}>
                     <div className={style.header}>
-                        <p>Producto</p>
+                        <p >Producto</p>
                         <p>Cantidad</p>
                         <p>Precio</p>
                     </div>
                     {productosSeleccionados.map((prod, index) => (
                         <div className={style.selectedItem} key={prod.id}>
-                            <p>{prod.name}</p>
+                            <p className={style.headerProducto}>{prod.name}</p>
                             <div className={style.quantityControls}>
                                 <input type="number" value={prod.stock} onChange={(e) => addCantidad(index, e)} name='input' />
-                                <div>
-
-                                    <button className={style.button} onClick={(e) => addCantidad(index, e, 1)}>+</button>
-                                    <button className={style.button} onClick={(e) => addCantidad(index, e, -1)}>-</button>
-                                </div>
                             </div>
                             <p>${prod.precioVenta}</p>
                         </div>

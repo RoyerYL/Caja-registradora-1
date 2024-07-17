@@ -3,6 +3,10 @@
     padding: 10px;
     border: 1px solid #000;
     font-family: Arial, sans-serif;
+    transform: scale(2.0);
+    position: absolute;
+    top: 25%;
+    left: 25%;
   }
   
   .header, .storeInfo, .itemsHeader, .item, .summary, .footer {

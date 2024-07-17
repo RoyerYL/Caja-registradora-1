@@ -1,7 +1,8 @@
-import { ADD_ART, ADD_ARTLike, GET_ART, REMOVE_ART } from "./acionTypes"
+import { ADD_ART, ADD_ARTLike, ADD_BUTTON, GET_ART, REMOVE_ART, REMOVE_BUTTON } from "./acionTypes"
 
 const initialState = {
   listProductos: [],
+  listLength:0,
   ventasRealizadas: [],
   producto: {},
   productoLike: [],
@@ -9,24 +10,34 @@ const initialState = {
   Vendedor: 0,
   cotizacionDolar: 0.00,
   articulosActualizar: [],
-  caja: 0
+  caja: 0,
+  buttons: [],
 }
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case ADD_BUTTON:
+      return {
+          ...state,
+          buttons: [...state.buttons, payload],
+      };
+  case REMOVE_BUTTON:
+      return {
+          ...state,
+          buttons: state.buttons.filter(button => button.id !== payload),
+      };
     case "CERRARVENTA":
       if (state.ventasRealizadas.includes(payload)) {
         return { ...state };
       }
       const newListVentas = [...state.ventasRealizadas, payload]
-      return { ...state, ventasRealizadas: newListVentas };
+      return { ...state, ventasRealizadas: newListVentas,listLength:newListVentas.length };
 
     case "ADD_VENTA":
 
       const newList = [...state.listProductos]
       newList.push({ productos: [], descuento: 0 })
-      console.log(newList);
-      return { ...state, listProductos: newList };
+      return { ...state, listProductos: newList ,listLength: newList.length};
 
     case ADD_ART:
       const { page, descuento, cantidad, producto } = payload

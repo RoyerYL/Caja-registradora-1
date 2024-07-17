@@ -24,7 +24,6 @@ const createWindow = () => {
     console.log('Cargando desde servidor de desarrollo Vite');
   } else {
     const filePath = path.join(__dirname, '../renderer', MAIN_WINDOW_VITE_NAME, 'index.html');
-    console.log('Cargando desde archivo:', filePath);
     mainWindow.loadFile(filePath);
   }
 
@@ -70,10 +69,9 @@ const createWindow = () => {
 
 };
 
-ipcMain.on("executeTicketCreate", (event, id) => {
+ipcMain.on("executeTicketCreate", (event, id , store) => {
   // Ejecutar la función ticketCreate
-  console.log(id);
-  ticketCreate(id);
+  ticketCreate(id,store);
 
   // Enviar el resultado de vuelta al proceso de renderizado
   event.reply('ticketCreateResult', 'Ticket creado con éxito');

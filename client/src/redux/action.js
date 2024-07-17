@@ -1,6 +1,17 @@
 import buildQueryParams from "../Utils/QueryFilterPath";
-import { ADD_ART, ADD_ARTLike, REMOVE_ART } from "./acionTypes"
+import { ADD_ART, ADD_ARTLike, REMOVE_ART,ADD_BUTTON ,REMOVE_BUTTON} from "./acionTypes"
 import axios from 'axios'
+
+
+export const addButton = (button) => ({
+    type: ADD_BUTTON,
+    payload: button,
+});
+
+export const removeButton = (id) => ({
+    type: REMOVE_BUTTON,
+    payload: id,
+});
 export const addVenta = () => {
   return {
     type: "ADD_VENTA"

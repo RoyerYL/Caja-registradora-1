@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
-import { useDispatch } from 'react-redux';
-import { addVenta, cerrarVenta, get_list } from '../../redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { addButton, addVenta, cerrarVenta, get_list, removeButton } from '../../redux/action';
 import styles from './Navbar.module.css';
 import Swal from 'sweetalert2';
-import { FaBeer, FaCoffee } from 'react-icons/fa';
-import { FaHome } from 'react-icons/fa';
-import { MdHome } from 'react-icons/md';
 import { FiHome } from 'react-icons/fi';
-import { IoHome } from 'react-icons/io5';
+
 export default function Navbar(props) {
     const { Cotizacion } = props;
     const [id_, setID] = useState(0);
     const dispatch = useDispatch();
-    const [button, setButton] = useState([]);
+    const ventas = useSelector((state) => state.listLength);
+    const buttons = useSelector((state) => state.buttons);
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const handleClick = () => {
         dispatch(addVenta());
         if (Cotizacion.apertura) {
-            setButton([...button, { id: id_ }]);
+            const newButton = { id: id_ };
+            dispatch(addButton(newButton));
             setID(id_ + 1);
             dispatch(get_list(id_));
         }
     };
 
     const onClose = (idFilter) => {
-        const newButtons = button.filter((b) => b.id !== idFilter);
-        setButton(newButtons);
+        dispatch(removeButton(idFilter));
     };
 
     const handleLinkClick = (to) => {
@@ -43,49 +42,37 @@ export default function Navbar(props) {
         }
     };
 
-    const cerar = (id) => {
+    const cerrar = (id) => {
         dispatch(cerrarVenta(id));
     };
 
+    const isVentanaPath = pathname.startsWith('/ventana/') || pathname === "/HomePage";
+
     return (
         <div className={styles.navContainer}>
-            {/* <nav className={styles.navSection}>
-                <Link to="./HomePage">
-                    <p>Caja</p>
-                </Link>
-                <Link to="/comprobantes">
-                    <p>Ventas</p>
-                </Link>
-                <Link to="/reportes">
-                    <p>Reportes</p>
-                </Link>
-                <Link to="/mercaderia">
-                    <p>Ingreso Mercaderia</p>
-                </Link>
-                <Link to="/operaciones">
-                    <p>Operaciones</p>
-                </Link>
-                <Link to="/administracion">
-                    <p>Administración</p>
-                </Link>
-            </nav> */}
-
             <nav className={styles.navSection}>
                 <Link to="/">
                     <p><FiHome size={17} /></p>
                 </Link>
-                <Link onClick={() => handleLinkClick(`/ventana/${id_}`)}>
-                    <p onClick={handleClick}>Nuevo</p>
-                </Link>
-                <Link to="/listaArticulos">
-                    <p>Lista de artículos</p>
-                </Link>
-
+                {isVentanaPath && (
+                    <>
+                        <Link onClick={() => handleLinkClick(`/ventana/${id_}`)}>
+                            <p onClick={handleClick}>Nuevo</p>
+                        </Link>
+                        <Link to="/listaArticulos">
+                            <p>Lista de artículos</p>
+                        </Link>
+                    </>
+                )}
             </nav>
-       
             <nav className={styles.navSection}>
-                {button.map((prod, id) => (
-                    <PageArticulo handleClick={() => cerar(prod.id)} key={prod.id} id={prod.id} onClose={onClose} />
+                {buttons.map((prod,key) => (
+                    <PageArticulo
+                        handleClick={() => cerrar(prod.id)}
+                        key={key}
+                        id={prod.id}
+                        onClose={onClose}
+                    />
                 ))}
             </nav>
         </div>

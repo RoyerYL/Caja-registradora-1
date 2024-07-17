@@ -86,11 +86,11 @@ export default function Navbar() {
             // Buscar el cliente por nombre
             const responseCliente = await axios(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
             const cliente = responseCliente.data[0];
-            console.log(costo.descuento);
+            console.log(costo);
             // Crear un nuevo ticket
             const body = {
                 clienteId: cliente.id,
-                valorTotal: costo.subTotal,
+                valorTotal: costo.subTotal* ((100 - costo.descuento) / 100),
                 fecha: new Date(),
                 vendedorId: vendedor,
                 descuento: costo.descuento,
@@ -131,9 +131,9 @@ export default function Navbar() {
     };
 
     const imprimirRecibo = () => {
-        window.electronAPI.executeTicketCreate(ticket)
-
-    }
+        const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
+        window.electronAPI.executeTicketCreate(ticket, storeInfo);
+    };
 
     const handleChange = (event) => {
         const value = event.target.value

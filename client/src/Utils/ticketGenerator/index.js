@@ -5,53 +5,44 @@ const pdfFonts = require('pdfmake/build/vfs_fonts');
 const pdfToPrinter = require('pdf-to-printer');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-async function ticketCreate(id) {
+async function ticketCreate(id, storeInfo) {
+    console.log(storeInfo,"storeInfo");
+    let compras = [];
+    let fecha = "";
+    let ticketId = 0;
+    let costo = 0;
+    let items = {};
 
-
-    let compras = []
-    let fecha = ""
-    let ticketId = 0
-    let costo = 0
-    let items = {}
-    let nombreArt = ""
     if (!id) {
-        throw new Error("faltan datos")
+        throw new Error("faltan datos");
     }
+
     await axios(`http://localhost:3001/tienda/ticket/${id}`).then(({ data }) => {
-        fecha = data.fecha
+        fecha = data.fecha;
         ticketId = String(data.id).padStart(12, '0');
-        costo = data.valorTotal
-    })
+        costo = data.valorTotal;
+    });
 
-    const item = async (codBarras) => {
-
-    }
     const calculateTotal = (compras) => {
-        console.log(compras.articles ,"articulos");
+        console.log(compras.articles, "articulos");
         return compras.articles.productos.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
     };
+
     await axios(`http://localhost:3001/tienda/compra/${id}`).then(async ({ data }) => {
-        const total = calculateTotal(data[0])            
+        const total = calculateTotal(data[0]);
         items = await Promise.all(data[0]?.articles.productos.map(async (data) => {
-            
-            // return { text: `${data.name} \t ${compra.cantidad} \t 10$`, fontSize: 9, margin: [0, 0, 0, 5] }
             return {
-                
                 stack: [
                     { text: data.producto.name, fontSize: 8 },
-                    { text: `${data.cantidad} X ${data.producto.precioVenta}   ${data.cantidad*data.producto.precioVenta}`, fontSize: 9 },
-                    ],
+                    { text: `${data.cantidad} X ${data.producto.precioVenta}   ${data.cantidad * data.producto.precioVenta}`, fontSize: 9 },
+                ],
                 margin: [0, 0, 0, 5],
             };
-        }))
-
-    })
-
+        }));
+    });
 
     // Define el tamaño de la página en puntos (aproximadamente 80 mm de ancho)
-    // const pageSize = { width: 226.8, height: 1700 };
     const pageSize = { width: 140, height: "auto" };
-
 
     // Define la estructura del documento PDF
     const documentDefinition = {
@@ -62,12 +53,12 @@ async function ticketCreate(id) {
             { text: `N° ${ticketId}`, fontSize: 7, alignment: 'left', margin: [0, 0, 0, 10] },
             { text: `Fecha: ${fecha}`, fontSize: 7, margin: [0, 0, 0, 10] },
             { text: '---------------------------------------------------------------', fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] },
-            { text: 'Mequitex', fontSize: 9, alignment: 'center', margin: [0, 0, 0, 10] },
-            { text: 'av. fernandez de la cruz 3269', fontSize: 7, alignment: 'left', margin: [0, 0, 0, 0] },
-            { text: 'villa soldati', fontSize: 7, alignment: 'left', margin: [0, 0, 0, 5] },
-            { text: 'whatsapp: 115524-3993', fontSize: 8, alignment: 'left', margin: [0, 0, 0, 4] },
-            { text: 'CUIT:', fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] },
-            { text: 'iva responsable inscripto:', fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] },
+            storeInfo?.name ? { text: storeInfo.name, fontSize: 9, alignment: 'center', margin: [0, 0, 0, 10] } : {},
+            storeInfo?.address ? { text: storeInfo.address, fontSize: 7, alignment: 'left', margin: [0, 0, 0, 0] } : {},
+            storeInfo?.city ? { text: storeInfo.city, fontSize: 7, alignment: 'left', margin: [0, 0, 0, 5] } : {},
+            storeInfo?.whatsapp ? { text: `whatsapp: ${storeInfo.whatsapp}`, fontSize: 8, alignment: 'left', margin: [0, 0, 0, 4] } : {},
+            storeInfo?.cuit ? { text: `CUIT: ${storeInfo.cuit}`, fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] } : {},
+            { text: `iva: Iva responsable inscripto`, fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] },
             { text: '---------------------------------------------------------------', fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] },
             items,
             { text: '---------------------------------------------------------------', fontSize: 8, alignment: 'left', margin: [0, 0, 0, 3] },
@@ -82,6 +73,7 @@ async function ticketCreate(id) {
         ],
         pageMargins: [0, 0, 0, 25],
     };
+
     // Crea el documento PDF
     const pdfDoc = pdfMake.createPdf(documentDefinition);
 
@@ -106,9 +98,7 @@ async function ticketCreate(id) {
         } catch (error) {
             console.error('Error al imprimir:', error);
         }
-
     });
-
 }
 
 // Llama a la función para crear el PDF

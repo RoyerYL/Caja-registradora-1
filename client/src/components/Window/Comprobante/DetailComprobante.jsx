@@ -12,12 +12,12 @@ export default function DetailComprobante(props) {
     const [total, setTotal] = useState(5);
     useEffect(() => {
         axios(`http://localhost:3001/tienda/compra/${id}`).then(({ data }) => {
+            console.log(data[0]);
             setAllCompras(data[0]);
             const calculateTotal = (compras) => {
                 // if (!compras.articles) return 0;
                 return compras.articles.productos.reduce((acc, prod) => acc + prod.cantidad * prod.producto.precioVenta, 0);
             };
-            // console.log();
             console.log( data[0].articles.descuento);
             setTotal(calculateTotal(data[0])*((100 - data[0].articles.descuento) / 100))
         });
@@ -29,7 +29,8 @@ export default function DetailComprobante(props) {
     };
 
     const imprimirRecibo = () => {
-        window.electronAPI.executeTicketCreate(id);
+        const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
+        window.electronAPI.executeTicketCreate(id, storeInfo);
     };
 
 
@@ -68,7 +69,7 @@ export default function DetailComprobante(props) {
 
                     <span className={style.descuento}>{`Descuento: ${compras?.Ticket.descuento}%`}</span>
 
-                    <span>Total: ${Number.parseFloat(total * ((100 - 0) / 100)).toFixed(2) || 0}</span>
+                    <span>Total: ${Number.parseFloat(compras?.Ticket.valorTotal)}</span>
                 </div>
             </div>
         </>

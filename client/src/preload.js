@@ -7,9 +7,9 @@ import { BrowserWindow, contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("electronAPI",
    {
       onUpdateTheme: (cb)=>ipcRenderer.on("theme",cb),
-      executeTicketCreate: async (id) => {
+      executeTicketCreate: async (id,store) => {
          // Emitir un evento para solicitar la ejecución de la función ticketCreate
-         ipcRenderer.send("executeTicketCreate",id);
+         ipcRenderer.send("executeTicketCreate",id,store);
 
          // Escuchar la respuesta (puedes personalizar el nombre del evento)
          ipcRenderer.on("ticketCreateResult", (event, result) => {

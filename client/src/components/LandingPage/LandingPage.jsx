@@ -1,38 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
 
 export default function LandingPage() {
+    const [showWarning, setShowWarning] = useState(false);
+    const [tooltipState, setTooltipState] = useState({});
+
+    useEffect(() => {
+        const storeInfo = localStorage.getItem('storeInfo');
+        if (!storeInfo) {
+            setShowWarning(true);
+        }
+    }, []);
+
+    const handleMouseEnter = (key) => {
+        setTooltipState(prevState => ({ ...prevState, [key]: true }));
+    };
+
+    const handleMouseLeave = (key) => {
+        setTooltipState(prevState => ({ ...prevState, [key]: false }));
+    };
+
+    const links = [
+        { path: './HomePage', label: 'Caja', tooltip: 'Acceso a la caja registradora' },
+        { path: '/comprobantes', label: 'Ventas', tooltip: 'Gestión de ventas' },
+        { path: '/reportes', label: 'Reportes', tooltip: 'Generación de reportes' },
+        { path: '/mercaderia', label: 'Ingreso Mercaderia', tooltip: 'Registro de nueva mercadería' },
+        { path: '/operaciones', label: 'Operaciones', tooltip: 'Gestión de operaciones' },
+        { path: '/administracion', label: 'Administración', tooltip: 'Acceso a la administración' },
+        { path: '/altaArticulo', label: 'Alta de artículo', tooltip: 'Registrar nuevo artículo' },
+        { path: '/listaArticulos', label: 'Lista de artículos', tooltip: 'Ver lista de artículos' },
+        { path: '/actualizarArticulo', label: 'Actualizar datos', tooltip: 'Actualizar datos de artículos' },
+    ];
+
     return (
         <div className={styles.container}>
             <div className={styles.buttonSection}>
-                <Link to="./HomePage" className={styles.button}>
-                    <p>Caja</p>
-                </Link>
-                <Link to="/comprobantes" className={styles.button}>
-                    <p>Ventas</p>
-                </Link>
-                <Link to="/reportes" className={styles.button}>
-                    <p>Reportes</p>
-                </Link>
-                <Link to="/mercaderia" className={styles.button}>
-                    <p>Ingreso Mercaderia</p>
-                </Link>
-                <Link to="/operaciones" className={styles.button}>
-                    <p>Operaciones</p>
-                </Link>
-                <Link to="/administracion" className={styles.button}>
-                    <p>Administración</p>
-                </Link>
-                <Link to="/altaArticulo" className={styles.button}>
-                    <p>Alta de artículo</p>
-                </Link>
-                <Link to="/listaArticulos" className={styles.button}>
-                    <p>Lista de artículos</p>
-                </Link>
-                <Link to="/actualizarArticulo" className={styles.button}>
-                    <p>Actualizar datos</p>
-                </Link>
+                {links.map(({ path, label, tooltip }, index) => (
+                    <div
+                        key={index}
+                        className={styles.relativeWrapper}
+                        onMouseEnter={() => handleMouseEnter(index)}
+                        onMouseLeave={() => handleMouseLeave(index)}
+                    >
+                        <Link to={path} className={`${styles.button} ${showWarning && label === 'Administración' ? styles.shakeAnimation : ''}`}>
+                            <p>{label}</p>
+                        </Link>
+                        {(showWarning && label === 'Administración') || tooltipState[index] ? (
+                            <div className={styles.tooltip}>
+                                <p>{tooltip}</p>
+                            </div>
+                        ) : null}
+                    </div>
+                ))}
             </div>
         </div>
     );
