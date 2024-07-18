@@ -4,11 +4,15 @@ import ListaArticulosEncontrados from '../Home/components/ListaArticulos/ListaAr
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { articuloActualizar, filterArtLike, getAll, order_articulos } from '../../redux/action';
+import buildQueryParams from '../../Utils/QueryFilterPath';
 
 export default function ActualizarDatos() {
     const dispatch = useDispatch();
-    const articulos = useSelector((state) => state.productoLike);
+
+    // const articulos = useSelector((state) => state.productoLike);
+    const [articulos, setArticulo] = useState([]);
     const articulosActualizar = useSelector((state) => state.articulosActualizar);
+
     const [categoria, setCategoria] = useState([]);
     const [provedor, setProvedor] = useState([]);
     const [articulosSeleccionados, setArticulosSeleccionados] = useState([]);
@@ -36,8 +40,25 @@ export default function ActualizarDatos() {
         ProvedorId: 1,
         precioEnDolar: false
     });
+    const [filters, setFilter] = useState({
+        name: "",
+        id: "",
+        page: 1,
+        pageSize: 50,
+        orderBy: 'id',
+        orderDirection: ''
+    })
+
+    const [pageNumber, setpageNumber] = useState(0)
 
     useEffect(() => {
+        const fetchArticulos = async () => {
+            const { data: articulo } = await axios("http://localhost:3001/tienda/articulo"+ buildQueryParams(filters))
+            setArticulo(articulo.items)
+        }
+
+        fetchArticulos();
+
         const fetchData = async () => {
             const { data: provedores } = await axios("http://localhost:3001/tienda/provedor");
             setProvedor(provedores);
@@ -48,7 +69,7 @@ export default function ActualizarDatos() {
 
         fetchData();
         dispatch(getAll());
-    }, [dispatch]);
+    }, []);
 
     const handleToggleSeleccion = (articulo) => {
         const estaSeleccionado = articulosSeleccionados.some(item => item.id === articulo.id);
@@ -161,35 +182,41 @@ export default function ActualizarDatos() {
 
     return (
         <div className={style.ActualizarDatos}>
-            <div className={style.containerListArticulos}>
-                <div>
-                    <input type="text" name="buscador" placeholder="nombre" value={buscador} onChange={search} />
-                    <button onClick={ordenar}>{order ? "asc" : "desc"}</button>
-                    <select name="categoria" onChange={handleChange}>
-                        {categoria.map((c) => (
-                            <option key={c.id} value={c.id}>{c.nameCategoria}</option>
+
+            <div>
+                <div className={style.containerListArticulos}>
+                    <div>
+                        <input type="text" name="buscador" placeholder="nombre" value={buscador} onChange={search} />
+                        <button onClick={ordenar}>{order ? "asc" : "desc"}</button>
+                        <select name="categoria" onChange={handleChange}>
+                            {categoria.map((c) => (
+                                <option key={c.id} value={c.id}>{c.nameCategoria}</option>
+                            ))}
+                        </select>
+
+                    </div>
+                    <p>Lista de Artículos</p>
+                    <ul>
+                        {articulos.map((articulo) => (
+                            <li
+                                className={`${style.elemento} ${articulosSeleccionados.includes(articulo) ? style.seleccionado : ''}`}
+                                key={articulo.id}
+                                onClick={() => handleToggleSeleccion(articulo)}
+                            >
+                                <p className={style.articulo}>{articulo.id} - {articulo.name}</p>
+                            </li>
                         ))}
-                    </select>
+                    </ul>
                 </div>
-                <p>Lista de Artículos</p>
-                <ul>
-                    {articulos.map((articulo) => (
-                        <li
-                            className={`${style.elemento} ${articulosSeleccionados.includes(articulo) ? style.seleccionado : ''}`}
-                            key={articulo.id}
-                            onClick={() => handleToggleSeleccion(articulo)}
-                        >
-                            <p className={style.articulo}>{articulo.id} - {articulo.name}</p>
-                        </li>
-                    ))}
-                </ul>
+                <p onClick={()=>{setFilter({...filters,page:filters.page-1})}}>anterior</p>
+                <p onClick={()=>{setFilter({...filters,page:filters.page+1})}}>siguiente</p>
             </div>
             <div>
                 <button onClick={addArticulosActualizar}>{`->`}</button>
                 <button onClick={addArticulosAll}>{`Todos`}</button>
             </div>
             <div className={style.containerListArticulos}>
-                <p>Lista de Artículos</p>
+                <p>Artículos seleccionados</p>
                 <ul>
                     {articulosActualizar.map((articulo) => (
                         <li
