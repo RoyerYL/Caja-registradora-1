@@ -17,6 +17,7 @@
 }
 
 .button {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,13 +31,14 @@
     text-align: center;
     font-size: 1.2em;
     transition: background-color 0.3s;
+    z-index: 99;
 }
 
 .button:hover {
     background-color: #0056b3;
 }
 
-.shakeAnimation {
+/* .shakeAnimation {
     animation: shake 0.5s ease-in-out infinite alternate;
 }
 
@@ -47,24 +49,27 @@
     to {
         transform: translateX(5px);
     }
-}
+} */
 
 .relativeWrapper {
     position: relative;
+    z-index: 99;
 }
 
 .tooltip {
     position: absolute;
-    top: 110%; /* Adjust the position as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 0, 0.9);
-    color: #333;
-    padding: 10px;
+    top: 115px;
+    left: 10px;
+    /* transform: translate(-50%, 5px); */
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 10px;
     border-radius: 5px;
-    text-align: center;
-    font-size: 1em;
-    width: 200px;
-    z-index: 1000;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0; /* Hidden by default */
     pointer-events: none;
+}
+.tooltip.show {
+    opacity: 1; /* Show the tooltip */
 }

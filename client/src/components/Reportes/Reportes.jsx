@@ -22,9 +22,9 @@ export default function Reportes() {
                 <Link to="reportes/VentasPorCategoria" className={style.link}>
                     <span>Cantidad ventas x categoria</span>
                 </Link>
-                <Link to="reportes/mercaderia" className={style.link}>
+                {/* <Link to="reportes/mercaderia" className={style.link}>
                     <span>Ventas x mercadería</span>
-                </Link>
+                </Link> */}
             </div>
             <div className={style.content}>
                 <Routes>

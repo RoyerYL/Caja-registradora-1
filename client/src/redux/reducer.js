@@ -1,4 +1,4 @@
-import { ADD_ART, ADD_ARTLike, ADD_BUTTON, GET_ART, REMOVE_ART, REMOVE_BUTTON } from "./acionTypes"
+import { ADD_ART, ADD_ARTLike, ADD_BUTTON, CERRAR_BUTTON, GET_ART, REMOVE_ART, REMOVE_BUTTON } from "./acionTypes"
 
 const initialState = {
   listProductos: [],
@@ -17,6 +17,7 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_BUTTON:
+      console.log(state.buttons);
       return {
           ...state,
           buttons: [...state.buttons, payload],
@@ -26,6 +27,17 @@ export default (state = initialState, { type, payload }) => {
           ...state,
           buttons: state.buttons.filter(button => button.id !== payload),
       };
+      case CERRAR_BUTTON:
+        const buttonsAux = [...state.buttons]
+        for (const button of buttonsAux) {
+          if (button.id == payload) {
+              button.open = false;
+          }
+        }
+        return {
+            ...state,
+            buttons: buttonsAux
+        };
     case "CERRARVENTA":
       if (state.ventasRealizadas.includes(payload)) {
         return { ...state };

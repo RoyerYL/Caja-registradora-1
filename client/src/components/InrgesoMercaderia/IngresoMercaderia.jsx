@@ -192,9 +192,11 @@ export default function IngresoMercaderia() {
             <div className={style.leftContainer}>
                 <div className={style.searchContainer}>
                     <div>
-                        <span>Nombre</span>
+                        <span>Nombre: </span>
                         <input type="text" name='name' value={filters.name} onChange={filter} placeholder="Buscar por nombre" />
-                        <span>id</span>
+                    </div>
+                    <div>
+                        <span>id: </span>
                         <input type="text" name='id' value={filters.id} onChange={filter} placeholder="Buscar por ID" />
                     </div>
                     <button className={style.button} onClick={() => getAll(1)}>Todo</button>
@@ -202,10 +204,14 @@ export default function IngresoMercaderia() {
                 </div>
                 <div className={style.productList}>
                     {allProductos.map((prod, index) => (
-                        <div className={style.productItem} key={prod.id} onClick={() => setArticulo(prod)}>
-                            <p>{prod.name}</p>
-                            <p>Stock: {prod.stock}</p>
-                            <p>Precio: ${prod.precioVenta}</p>
+                        <div className={style.productItem} key={prod.id} >
+                            <div>
+
+                                <p>{prod.name}</p>
+                                <p>Stock: {prod.stock}</p>
+                                <p>Precio: ${prod.precioVenta}</p>
+                            </div>
+                            <button onClick={() => setArticulo(prod)}>Añadir</button>
                         </div>
                     ))}
                 </div>

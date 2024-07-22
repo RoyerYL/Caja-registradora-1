@@ -38,14 +38,14 @@
     background-color: #ff4d4d;
     color: white;
     border: none;
-    padding: 5px;
+    padding: 1px 2px 0px 0px;
     border-radius: 50%; /* Para hacer un círculo */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .close:hover {
-    background-color: #e60000;
+    color: #e60000;
 }
 
 
@@ -62,4 +62,10 @@
 
 .navbarContainer > div {
     display: inline-block;
+}
+.buttonCerrado button{
+    background-color: grey;
+}
+.buttonAbierto button{
+background-color: #007bff;
 }

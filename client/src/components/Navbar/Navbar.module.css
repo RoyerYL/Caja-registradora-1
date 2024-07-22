@@ -9,6 +9,7 @@
 
 .navSection {
     display: flex;
+    overflow-y: auto;
 }
 
 .navSection a {

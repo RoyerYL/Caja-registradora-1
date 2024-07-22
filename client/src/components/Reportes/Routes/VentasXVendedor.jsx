@@ -1,11 +1,22 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import style from './VentasXVendedor.module.css';
+import buildQueryParams from "../../../Utils/QueryFilterPath";
 
 export default function VentasXVendedor() {
     const [vendedores, setVendedores] = useState([]);
     const [selectedVendedor, setSelectedVendedor] = useState(null);
     const [ventas, setVentas] = useState([]);
+
+    const[filter, setFilter] = useState({
+        id:"",
+        type: "vendedor",
+        page:"",
+        limit:15,
+        order:"",
+        orderDirection:""
+    })
+
 
     useEffect(() => {
         axios("http://localhost:3001/tienda/vendedor") // Suponiendo que tienes un endpoint para obtener los vendedores
@@ -18,8 +29,8 @@ export default function VentasXVendedor() {
 
     async function handleVendedorClick(id) {
         try {
-            const { data } = await axios(`http://localhost:3001/tienda/ticket/ticketByVendedor/${id}`);
-            console.log(data);
+            const { data } = await axios(`http://localhost:3001/tienda/ticket${buildQueryParams({...filter,id})}`);
+            console.log(data.tickets);
             setSelectedVendedor(id);
             setVentas(data);
         } catch (error) {

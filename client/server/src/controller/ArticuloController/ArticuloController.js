@@ -348,11 +348,11 @@ const getAllArticulos = async (req, res) => {
             orderDirection = 'ASC';
         }
 
-        // Validar orderBy
-        const validOrderFields = ['id', 'name', 'precioVenta', 'stock'];
-        if (!validOrderFields.includes(orderBy)) {
-            orderBy = 'id';
-        }
+        // // Validar orderBy
+        // const validOrderFields = ['id', 'name', 'precioVenta', 'stock',"camtVendidos"];
+        // if (!validOrderFields.includes(orderBy)) {
+        //     orderBy = 'id';
+        // }
 
         const { count, rows } = await Articulo.findAndCountAll({
             where,

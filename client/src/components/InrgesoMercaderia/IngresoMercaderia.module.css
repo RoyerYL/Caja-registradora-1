@@ -17,33 +17,56 @@
 }
 
 .searchContainer {
+    display: grid;
+    grid-gap: 5px;
+    justify-items: center;
+    grid-template-columns: 2fr 2fr ;
     margin-bottom: 20px;
+}
+.searchContainer button {
+    width: 150px;
 }
 
 .productList,
 .selectedList {
+
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
     border-radius: 5px;
     margin-bottom: 20px;
     height: 500px;
 
-    max-height: 500px; /* Altura máxima de la lista */
-    overflow-y: auto; /* Agrega scroll vertical si se necesita */
-    }
-    .productList{
-        max-height: 600px;
-    }
-    
-.productItem {
-    cursor: pointer;
-    padding: 5px;
-    border-bottom: 1px solid #ccc;
+    max-height: 500px;
+    /* Altura máxima de la lista */
+    overflow-y: auto;
+    /* Agrega scroll vertical si se necesita */
+}
+.selectedList{
+    background-color: #c0c0c048;
+
+}
+.productList {
+    max-height: 600px;
 }
 
-.productItem:hover {
-    background-color: #f0f0f0;
+.productItem {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    justify-content: space-between;
 }
+
+.productItem button {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.productItem button:hover {
+    cursor: pointer;
+    background-color: #0056b3;
+    color: #fff;
+}
+
 
 .pagination {
     display: flex;
@@ -51,16 +74,21 @@
     margin-bottom: 20px;
 }
 
-.selectedItem {
-    display: flex;
+.selectedItem,
+.header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
     padding: 5px 0;
 }
 
 .quantityControls {
-    display: flex;
-    align-items: center;
+    width: 100px;
+}
+
+.quantityControls input {
+    width: 100%;
 }
 
 .form {
@@ -76,13 +104,16 @@
 .form input,
 .form textarea,
 .form select {
-    width: calc(100% - 22px); /* Considerando el padding */
+    width: calc(100% - 22px);
+    /* Considerando el padding */
     padding: 1px;
     border: 1px solid #ccc;
 }
-.form button{
+
+.form button {
     padding: 1px;
 }
+
 .button {
     width: 100%;
     padding: 8px 16px;
@@ -92,6 +123,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
 .buttonDes {
     width: 100%;
     padding: 8px 16px;
@@ -102,43 +134,58 @@
     cursor: pointer;
 }
 
-.button:hover {
-    background-color: #0056b3;
-}
 /* IngresoMercaderia.module.css */
 
-.searchContainer {
-    display: flex;
-    align-items: center;
-    background-color: #f8f9fa; /* Color de fondo */
-    padding: 5px; /* Espaciado interno */
-    margin-bottom: 20px; /* Espaciado inferior */
-}
+/* .searchContainer { */
+    /* display: flex; */
+    /* align-items: center; */
+    /* background-color: #f8f9fa; */
+    /* Color de fondo */
+    /* padding: 5px; */
+    /* Espaciado interno */
+    /* margin-bottom: 20px; */
+    /* Espaciado inferior */
+/* } */
 
 .searchContainer input[type="text"] {
-    flex: 1; /* Que el input ocupe el espacio restante */
-    border: none; /* Sin borde */
-    padding: 5px; /* Espaciado interno */
-    margin-right: 5px; /* Espaciado derecho */
-    border-radius: 3px; /* Bordes redondeados */
+    flex: 1;
+    /* Que el input ocupe el espacio restante */
+    border: none;
+    /* Sin borde */
+    padding: 5px;
+    /* Espaciado interno */
+    margin-right: 5px;
+    /* Espaciado derecho */
+    border-radius: 3px;
+    /* Bordes redondeados */
 }
 
 .searchContainer button {
-    padding: 5px 10px; /* Espaciado interno */
-    background-color: #007bff; /* Color de fondo */
-    color: white; /* Color de texto */
-    border: none; /* Sin borde */
-    border-radius: 3px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor de puntero */
+    padding: 5px 10px;
+    /* Espaciado interno */
+    background-color: #007bff;
+    /* Color de fondo */
+    color: white;
+    /* Color de texto */
+    border: none;
+    /* Sin borde */
+    border-radius: 3px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cursor de puntero */
 }
 
 .searchContainer button:hover {
-    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+    background-color: #0056b3;
+    /* Color de fondo al pasar el mouse */
 }
-.header{
+
+/* .header{
     display: flex;
     justify-content: space-between;
-}
-.headerProducto{
-    width: 135px;
+} */
+.headerProducto {
+    width: 250px;
+    height: 3rem;
+    padding-right: 5px;
 }

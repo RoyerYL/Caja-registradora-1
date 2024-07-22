@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
+import { motion } from 'framer-motion';
 
 export default function LandingPage() {
     const [showWarning, setShowWarning] = useState(false);
@@ -47,9 +48,14 @@ export default function LandingPage() {
                             <p>{label}</p>
                         </Link>
                         {(showWarning && label === 'Administración') || tooltipState[index] ? (
-                            <div className={styles.tooltip}>
+                            <motion.div
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ type: 'spring', stiffness: 90, repeat: Infinity, repeatType: "reverse" }}
+                                className={`${styles.tooltip} ${tooltipState[index] ? styles.show : ''}`}
+                            >
                                 <p>{tooltip}</p>
-                            </div>
+                            </motion.div>
                         ) : null}
                     </div>
                 ))}

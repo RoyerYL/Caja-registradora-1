@@ -5,7 +5,7 @@ import { get_list } from '../../../../redux/action';
 import style from "./PageArticulo.module.css"
 
 export default function PageArticulo(props) {
-    const { id, onClose } = props;
+    const { id, onClose ,open} = props;
     const dispatch = useDispatch();
 
     const handleClick = () => {
@@ -13,7 +13,7 @@ export default function PageArticulo(props) {
     };
 
     return (
-        <div className={style.container}>
+        <div className={`${style.container} ${open ? style.buttonAbierto : style.buttonCerrado} `}>
             <Link to={`/ventana/${id}`}>
                 <button className={style.nuevo} onClick={handleClick}>Nuevo {id}</button>
             </Link>

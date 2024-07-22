@@ -14,7 +14,7 @@ export default function MasVendidos() {
         page: 1,
         pageSize: 15,
         orderBy: 'cantVendidos',
-        orderDirection: ''
+        orderDirection: 'DESC'
     });
 
     useEffect(() => {
@@ -22,6 +22,7 @@ export default function MasVendidos() {
             setLoading(true);
             axios("http://localhost:3001/tienda/articulo" + buildQueryParams(filters))
                 .then(({ data }) => {
+                    console.log(data.items);
                     setProductos(data.items);
                     setTotalPages(data.totalPages); // Suponiendo que la API devuelve el número total de páginas
                     setLoading(false);

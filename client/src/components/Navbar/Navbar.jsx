@@ -19,7 +19,7 @@ export default function Navbar(props) {
     const handleClick = () => {
         dispatch(addVenta());
         if (Cotizacion.apertura) {
-            const newButton = { id: id_ };
+            const newButton = { id: id_ , open:true};
             dispatch(addButton(newButton));
             setID(id_ + 1);
             dispatch(get_list(id_));
@@ -66,11 +66,12 @@ export default function Navbar(props) {
                 )}
             </nav>
             <nav className={styles.navSection}>
-                {buttons.map((prod,key) => (
+                {buttons.map((button,key) => (
                     <PageArticulo
-                        handleClick={() => cerrar(prod.id)}
+                        handleClick={() => cerrar(button.id)}
                         key={key}
-                        id={prod.id}
+                        id={button.id}
+                        open={button.open}
                         onClose={onClose}
                     />
                 ))}

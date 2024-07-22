@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import style from "./ListaArticulos.module.css";
+import buildQueryParams from '../../Utils/QueryFilterPath';
 
 export default function ListaArticulos(props) {
     const [filters, setFilters] = useState({
@@ -10,18 +11,16 @@ export default function ListaArticulos(props) {
         pageSize: 50,
         page: 1,
         orderBy: "",
-        orderDirection: "asc"
+        orderDirection: "ASC"
     });
 
     const [allProductos, setAllProductos] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        const queryString = Object.keys(filters)
-            .map(key => `${key}=${encodeURIComponent(filters[key])}`)
-            .join('&');
+     
 
-        axios(`http://localhost:3001/tienda/articulo?${queryString}`).then(({ data }) => {
+        axios(`http://localhost:3001/tienda/articulo${buildQueryParams(filters)}`).then(({ data }) => {
             setAllProductos(data.items);
             setTotalPages(Math.ceil(data.totalItems / filters.pageSize));
         });
