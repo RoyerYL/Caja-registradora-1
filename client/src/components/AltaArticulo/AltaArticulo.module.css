@@ -1,9 +1,17 @@
 .AltaArticulo{
+    display: grid;
+    grid-template-rows: 0.2fr 1fr 0.2fr;
+    align-items: center;
+    justify-items: center;
     text-align: center;
     margin: 15px;
     border: 1px solid;
     box-shadow: 10px 10px 10px black;
     padding: 10px;
+    background-color: #c0c0c048;
+}
+.title{
+    text-decoration: underline;
 }
 .stock{
     display: flex;

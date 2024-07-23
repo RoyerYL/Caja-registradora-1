@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function AltaArticulo(props) {
     const { infoArticulo } = props;
     const { id } = useParams();
-    const cotizacion=useSelector((state) => state.cotizacionDolar)
-    console.log(cotizacion);
+    const cotizacion = useSelector((state) => state.cotizacionDolar)
     const [categoria, setCategoria] = useState([]);
     const [provedor, setProvedor] = useState([]);
     const [form, setForm] = useState({
@@ -179,13 +178,13 @@ function AltaArticulo(props) {
         const { costoDolar, costoPeso, ganancia, iva } = form;
         setForm(prevForm => ({
             ...prevForm,
-            precioVenta: Number.parseFloat((((100 + iva) / 100) * ((100 + ganancia) / 100) * costoDolar)*cotizacion).toFixed(2)
+            precioVenta: Number.parseFloat((((100 + iva) / 100) * ((100 + ganancia) / 100) * costoDolar) * cotizacion).toFixed(2)
         }));
     };
 
     return (
         <div className={style.AltaArticulo}>
-            <h2>Alta Articulos</h2>
+            <h2 className={style.title}>Alta Articulos</h2>
             <div>
                 <div className={style.containerNombreStock}>
                     <div className={style.containerDatos}>
@@ -248,7 +247,7 @@ function AltaArticulo(props) {
                             </div>
                             <div>
                                 <label>Precio de venta AR$</label>
-                                <input value={form.precioVenta}  onChange={handleChange} />
+                                <input value={form.precioVenta} onChange={handleChange} />
                                 <button onClick={calcular}>Calcular</button>
                             </div>
                         </div>

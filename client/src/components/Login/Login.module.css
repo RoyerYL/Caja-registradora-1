@@ -7,7 +7,9 @@
     gap: 25px;
     margin: 25px 0px 0px 0px;
     width: 100%;
-    background-color: beige;
+}
+.login div{
+    background-color: #c0c0c048;
 }
 .cajaApertura{
     display: flex;
@@ -62,7 +64,6 @@
 .index{
     display: flex;
     position: fixed;
-    background-color: antiquewhite;
 }
 .cajaId{
     width: 50px;

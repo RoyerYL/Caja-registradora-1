@@ -20,7 +20,7 @@
 }
 
 .nuevo:hover {
-    background-color: #0056b3;
+    background-color: rgb(187, 187, 187);
 }
 
 /* Estilo del botón de cerrar */
@@ -65,7 +65,9 @@
 }
 .buttonCerrado button{
     background-color: grey;
+    color: white;
 }
 .buttonAbierto button{
-background-color: #007bff;
+background-color:rgb(236, 236, 236);
+color: black;
 }
