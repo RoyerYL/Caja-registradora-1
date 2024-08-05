@@ -8,7 +8,8 @@ export default function ListCliente(props) {
 
     useEffect(() => {
         if (selectClient !== "") {
-            axios(`http://localhost:3001/tienda/clienteLike/${selectClient}`).then(({ data }) => {
+            axios(`http://localhost:3001/tienda/cliente/clienteLike/${selectClient}`).then(({ data }) => {
+                console.log(data);
                 setClienteForm({
                     ...clienteForm,
                     nombre: data[0].nombre
@@ -17,10 +18,7 @@ export default function ListCliente(props) {
         }
     }, [selectClient]);
 
-    const handleClick = (e) => {
-        const value = e.target.innerHTML;
-        setSelectClient(value);
-    };
+
 
     return (
         <table className={style.tablaCliente}>
@@ -34,7 +32,7 @@ export default function ListCliente(props) {
             <tbody>
                 {cliente.map((c) => (
                     <tr key={c.id}>
-                        <td className={style.selectClient} onClick={handleClick}>
+                        <td className={style.selectClient} value={c.nombre} onClick={()=>{setSelectClient(c.nombre)}}>
                             {c.nombre}
                         </td>
                     </tr>

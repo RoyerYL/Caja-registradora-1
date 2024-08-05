@@ -4,6 +4,8 @@ const { Cliente , Ticket} = require("../../DB_connection")
 
 const getClienteLike = async (req, res) => {
     const { id } = req.params
+    const { page = 1, limit = 10, order = 'fecha', orderDirection = 'DESC' } = req.query; // obtener página, límite, orden y dirección de la query string
+
     try {
         let resultados = await Cliente.findAll({
             where: {
