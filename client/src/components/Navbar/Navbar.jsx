@@ -62,6 +62,9 @@ export default function Navbar(props) {
                         <Link to="/listaArticulos">
                             <p>Lista de artículos</p>
                         </Link>
+                        <Link to="/clientes">
+                            <p>Clientes</p>
+                        </Link>
                     </>
                 )}
             </nav>

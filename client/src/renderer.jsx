@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import axios from 'axios'
 import './index.css';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
@@ -15,6 +15,7 @@ window.electronAPI.onUpdateTheme((event,theme)=>{
   // console.log(root);
   root.style.setProperty("--scheme",theme)
 })
+axios.defaults.baseURL="http://localhost:3001/"
 rootElement.render(
   <Provider store={store}>
     <BrowserRouter>

@@ -23,6 +23,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import Administracion from './components/Administracion/Administracion';
 import { useDispatch } from 'react-redux';
 import { cajaAbierta } from './redux/action';
+import ListClient from './components/Cliente/ListClient';
 
 
 
@@ -108,6 +109,9 @@ function App() {
 
             <Route path='/administracion' element={
                <Administracion />
+            } />
+            <Route path='/clientes/*' element={
+               <ListClient />
             } />
 
          </Routes>

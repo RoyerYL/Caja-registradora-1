@@ -16,6 +16,8 @@ export default function VentasXCliente() {
 
     async function getVentas(id, page = 1) {
         const { data } = await axios(`http://localhost:3001/tienda/cliente/ventasCliente/${id}?page=${page}`);
+        console.log(data);
+        
         setVentas(prevVentas => ({
             ...prevVentas,
             [id]: {
