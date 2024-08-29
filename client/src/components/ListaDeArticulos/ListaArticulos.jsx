@@ -20,7 +20,7 @@ export default function ListaArticulos(props) {
     useEffect(() => {
      
 
-        axios(`http://localhost:3001/tienda/articulo${buildQueryParams(filters)}`).then(({ data }) => {
+        axios(`/tienda/articulo${buildQueryParams(filters)}`).then(({ data }) => {
             setAllProductos(data.items);
             setTotalPages(Math.ceil(data.totalItems / filters.pageSize));
         });

@@ -9,7 +9,7 @@ export default function Vendedor() {
     const [vendedores, setVendedores] = useState([])
 
     useEffect(() => {
-        axios(`http://localhost:3001/tienda/vendedor`).then(
+        axios(`/tienda/vendedor`).then(
             ({ data }) => {
                 setVendedores(data)
             }
@@ -23,10 +23,10 @@ export default function Vendedor() {
         setForm({ ...form, [property]: value })
     }
     const createVendedor = async () => {
-        await axios.post(`http://localhost:3001/tienda/vendedor`, {
+        await axios.post(`/tienda/vendedor`, {
             vendedor: form.vendedor
         })
-        await axios(`http://localhost:3001/tienda/vendedor`).then(
+        await axios(`/tienda/vendedor`).then(
             ({ data }) => {
                 setVendedores(data)
             })
@@ -34,11 +34,11 @@ export default function Vendedor() {
 
     }
     const modifyVendedor = async () => {
-        await axios.post(`http://localhost:3001/tienda/updateVendedor`, {
+        await axios.post(`/tienda/updateVendedor`, {
             id: form.idVendedor,
             vendedor: form.vendedor
         })
-        await axios(`http://localhost:3001/tienda/vendedor`).then(
+        await axios(`/tienda/vendedor`).then(
             ({ data }) => {
                 setVendedores(data)
             })
@@ -54,8 +54,8 @@ export default function Vendedor() {
         })
     }
     const deleteVendedor = async () => {
-        await axios.delete(`http://localhost:3001/tienda/deleteVendedor/${form.idVendedor}`)
-        await axios(`http://localhost:3001/tienda/vendedor`).then(
+        await axios.delete(`/tienda/deleteVendedor/${form.idVendedor}`)
+        await axios(`/tienda/vendedor`).then(
             ({ data }) => {
                 setVendedores(data)
             })

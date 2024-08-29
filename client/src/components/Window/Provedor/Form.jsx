@@ -43,7 +43,7 @@ export default function Form(props) {
         if (body.razonSocial==="" || body.nombreComercial==="") {
             throw new Error("faltan datos")
         }
-        axios.post("http://localhost:3001/tienda/provedor",body).then((res)=>{
+        axios.post("/tienda/provedor",body).then((res)=>{
             console.log("Creado correctamente");
         })
     }

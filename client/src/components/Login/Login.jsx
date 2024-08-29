@@ -18,7 +18,7 @@ export default function Login(props) {
 
         const fetchCotizacionData = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3001/tienda/cotizacion");
+                const { data } = await axios.get("/tienda/cotizacion");
                 if (data.length > 0) {
                     const { cotizacionBlue } = data[0];
 
@@ -41,7 +41,7 @@ export default function Login(props) {
     useEffect(() => {
         const fetchVendedores = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3001/tienda/vendedor");
+                const { data } = await axios.get("/tienda/vendedor");
                 dispatch(add_vendedor(data[0].id));
                 setVendedores(data);
             } catch (error) {
@@ -55,7 +55,10 @@ export default function Login(props) {
     const validateForm = () => {
         const newErrors = {};
         if (!Cotizacion.apertura) {
-            if (!Cotizacion.precioInicial || isNaN(Cotizacion.precioInicial)) {
+            console.log(typeof Cotizacion.precioInicial);
+            
+            
+            if (!Cotizacion.precioInicial || typeof Cotizacion.precioInicial != 'number') {
                 newErrors.precioInicial = 'Precio Inicial is required and must be a number.';
             }
         }
@@ -75,7 +78,7 @@ export default function Login(props) {
             return;
         }
         try {
-            const { data } = await axios.post("http://localhost:3001/tienda/cotizacion", { cotizacionBlue: Cotizacion.cotizacionBlue });
+            const { data } = await axios.post("/tienda/cotizacion", { cotizacionBlue: Cotizacion.cotizacionBlue });
             const { cotizacionBlue } = data[0];
             dispatch(setCotizacionGlobal(cotizacionBlue));
         } catch (error) {
@@ -97,7 +100,7 @@ export default function Login(props) {
             return;
         }
         try {
-            await axios.post("http://localhost:3001/tienda/caja", {
+            await axios.post("/tienda/caja", {
                 precioInicial: Cotizacion.precioInicial,
                 fechaApertura: new Date()
             });
@@ -112,7 +115,7 @@ export default function Login(props) {
             return;
         }
         try {
-            await axios.put("http://localhost:3001/tienda/caja", {
+            await axios.put("/tienda/caja", {
                 id: caja,
                 precioFinal: Cotizacion.precioFinal,
                 fechaCierre: new Date()
@@ -126,7 +129,7 @@ export default function Login(props) {
 
     const actualizarPrecios = async () => {
         try {
-            await axios.post("http://localhost:3001/tienda/articulo/calcularPrecioVentaPorDolar");
+            await axios.post("/tienda/articulo/calcularPrecioVentaPorDolar");
         } catch (error) {
             console.error("Error updating precios:", error);
         }

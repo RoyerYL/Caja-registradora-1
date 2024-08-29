@@ -15,7 +15,7 @@ export default function Caja(props) {
     useEffect(() => {
 
 
-        axios("http://localhost:3001/tienda/caja").then(({ data }) => {
+        axios("/tienda/caja").then(({ data }) => {
             setCaja(data)
         })
 

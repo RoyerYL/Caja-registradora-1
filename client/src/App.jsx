@@ -37,8 +37,8 @@ function App() {
 
    const [Cotizacion, setCotizacion] = useState({
       apertura: false,
-      precioInicial: 0,
-      precioFinal: 0,
+      precioInicial: Number(0),
+      precioFinal: Number(0),
       cotizacionBlue: Number.parseFloat(0).toFixed(2),
       cotizacionMep: Number.parseFloat(0).toFixed(2),
 
@@ -46,7 +46,7 @@ function App() {
    useEffect(() => {
       const fetchCajaData = async () => {
          try {
-            const { data } = await axios.get("http://localhost:3001/tienda/caja");
+            const { data } = await axios.get("/tienda/caja");
             if (data.length > 0 && data[0].apertura) {
                dispatch(cajaAbierta(data[0].id));
                setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: data[0].precioInicial, apertura: data[0].apertura }));

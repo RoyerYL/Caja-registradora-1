@@ -11,7 +11,7 @@ export default function DetailComprobante(props) {
 
     const [total, setTotal] = useState(5);
     useEffect(() => {
-        axios(`http://localhost:3001/tienda/compra/${id}`).then(({ data }) => {
+        axios(`/tienda/compra/${id}`).then(({ data }) => {
             console.log(data[0]);
             setAllCompras(data[0]);
             const calculateTotal = (compras) => {
@@ -24,7 +24,7 @@ export default function DetailComprobante(props) {
     }, [id, actualizar]);
 
     const cancelarTicket = async () => {
-        await axios.post(`http://localhost:3001/tienda/ticket/cancelarTicket/${id}`);
+        await axios.post(`/tienda/ticket/cancelarTicket/${id}`);
         setActualizar(actualizar + 1);
     };
 

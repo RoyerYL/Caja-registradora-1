@@ -8,7 +8,7 @@ export default function ListCliente(props) {
 
     useEffect(() => {
         if (selectClient !== "") {
-            axios(`http://localhost:3001/tienda/cliente/clienteLike/${selectClient}`).then(({ data }) => {
+            axios(`/tienda/cliente/clienteLike/${selectClient}`).then(({ data }) => {
                 console.log(data);
                 setClienteForm({
                     ...clienteForm,

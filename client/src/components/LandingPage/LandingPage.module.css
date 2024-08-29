@@ -9,6 +9,7 @@
 
 .buttonSection {
     display: flex;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
@@ -59,17 +60,23 @@
 .tooltip {
     position: absolute;
     top: 115px;
-    left: 10px;
+    left: 14px;
+    width: 170px;
     /* transform: translate(-50%, 5px); */
     background-color: rgba(0, 0, 0, 0.75);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     z-index: 1;
     opacity: 0; /* Hidden by default */
     pointer-events: none;
 }
+.tooltip p {
+}
 .tooltip.show {
     opacity: 1; /* Show the tooltip */
+}
+.Caja{
+    background-color: red;
 }

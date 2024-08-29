@@ -5,7 +5,7 @@ export default function ListProvedores() {
     const [provedores, setProvedores] = useState([])
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/provedor").then(({ data }) => {
+        axios("/tienda/provedor").then(({ data }) => {
             setProvedores(data)
         })
     }, [])

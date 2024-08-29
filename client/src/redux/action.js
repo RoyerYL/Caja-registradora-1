@@ -26,7 +26,7 @@ export const add_art = (input) => {
   return async (dispatch) => {
     const { cantidad, filter, page,descuento } = input
     try {
-      const { data } = await axios.get(`http://localhost:3001/tienda/articulo${buildQueryParams(filter)}`)
+      const { data } = await axios.get(`/tienda/articulo${buildQueryParams(filter)}`)
       if (data.totalItems === 0) { console.error("Articulo no encontrado"); }
       if (data.totalItems > 1) {
         dispatch({
@@ -51,7 +51,7 @@ export const get_artLike = (input) => {
     try {
       const { codBarras } = input
 
-      const { data } = await axios.get(`http://localhost:3001/tienda/articulo/articuloLike/${codBarras}`)
+      const { data } = await axios.get(`/tienda/articulo/articuloLike/${codBarras}`)
       dispatch({
         type: ADD_ARTLike,
         payload: data
@@ -71,7 +71,7 @@ export const resetArtLike = () => {
 export const getAll = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/tienda/articulo`)
+      const { data } = await axios.get(`/tienda/articulo`)
       dispatch({
         type: 'GET_ALL',
         payload: data.items
@@ -101,7 +101,7 @@ export const setCotizacionGlobal = (cotizacion) => {
 export const postCotizacionGlobal = (cotizacion) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/tienda/cotizacion`, { cotizacionBlue: cotizacion });
+      const { data } = await axios.post(`/tienda/cotizacion`, { cotizacionBlue: cotizacion });
       dispatch({
         type: 'SET_COTIZACION',
         payload: data

@@ -11,7 +11,7 @@ export default function Detail() {
 
     useEffect(() => {
 
-        axios(`http://localhost:3001/tienda/articulo/${id}`)
+        axios(`/tienda/articulo/${id}`)
             .then(({data})=>{
                 if (data.name) {
                     setInfoArticulo(data)

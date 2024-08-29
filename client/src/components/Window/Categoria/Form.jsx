@@ -23,7 +23,7 @@ export default function Form(props) {
             
         }
        
-        axios.post("http://localhost:3001/tienda/categoria",body).then((res)=>{
+        axios.post("/tienda/categoria",body).then((res)=>{
             console.log("Creado correctamente");
         })
     }

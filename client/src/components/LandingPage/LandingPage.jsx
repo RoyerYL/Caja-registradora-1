@@ -47,16 +47,17 @@ export default function LandingPage() {
                         <Link to={path} className={`${styles.button} ${showWarning && label === 'Administración' ? styles.shakeAnimation : ''}`}>
                             <p>{label}</p>
                         </Link>
-                        {(showWarning && label === 'Administración') || tooltipState[index] ? (
+                        {(showWarning && label === 'Administración'|| (label === 'Caja')) || tooltipState[index] ? (
                             <motion.div
-                                initial={{ y: -50, opacity: 0 }}
+                                initial={{ y: -35, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ type: 'spring', stiffness: 90, repeat: Infinity, repeatType: "reverse" }}
+                                transition={{ type: 'spring', stiffness: 50, repeat: Infinity, repeatType: "reverse" }}
                                 className={`${styles.tooltip} ${tooltipState[index] ? styles.show : ''}`}
                             >
                                 <p>{tooltip}</p>
                             </motion.div>
                         ) : null}
+                        
                     </div>
                 ))}
             </div>

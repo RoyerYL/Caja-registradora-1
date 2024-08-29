@@ -9,13 +9,13 @@ export default function VentasXCliente() {
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/cliente").then(({ data }) => {
+        axios("/tienda/cliente").then(({ data }) => {
             setClientes(data);
         });
     }, []);
 
     async function getVentas(id, page = 1) {
-        const { data } = await axios(`http://localhost:3001/tienda/cliente/ventasCliente/${id}?page=${page}`);
+        const { data } = await axios(`/tienda/cliente/ventasCliente/${id}?page=${page}`);
         console.log(data);
         
         setVentas(prevVentas => ({

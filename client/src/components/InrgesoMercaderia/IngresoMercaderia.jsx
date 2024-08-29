@@ -38,10 +38,10 @@ export default function IngresoMercaderia() {
     });
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/provedores").then(({ data }) => {
+        axios("/tienda/provedores").then(({ data }) => {
             setProvedor(data);
         });
-        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
+        axios("/tienda/vendedor").then(({ data }) => {
             setVendedor(data);
         });
     }, []);
@@ -66,7 +66,7 @@ export default function IngresoMercaderia() {
             .map(key => `${key}=${encodeURIComponent(filters[key])}`)
             .join('&');
 
-        await axios(`http://localhost:3001/tienda/articulo?${queryString}`).then(({ data }) => {
+        await axios(`/tienda/articulo?${queryString}`).then(({ data }) => {
             setAllProductos(data.items);
             setAllProductosAux(data.items);
             setCurrentPage(data.currentPage);
@@ -121,10 +121,10 @@ export default function IngresoMercaderia() {
         for (const prod of productosSeleccionados) {
             const { id, name, stock, precioVenta } = prod;
             const art = { id, stock, name, precioVenta };
-            axios.post("http://localhost:3001/tienda/aumentarStock", { id, stock });
+            axios.post("/tienda/aumentarStock", { id, stock });
             listArticulo.push(art);
         }
-        await axios.post("http://localhost:3001/tienda/mercaderia", {
+        await axios.post("/tienda/mercaderia", {
             articulos: { listArticulo, fecha },
             vendedorId: Vendedor,
             provedorId: form.ProvedorId,
@@ -139,7 +139,7 @@ export default function IngresoMercaderia() {
     };
 
     const getHistorial = async () => {
-        axios("http://localhost:3001/tienda/mercaderia").then(({ data }) => {
+        axios("/tienda/mercaderia").then(({ data }) => {
             setListMercaderia(data);
         });
     };

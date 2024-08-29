@@ -6,7 +6,7 @@ export default function ListClientes() {
     const [provedores, setProvedores] = useState([])
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/cliente").then(({ data }) => {
+        axios("/tienda/cliente").then(({ data }) => {
             setProvedores(data)
         })
     }, [])

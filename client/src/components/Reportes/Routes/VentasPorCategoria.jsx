@@ -6,7 +6,7 @@ export default function VentasPorCategoria() {
     const [ventasPorCategoria, setVentasPorCategoria] = useState([]);
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/ticket/ticketByCategory")
+        axios("/tienda/ticket/ticketByCategory")
             .then(({ data }) => {
                 console.log(data);
                 setVentasPorCategoria(data.ventas);

@@ -74,7 +74,7 @@ export default function Navbar() {
     const generarRecibo = async () => {
         setCompraRealizada(1);
         try {
-            const responseCliente = await axios.get(`http://localhost:3001/tienda/cliente/clienteLike/${clienteForm.nombre}`);
+            const responseCliente = await axios.get(`/tienda/cliente/clienteLike/${clienteForm.nombre}`);
             const cliente = responseCliente.data[0];
             const body = {
                 clienteId: cliente.id,
@@ -87,17 +87,17 @@ export default function Navbar() {
             if (!clienteForm.contado) {
                 body.cajaId = null;
             }
-            const responseTicket = await axios.post("http://localhost:3001/tienda/ticket", body);
+            const responseTicket = await axios.post("/tienda/ticket", body);
             const ticketId = responseTicket.data.id;
             setTicket(ticketId);
-            await axios.post("http://localhost:3001/tienda/compra", {
+            await axios.post("/tienda/compra", {
                 ticketId: ticketId,
                 fecha: new Date(),
                 articles: productos
             });
             for (const prod of productos.productos) {
                 try {
-                    await axios.post("http://localhost:3001/tienda/articulo/articuloVendido", {
+                    await axios.post("/tienda/articulo/articuloVendido", {
                         id: prod.producto.id,
                         cantVendidos: prod.cantidad
                     });

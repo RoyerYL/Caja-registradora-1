@@ -14,7 +14,7 @@ export default function Navbar(props) {
     };
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/cliente").then(({ data }) => {
+        axios("/tienda/cliente").then(({ data }) => {
             setCliente(data);
         });
 
