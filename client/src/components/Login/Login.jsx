@@ -54,24 +54,26 @@ export default function Login(props) {
 
     const validateForm = () => {
         const newErrors = {};
-        if (!Cotizacion.apertura) {
-            console.log(typeof Cotizacion.precioInicial);
-            
-            
-            if (!Cotizacion.precioInicial || typeof Cotizacion.precioInicial != 'number') {
-                newErrors.precioInicial = 'Precio Inicial is required and must be a number.';
-            }
+    
+        // Verifica si el precioInicial es un número válido
+        if (!Cotizacion.apertura && (Cotizacion.precioInicial === "" || isNaN(Number(Cotizacion.precioInicial)))) {
+            newErrors.precioInicial = 'Precio Inicial is required and must be a valid number.';
         }
-        if (Cotizacion.apertura && (!Cotizacion.precioFinal || isNaN(Cotizacion.precioFinal))) {
-            newErrors.precioFinal = 'Precio Final is required and must be a number.';
+    
+        // Verifica si el precioFinal es un número válido
+        if (Cotizacion.apertura && (Cotizacion.precioFinal === "" || isNaN(Number(Cotizacion.precioFinal)))) {
+            newErrors.precioFinal = 'Precio Final is required and must be a valid number.';
         }
-        if (!Cotizacion.cotizacionBlue || isNaN(Cotizacion.cotizacionBlue)) {
-            newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a number.';
+    
+        // Verifica si la cotización Blue es un número válido
+        if (Cotizacion.cotizacionBlue === "" || isNaN(Number(Cotizacion.cotizacionBlue))) {
+            newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a valid number.';
         }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-
+    
     const submitHandler = async (event) => {
         event.preventDefault(); // Prevent page reload
         if (!validateForm()) {

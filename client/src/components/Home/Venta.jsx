@@ -14,7 +14,6 @@ import getFecha from '../../Utils/getFecha/getFecha';
 import Swal from 'sweetalert2';
 
 export default function Navbar() {
-
     const fecha = getFecha(new Date());
     const dispatch = useDispatch();
 
