@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
-const { Cliente , Ticket} = require("../../DB_connection")
+const { Cliente , Ticket, Compra, Vendedor, Caja} = require("../../DB_connection");
+
 
 
 const getClienteLike = async (req, res) => {
@@ -34,17 +35,33 @@ const getClienteLike = async (req, res) => {
     }
 }
 const getAllClientes = async (req, res) => {
-
     try {
-        const allClientes = await Cliente.findAll()
+        const allClientes = await Cliente.findAll({
+            include: [
+                {
+                    model: Ticket,
+                    include: [
+                        {
+                            model: Compra,
+                        },
+                        {
+                            model: Vendedor,
+                        },
+                        {
+                            model: Caja,
+                        },
+                        
+                    ],
+                },
+            ],
+        });
 
-        return res.status(201).json(allClientes);
-
+        return res.status(200).json(allClientes);
     } catch (error) {
-        return res.status(500).json({ error: error.message })
-
+        return res.status(500).json({ error: error.message });
     }
-}
+};
+
 const getCliente = async (req, res) => {
     const { id } = req.params
     try {
