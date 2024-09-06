@@ -52,22 +52,6 @@ export default function Login(props) {
         fetchVendedores();
     }, [dispatch]);
 
-    const validateForm = () => {
-        const newErrors = {};
-        if (!Cotizacion.apertura) {
-            if (!Cotizacion.precioInicial || isNaN(Cotizacion.precioInicial)) {
-                newErrors.precioInicial = 'Precio Inicial is required and must be a number.';
-            }
-        }
-        if (Cotizacion.apertura && (!Cotizacion.precioFinal || isNaN(Cotizacion.precioFinal))) {
-            newErrors.precioFinal = 'Precio Final is required and must be a number.';
-        }
-        if (!Cotizacion.cotizacionBlue || isNaN(Cotizacion.cotizacionBlue)) {
-            newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a number.';
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
 
     const submitHandler = async (event) => {
         event.preventDefault(); // Prevent page reload
@@ -92,8 +76,26 @@ export default function Login(props) {
         }
     };
 
+    const validateAperturaForm = () => {
+        const newErrors = {};
+        if (!Cotizacion.precioInicial || isNaN(Cotizacion.precioInicial)) {
+            newErrors.precioInicial = 'Precio Inicial is required and must be a number.';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+    
+    const validateCotizacionForm = () => {
+        const newErrors = {};
+        if (!Cotizacion.cotizacionBlue || isNaN(Cotizacion.cotizacionBlue)) {
+            newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a number.';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+    
     const apertura = async () => {
-        if (!validateForm()) {
+        if (!validateAperturaForm()) {
             return;
         }
         try {
@@ -102,13 +104,16 @@ export default function Login(props) {
                 fechaApertura: new Date()
             });
             setCajaAbierta(1);
+            setCotizacion({ ...Cotizacion, apertura: true });
         } catch (error) {
             console.error("Error opening caja:", error);
         }
     };
 
+    
+
     const cierre = async () => {
-        if (!validateForm()) {
+        if (!validateAperturaForm()) {
             return;
         }
         try {
@@ -150,7 +155,7 @@ export default function Login(props) {
                             {errors.precioFinal && <span className={style.error}>{errors.precioFinal}</span>}
                         </div>
                         <div>
-                            <button type='submit' onClick={cierre}>Cerrar caja</button>
+                            <button onClick={cierre}>Cerrar caja</button>
                         </div>
                     </>
                 ) : (
@@ -158,7 +163,7 @@ export default function Login(props) {
                         <label>Precio Inicial</label>
                         <input name='precioInicial' value={Cotizacion.precioInicial} onChange={handleChange} />
                         <div>
-                            <button type='submit' onClick={apertura}>Apertura</button>
+                            <button onClick={apertura}>Apertura</button>
                         </div>
                         {errors.precioInicial && <span className={style.error}>{errors.precioInicial}</span>}
                     </>

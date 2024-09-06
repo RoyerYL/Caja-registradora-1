@@ -34,7 +34,7 @@ router.get('/articuloMasVendidos', getArticulosMasVendidos);
 router.get('/:id', getArticulo);
 router.get('/articuloLike/:id', getArticuloLike);
 
-router.post('/articulo', postArticulo);
+router.post('/', postArticulo);
 router.post('/actualizararticulo', updateArticulo);
 router.post('/actualizarpreciosporcentajexcategoria', actualizarPrecioPorcentajexCategoria);
 router.post('/actualizarPorcentajeDolar', actualizarPorcentajeDolar);

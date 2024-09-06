@@ -25,20 +25,27 @@ const cerrarCaja = async (req, res) => {
 }
 
 const getAllCaja = async (req, res) => {
-
     try {
-        const allCaja=await Caja.findAll({
-            order:[["fechaApertura","DESC"]],
-            limit:25
-        })
+        // Obtener todos los registros de la tabla Caja, ordenados por fecha de apertura
+        const allCaja = await Caja.findAll({
+            order: [["fechaApertura", "DESC"]],
+            limit: 25
+        });
 
-        return res.status(201).json(allCaja);
+        // Verificar si el primer registro (último por fecha) tiene apertura en true
+        const ultimaCaja = allCaja.length > 0 ? allCaja[0] : null;
+        const aperturaUltimaCaja = ultimaCaja ? ultimaCaja.apertura : false;
+
+        // Incluir en la respuesta si el último registro tiene apertura en true
+        return res.status(201).json({
+            allCaja,
+            aperturaUltimaCaja
+        });
 
     } catch (error) {
-        return res.status(500).json({ error: error.message })
-
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
 const getCaja= async (req, res) => {
     const {id}=req.params

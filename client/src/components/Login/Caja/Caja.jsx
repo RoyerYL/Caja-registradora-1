@@ -16,7 +16,7 @@ export default function Caja(props) {
 
 
         axios("http://localhost:3001/tienda/caja").then(({ data }) => {
-            setCaja(data)
+            setCaja(data.allCaja)
         })
 
     }, [props.cajaAbierta])

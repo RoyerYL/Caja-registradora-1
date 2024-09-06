@@ -9,10 +9,10 @@ import { FiHome } from 'react-icons/fi';
 
 export default function Navbar(props) {
     const { Cotizacion } = props;
-    const [id_, setID] = useState(0);
     const dispatch = useDispatch();
     const ventas = useSelector((state) => state.listLength);
     const buttons = useSelector((state) => state.buttons);
+    const [id_, setID] = useState(buttons?.length > 0 ? buttons[buttons.length - 1].id + 1 : 0);
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
