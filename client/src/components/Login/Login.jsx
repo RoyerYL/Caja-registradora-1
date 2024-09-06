@@ -18,7 +18,7 @@ export default function Login(props) {
 
         const fetchCotizacionData = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3001/tienda/cotizacion");
+                const { data } = await axios.get("/tienda/cotizacion");
                 if (data.length > 0) {
                     const { cotizacionBlue } = data[0];
 
@@ -41,7 +41,7 @@ export default function Login(props) {
     useEffect(() => {
         const fetchVendedores = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3001/tienda/vendedor");
+                const { data } = await axios.get("/tienda/vendedor");
                 dispatch(add_vendedor(data[0].id));
                 setVendedores(data);
             } catch (error) {
@@ -52,14 +52,35 @@ export default function Login(props) {
         fetchVendedores();
     }, [dispatch]);
 
-
+    const validateForm = () => {
+        const newErrors = {};
+    
+        // Verifica si el precioInicial es un número válido
+        if (!Cotizacion.apertura && (Cotizacion.precioInicial === "" || isNaN(Number(Cotizacion.precioInicial)))) {
+            newErrors.precioInicial = 'Precio Inicial is required and must be a valid number.';
+        }
+    
+        // Verifica si el precioFinal es un número válido
+        if (Cotizacion.apertura && (Cotizacion.precioFinal === "" || isNaN(Number(Cotizacion.precioFinal)))) {
+            newErrors.precioFinal = 'Precio Final is required and must be a valid number.';
+        }
+    
+        // Verifica si la cotización Blue es un número válido
+        if (Cotizacion.cotizacionBlue === "" || isNaN(Number(Cotizacion.cotizacionBlue))) {
+            newErrors.cotizacionBlue = 'Cotizacion Blue is required and must be a valid number.';
+        }
+    
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+    
     const submitHandler = async (event) => {
         event.preventDefault(); // Prevent page reload
         if (!validateForm()) {
             return;
         }
         try {
-            const { data } = await axios.post("http://localhost:3001/tienda/cotizacion", { cotizacionBlue: Cotizacion.cotizacionBlue });
+            const { data } = await axios.post("/tienda/cotizacion", { cotizacionBlue: Cotizacion.cotizacionBlue });
             const { cotizacionBlue } = data[0];
             dispatch(setCotizacionGlobal(cotizacionBlue));
         } catch (error) {
@@ -99,7 +120,7 @@ export default function Login(props) {
             return;
         }
         try {
-            await axios.post("http://localhost:3001/tienda/caja", {
+            await axios.post("/tienda/caja", {
                 precioInicial: Cotizacion.precioInicial,
                 fechaApertura: new Date()
             });
@@ -117,7 +138,7 @@ export default function Login(props) {
             return;
         }
         try {
-            await axios.put("http://localhost:3001/tienda/caja", {
+            await axios.put("/tienda/caja", {
                 id: caja,
                 precioFinal: Cotizacion.precioFinal,
                 fechaCierre: new Date()
@@ -131,7 +152,7 @@ export default function Login(props) {
 
     const actualizarPrecios = async () => {
         try {
-            await axios.post("http://localhost:3001/tienda/articulo/calcularPrecioVentaPorDolar");
+            await axios.post("/tienda/articulo/calcularPrecioVentaPorDolar");
         } catch (error) {
             console.error("Error updating precios:", error);
         }

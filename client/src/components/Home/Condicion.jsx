@@ -11,7 +11,7 @@ export default function Condicion({contado,handleChange}) {
     const [vendedores, setVendedores] = useState([]);
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/vendedor").then(({ data }) => {
+        axios("/tienda/vendedor").then(({ data }) => {
             setVendedores(data);
         });
     }, []);

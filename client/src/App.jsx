@@ -37,8 +37,8 @@ function App() {
 
    const [Cotizacion, setCotizacion] = useState({
       apertura: false,
-      precioInicial: 0,
-      precioFinal: 0,
+      precioInicial: Number(0),
+      precioFinal: Number(0),
       cotizacionBlue: Number.parseFloat(0).toFixed(2),
       cotizacionMep: Number.parseFloat(0).toFixed(2),
 

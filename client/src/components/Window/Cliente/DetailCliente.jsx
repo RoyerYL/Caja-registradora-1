@@ -21,7 +21,7 @@ export default function DetailClient() {
     })
 
     useEffect(() => {
-        axios(`http://localhost:3001/tienda/cliente/${id}`)
+        axios(`/tienda/cliente/${id}`)
             .then(({ data }) => {
                 setForm({
                     razonSocial: data.razonSocial,
@@ -59,7 +59,7 @@ export default function DetailClient() {
             "email": form.email,
             "comentarios": form.comentarios
         }
-        axios.post("http://localhost:3001/tienda/cliente", body).then((res) => {
+        axios.post("/tienda/cliente", body).then((res) => {
             console.log("Creado correctamente");
         })
     }

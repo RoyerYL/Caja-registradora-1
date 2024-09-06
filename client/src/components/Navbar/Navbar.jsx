@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PageArticulo from '../Home/components/ListaArticulos/PageArticulo';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,12 @@ export default function Navbar(props) {
     const [id_, setID] = useState(buttons?.length > 0 ? buttons[buttons.length - 1].id + 1 : 0);
     const navigate = useNavigate();
     const { pathname } = useLocation();
+
+    useEffect(() =>{
+        console.log(buttons);
+
+    },[buttons])
+
 
     const handleClick = () => {
         dispatch(addVenta());

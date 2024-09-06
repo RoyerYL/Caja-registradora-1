@@ -19,7 +19,7 @@ function Comprobante() {
 
     const fetchComprobantes = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:3001/tienda/ticket`, {
+            const { data } = await axios.get(`/tienda/ticket`, {
                 params: { page, limit, order, orderDirection }
             });
             console.log(data);

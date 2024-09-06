@@ -53,17 +53,17 @@ export default function ActualizarDatos() {
 
     useEffect(() => {
         const fetchArticulos = async () => {
-            const { data: articulo } = await axios("http://localhost:3001/tienda/articulo"+ buildQueryParams(filters))
+            const { data: articulo } = await axios("/tienda/articulo"+ buildQueryParams(filters))
             setArticulo(articulo.items)
         }
 
         fetchArticulos();
 
         const fetchData = async () => {
-            const { data: provedores } = await axios("http://localhost:3001/tienda/provedor");
+            const { data: provedores } = await axios("/tienda/provedor");
             setProvedor(provedores);
 
-            const { data: categorias } = await axios("http://localhost:3001/tienda/categoria");
+            const { data: categorias } = await axios("/tienda/categoria");
             setCategoria(categorias);
         };
 
@@ -109,59 +109,59 @@ export default function ActualizarDatos() {
             switch (nombre) {
                 case "precioVenta":
                     payload = { articuloId: prod.id, nuevoPrecio: form.precioVenta };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizprecio", payload);
+                    await axios.post("/tienda/articulo/actualizprecio", payload);
                     break;
                 case "precioVentaPorcentaje":
                     payload = { id: prod.id, porcentajeAumento: form.precioVentaPorcentaje };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizprecioPorcentaje", payload);
+                    await axios.post("/tienda/articulo/actualizprecioPorcentaje", payload);
                     break;
                 case "categoria":
                     payload = { articuloId: prod.id, categoriaId: form.CategoriaId };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarCategoria", payload);
+                    await axios.post("/tienda/articulo/actualizarCategoria", payload);
                     break;
                 case "provedor":
                     payload = { articuloId: prod.id, provedorId: form.ProvedorId };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarProvedor", payload);
+                    await axios.post("/tienda/articulo/actualizarProvedor", payload);
                     break;
                 case "costoDolar":
                     payload = { articuloId: prod.id, costoDolar: form.costoDolar };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarCostoDolar", payload);
+                    await axios.post("/tienda/articulo/actualizarCostoDolar", payload);
                     break;
                 case "costoDolarPorcentaje":
                     payload = { id: prod.id, porcentajeAumento: form.costoDolarPorcentaje };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarPorcentajeDolar", payload);
+                    await axios.post("/tienda/articulo/actualizarPorcentajeDolar", payload);
                     break;
                 case "costoPeso":
                     payload = { articuloId: prod.id, costoPeso: form.costoPeso };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarCostoPeso", payload);
+                    await axios.post("/tienda/articulo/actualizarCostoPeso", payload);
                     break;
                 case "costoPesoPorcentaje":
                     payload = { id: prod.id, porcentajeAumento: form.costoPesoPorcentaje };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarPorcentajePeso", payload);
+                    await axios.post("/tienda/articulo/actualizarPorcentajePeso", payload);
                     break;
                 case "ganancia":
                     payload = { articuloId: prod.id, ganancia: form.ganancia };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarGanancia", payload);
+                    await axios.post("/tienda/articulo/actualizarGanancia", payload);
                     break;
                 case "iva":
                     payload = { articuloId: prod.id, iva: form.iva };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarIva", payload);
+                    await axios.post("/tienda/articulo/actualizarIva", payload);
                     break;
                 case "stock":
                     payload = { articuloId: prod.id, stock: form.stock };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarStock", payload);
+                    await axios.post("/tienda/articulo/actualizarStock", payload);
                     break;
                 case "stockMin":
                     payload = { articuloId: prod.id, stockMin: form.stockMin };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarStockMin", payload);
+                    await axios.post("/tienda/articulo/actualizarStockMin", payload);
                     break;
                 case "activo":
                     payload = { articuloId: prod.id, activo: form.activo };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarActivo", payload);
+                    await axios.post("/tienda/articulo/actualizarActivo", payload);
                     break;
                 case "precioEnDolar":
                     payload = { articuloId: prod.id, precioEnDolar: form.precioEnDolar };
-                    await axios.post("http://localhost:3001/tienda/articulo/actualizarPrecioEnDolares", payload);
+                    await axios.post("/tienda/articulo/actualizarPrecioEnDolares", payload);
                     break;
                 default:
                     break;

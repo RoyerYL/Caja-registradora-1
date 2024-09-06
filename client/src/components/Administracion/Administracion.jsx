@@ -29,7 +29,7 @@ export default function TicketView() {
 
         const fetchTicketData = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:3001/tienda/ticket/4`);
+                const { data } = await axios.get(`/tienda/ticket/4`);
                 console.log(data);
                 setTicketData(data);
                 setCompra(data.Compras[0]);

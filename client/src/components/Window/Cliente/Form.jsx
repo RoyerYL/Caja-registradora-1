@@ -38,7 +38,7 @@ export default function Form() {
 
     const crearCliente = () => {
         if (validarFormulario()) {
-            axios.post("http://localhost:3001/tienda/cliente", form)
+            axios.post("/tienda/cliente", form)
                 .then((res) => {
                     Swal.fire({
                         icon: 'success',

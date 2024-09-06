@@ -19,7 +19,7 @@ export default function VentasXVendedor() {
 
 
     useEffect(() => {
-        axios("http://localhost:3001/tienda/vendedor") // Suponiendo que tienes un endpoint para obtener los vendedores
+        axios("/tienda/vendedor") // Suponiendo que tienes un endpoint para obtener los vendedores
             .then(({ data }) => {
                 console.log(data);
                 setVendedores(data);
@@ -29,7 +29,7 @@ export default function VentasXVendedor() {
 
     async function handleVendedorClick(id) {
         try {
-            const { data } = await axios(`http://localhost:3001/tienda/ticket${buildQueryParams({...filter,id})}`);
+            const { data } = await axios(`/tienda/ticket${buildQueryParams({...filter,id})}`);
             console.log(data.tickets);
             setSelectedVendedor(id);
             setVentas(data);

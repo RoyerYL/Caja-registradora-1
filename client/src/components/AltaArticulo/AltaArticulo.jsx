@@ -33,13 +33,13 @@ function AltaArticulo(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const provedorResponse = await axios("http://localhost:3001/tienda/provedores");
+                const provedorResponse = await axios("/tienda/provedores");
                 setProvedor(provedorResponse.data);
-                const categoriaResponse = await axios("http://localhost:3001/tienda/categoria");
+                const categoriaResponse = await axios("/tienda/categoria");
                 setCategoria(categoriaResponse.data);
 
                 if (id) {
-                    const articuloResponse = await axios(`http://localhost:3001/tienda/articulo/${id}`);
+                    const articuloResponse = await axios(`/tienda/articulo/${id}`);
                     if (articuloResponse.data.name) {
                         const {
                             activo, costoDolar, costoPeso, descripcion, ganancia, ganancia_2, id,
@@ -76,7 +76,7 @@ function AltaArticulo(props) {
     const handleClick = async () => {
         if (!(form.id === "" || form.name === "")) {
             try {
-                await axios.post("http://localhost:3001/tienda/articulo", form);
+                await axios.post("/tienda/articulo", form);
                 Swal.fire({
                     icon: 'success',
                     title: 'Artículo creado',
@@ -137,7 +137,7 @@ function AltaArticulo(props) {
                 "ProvedorId": Number(form.ProvedorId) || 1
             };
             try {
-                await axios.post("http://localhost:3001/tienda/articulo/actualizararticulo", body);
+                await axios.post("/tienda/articulo/actualizararticulo", body);
                 Swal.fire({
                     icon: 'success',
                     title: 'Artículo actualizado',

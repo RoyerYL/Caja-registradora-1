@@ -20,7 +20,7 @@ export default function MasVendidos() {
     useEffect(() => {
         const fetchData = () => {
             setLoading(true);
-            axios("http://localhost:3001/tienda/articulo" + buildQueryParams(filters))
+            axios("/tienda/articulo" + buildQueryParams(filters))
                 .then(({ data }) => {
                     console.log(data.items);
                     setProductos(data.items);
