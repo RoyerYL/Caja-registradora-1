@@ -24,7 +24,7 @@ import Administracion from './components/Administracion/Administracion';
 import { useDispatch } from 'react-redux';
 import { cajaAbierta } from './redux/action';
 import ListClient from './components/Cliente/ListClient';
-
+import firstLaunchBD from './Utils/FirstLaunchBD';
 
 
 function App() {
@@ -34,6 +34,8 @@ function App() {
    const dispatch = useDispatch();
    const [access, setAccess] = useState(false)
 
+
+   firstLaunchBD(axios.defaults.baseURL)
 
    const [Cotizacion, setCotizacion] = useState({
       apertura: false,
@@ -46,10 +48,10 @@ function App() {
    useEffect(() => {
       const fetchCajaData = async () => {
          try {
-            const { data } = await axios.get("http://localhost:3001/tienda/caja");
-            const {allCaja,aperturaUltimaCaja}=data
+            const { data } = await axios.get("/tienda/caja");
+            const { allCaja, aperturaUltimaCaja } = data
             console.log(data);
-            
+
             if (aperturaUltimaCaja) {
                dispatch(cajaAbierta(allCaja[0].id));
                setCotizacion(prevCotizacion => ({ ...prevCotizacion, precioInicial: allCaja[0].precioInicial, apertura: aperturaUltimaCaja }));
@@ -60,10 +62,12 @@ function App() {
       };
 
       fetchCajaData();
+   }, [Cotizacion.apertura]);
+
+   useEffect(() => {
       navigate("/");
-   }, []);
 
-
+   }, [])
 
    return (
       <div className="App">

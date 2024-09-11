@@ -71,6 +71,64 @@ Mercaderia.belongsTo(Provedor)
 Vendedor.hasMany(Mercaderia)
 Mercaderia.belongsTo(Vendedor)
 
+dataBase.sync()
+  .then(() => {
+    console.log('Tablas sincronizadas correctamente');
+    
+    // Configura el hook `afterSync`
+    return dataBase.afterSync(async () => {
+      try {
+        // Verifica si ya existe algún vendedor
+        const vendedor = await Vendedor.findOne();
+        if (!vendedor) {
+          // Si no existe, crea el "vendedor admin"
+          await Vendedor.create({
+            vendedor: 'Admin',
+          });
+          console.log('Vendedor admin creado por defecto');
+        }
+
+        // Verifica si ya existe alguna categoría
+        const categoria = await Categoria.findOne();
+        if (!categoria) {
+          // Si no existe, crea la categoría por defecto
+          await Categoria.create({
+            nameCategoria: 'Otros'
+          });
+          console.log('Categoría por defecto creada');
+        }
+
+        // Verifica si ya existe algún proveedor
+        const proveedor = await Provedor.findOne();
+        if (!proveedor) {
+          // Si no existe, crea el proveedor por defecto
+          await Provedor.create({
+            razonSocial: 'Otros',
+            nombreComercial: 'Otros'
+          });
+          console.log('Proveedor por defecto creado');
+        }
+
+        // Verifica si ya existe algún cliente
+        const cliente = await Cliente.findOne();
+        if (!cliente) {
+          // Si no existe, crea el cliente por defecto
+          await Cliente.create({
+            nombre: 'Admin',
+            razonSocial: 'Admin'
+          });
+          console.log('Cliente por defecto creado');
+        }
+
+      } catch (error) {
+        console.error('Error creando datos por defecto:', error);
+      }
+    });
+  })
+  .catch(error => {
+    console.error('Error sincronizando tablas:', error);
+  });
+
 
 module.exports = {
   dataBase,

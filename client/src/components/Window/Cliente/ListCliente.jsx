@@ -24,9 +24,6 @@ export default function ListClientes() {
                 <tbody>
 
                     {provedores.map((prov, index) => {
-                        if (index === 0) {
-                            return ""
-                        }
                         return (
                             <tr key={prov.id}>
                                 <td className={style.selectClient}>

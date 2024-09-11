@@ -11,7 +11,7 @@ const { cerrarCaja, getAllCaja, getCaja, getCajaTicket, postCaja } = require("..
 router.get('/', getAllCaja);
 router.get('/:id', getCaja);
 router.get('/ticket/:id', getCajaTicket);
-router.put('/', cerrarCaja);
+router.put('/cerrar', cerrarCaja);
 router.post('/', postCaja);
 
 module.exports = router;
