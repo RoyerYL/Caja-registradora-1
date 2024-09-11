@@ -247,7 +247,7 @@ function AltaArticulo(props) {
                             </div>
                             <div>
                                 <label>Precio de venta AR$</label>
-                                <input value={form.precioVenta} onChange={handleChange} />
+                                <input name='precioVenta' value={form.precioVenta} onChange={handleChange} />
                                 <button onClick={calcular}>Calcular</button>
                             </div>
                         </div>

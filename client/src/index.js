@@ -3,7 +3,7 @@ const { dataBase, Articulo, Categoria, TicketData, Compra } = require('../server
 
 const PORT = 3001;
 
-dataBase.sync({ force:false }).then(() => {
+dataBase.sync({ force:true}).then(() => {
   server.listen(PORT, () => {
     console.log('Server raised in port: ' + PORT);
 

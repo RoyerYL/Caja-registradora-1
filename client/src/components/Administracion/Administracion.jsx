@@ -135,7 +135,7 @@ export default function TicketView() {
             <div className={style.footer}>
                 <p>¡Gracias por tu compra!</p>
             </div>
-            <button onClick={() => removeItem('storeInfo')}>Borrar storeInfo de LocalStorage</button>
+            {/* <button onClick={() => removeItem('storeInfo')}>Reiniciar</button> */}
         </div>
     );
 }
